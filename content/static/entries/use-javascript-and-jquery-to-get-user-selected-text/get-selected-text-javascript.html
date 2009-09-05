@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Get Selected Text JavaScript Example</title>
+		<script src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			google.load("jquery", "1.3.2");
+		</script>
+		<script type="text/javascript">
+			
+			/**
+			 * Copyright (c) 2009 Mark S. Kolich
+			 * http://mark.kolich.com
+			 *
+			 * Permission is hereby granted, free of charge, to any person
+			 * obtaining a copy of this software and associated documentation
+			 * files (the "Software"), to deal in the Software without
+			 * restriction, including without limitation the rights to use,
+			 * copy, modify, merge, publish, distribute, sublicense, and/or sell
+			 * copies of the Software, and to permit persons to whom the
+			 * Software is furnished to do so, subject to the following
+			 * conditions:
+			 *
+			 * The above copyright notice and this permission notice shall be
+			 * included in all copies or substantial portions of the Software.
+			 *
+			 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+			 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+			 * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			 * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+			 * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+			 * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+			 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+			 * OTHER DEALINGS IN THE SOFTWARE.
+			*/
+			
+			if(!window.Kolich){
+				Kolich = {};
+			}
+			
+			Kolich.Selector = {};
+			// getSelected() was borrowed from CodeToad at
+			// http://www.codetoad.com/javascript_get_selected_text.asp
+			Kolich.Selector.getSelected = function(){
+				var t = '';
+				if(window.getSelection){
+					t = window.getSelection();
+				}else if(document.getSelection){
+					t = document.getSelection();
+				}else if(document.selection){
+					t = document.selection.createRange().text;
+				}
+				return t;
+			}
+			
+			Kolich.Selector.mouseup = function(){
+				var st = Kolich.Selector.getSelected();
+				if(st!=''){
+					alert("You selected:\n"+st);
+				}
+			}
+			
+			$(document).ready(function(){
+				$(document).bind("mouseup", Kolich.Selector.mouseup);
+			});
+						
+		</script>
+		<style type="text/css">
+			body { margin: 30px; }
+		</style>
+	</head>
+	<body>
+		<h2>Select some text on the page ...</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet tortor metus, et blandit ipsum. Aenean accumsan condimentum blandit. Suspendisse commodo, massa nec hendrerit consectetur, urna est fringilla lorem, quis tincidunt lectus ligula quis nisi. Integer sed sem quis quam scelerisque pulvinar. Donec in lorem ipsum. Sed gravida ornare congue. Maecenas vitae ante eu metus gravida condimentum vitae vitae metus. Nam purus ipsum, placerat vel tincidunt id, iaculis et ante. In tristique, nibh id luctus sodales, risus turpis fringilla tellus, nec semper metus est eu lectus. Nam porttitor rutrum odio, in placerat tellus mollis ac. Vestibulum nibh orci, cursus ut fringilla ac, aliquet non ipsum. Quisque sit amet erat eros. In condimentum arcu nec neque varius eu gravida dolor pharetra. Nunc id risus dui, sit amet porttitor enim. Ut pharetra ipsum id eros hendrerit accumsan. Vestibulum id augue ipsum, vel rutrum augue.</p>
+		<p>Mauris ornare mauris vitae est imperdiet nec vehicula arcu facilisis. Vivamus velit eros, aliquam non ultricies a, tincidunt ac lectus. Mauris adipiscing consectetur blandit. Morbi porttitor suscipit velit, ut semper nulla bibendum non. Quisque erat odio, lacinia ac placerat eget, accumsan nec leo. Sed tellus leo, vehicula ac tempor a, aliquam sed nibh. Curabitur et mi nibh. Vestibulum gravida porttitor nibh, bibendum rhoncus velit ullamcorper non. Quisque dictum enim non est commodo nec condimentum nulla commodo. Vestibulum ac arcu tortor. Nam nec tellus odio.</p>
+		<p>Morbi nulla massa, tristique a interdum et, euismod in leo. Morbi fringilla orci nec leo dignissim sagittis ac aliquam nibh. Integer consequat velit eu ante mollis non consequat ipsum tincidunt. Nam vestibulum quam a massa aliquet eleifend. Vestibulum quis gravida orci. Donec vel dui nec neque scelerisque aliquam. Aliquam erat volutpat. Nam magna metus, euismod eget pretium vitae, pellentesque et neque. Suspendisse gravida, enim a tempus vehicula, arcu arcu suscipit tortor, sed venenatis nulla ante sed elit. Pellentesque fringilla nibh quis diam congue id laoreet nunc pellentesque. Integer ac dictum magna. Fusce sit amet neque tortor, id gravida velit. Donec viverra rhoncus luctus.</p>
+		<p>Donec a odio nunc. Nulla porta convallis nunc quis porttitor. Vestibulum ut eros erat, ac fringilla libero. Sed eros nunc, semper at congue et, iaculis ac nulla. Vivamus pellentesque mattis eros nec pretium. Donec in tellus ac neque laoreet cursus in eget mauris. Nunc ac ligula risus, quis rutrum ipsum. Praesent nec nibh sed sem ullamcorper aliquam. Duis eget dolor eget purus ullamcorper suscipit quis eu diam. Nam eu tellus leo. Fusce eget elit eget quam posuere dictum. Nunc lectus enim, eleifend ut dapibus a, placerat nec dolor.</p>
+		<p>Cras vulputate felis eget purus commodo in tristique nibh bibendum. Suspendisse in nunc tellus. Aliquam egestas ligula eu lorem commodo euismod. Sed vel dui vel metus vestibulum lobortis ut id mi. Donec eros libero, eleifend at vulputate sit amet, dignissim eu ligula. Quisque convallis quam dictum ante iaculis ut pretium elit ornare. Suspendisse eu ligula in libero imperdiet fermentum ut quis metus. Suspendisse commodo dolor metus, vitae egestas urna. Aenean vestibulum enim ac augue accumsan eleifend. Fusce egestas justo id erat pharetra vel iaculis metus varius. Vestibulum pretium lectus dui. Fusce eu urna elementum libero volutpat aliquet in eu mi. Etiam ut metus augue.</p> 
+	</body>
+</html>
