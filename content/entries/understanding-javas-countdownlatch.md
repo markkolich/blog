@@ -7,7 +7,7 @@ Meet `CountDownLatch`.
 As described in the Java 6 API docs, a `CountDownLatch` is "a synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes."  In other words, the developer says new `CountDownLatch(N)` which waits for `N` threads to finish before the latch is "released" allowing the calling thread to make forward progress.  Couldn't be more perfect here.  To make my life a little easier, I wrote a few wrapper classes that encapsulate a `CountDownLatch` which allow me to easily synchronize on a `List<BaseWorker>`, a list of worker threads:
 
 * [ThreadRunner.java](static/entries/understanding-javas-countdownlatch/ThreadRunner.java) &mdash; A class that accepts a `List<BaseWorker>` (a List of `BaseWorker`'s), creates a `new CountDownLatch(list.size())`, starts each `BasedWorker` then allows the developer to `await()` on the runner for all `BaseWorker`'s to finish.
-* [BaseWorker.java]((static/entries/understanding-javas-countdownlatch/BaseWorker.java) &mdash; An abstract class that represents each worker thread, and defines a set of methods each `BaseWorker` must implement to be used with a `ThreadRunner`.
+* [BaseWorker.java](static/entries/understanding-javas-countdownlatch/BaseWorker.java) &mdash; An abstract class that represents each worker thread, and defines a set of methods each `BaseWorker` must implement to be used with a `ThreadRunner`.
 
 So, using these wrappers, let's create a new worker:
 
@@ -71,7 +71,7 @@ If you're interested, you can [download my complete ThreadRunner demo/example](s
 
 ### CyclicBarrier
 
-A `CyclicBarrier` is similar to that of a `CountDownLatch`, except that a `CyclicBarrier` is "a synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point."  Like a `CountDownLatch`, a `CyclicBarrier` can be used to synchronize a number of threads.  But instead of exiting upon completion, theads using a `CyclicBarrier` `await()` for all other threads in the pool to finish.  Here's a usage example of a `CyclicBarrier` built around my `BaseWorker` class:
+A `CyclicBarrier` is similar to a `CountDownLatch`, except that a `CyclicBarrier` is "a synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point."  Like a `CountDownLatch`, a `CyclicBarrier` can be used to synchronize a number of threads.  But instead of exiting upon completion, theads using a `CyclicBarrier` `await()` for all other threads in the pool to finish.  Here's a usage example of a `CyclicBarrier` built around my `BaseWorker` class:
 
 ```java
 public final class MyCyclicWorker extends BaseWorker {
