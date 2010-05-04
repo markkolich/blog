@@ -6,7 +6,7 @@ But, how do I convert a `java.util.Date` into a different time zone?  You can't,
 
 ```java
 // Do NOT use this, it does nothing and makes no sense.
-public static final Date convertIntoTimeZone(Date date, TimeZone tz) {
+public static final Date convertIntoTimeZone(final Date date, final TimeZone tz) {
   final Calendar cal = Calendar.getInstance();
   cal.setTime(date);
   cal.setTimeZone(tz);
@@ -19,8 +19,7 @@ You can't convert a `Date` into a different time zone, but you can use Java's ha
 ```java
 final Date currentTime = new Date();
 
-final SimpleDateFormat sdf =
-        new SimpleDateFormat("EEE, MMM d, yyyy hh:mm:ss a z");
+final SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm:ss a z");
 
 // Give it to me in US-Pacific time.
 sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
