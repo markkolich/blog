@@ -51,9 +51,9 @@ object Dependencies {
 
   private val typesafeConfig = "com.typesafe" % "config" % "1.0.2" % "compile"
 
-  private val logback = "ch.qos.logback" % "logback-core" % "1.0.7" % "compile"
-  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.7" % "compile" // An Slf4j impl
-  private val slf4j = "org.slf4j" % "slf4j-api" % "1.6.4" % "compile"
+  private val logback = "ch.qos.logback" % "logback-core" % "1.0.13" % "compile"
+  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
+  private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5" % "compile"
 
   private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
   private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"

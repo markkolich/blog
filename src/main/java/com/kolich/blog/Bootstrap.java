@@ -13,11 +13,11 @@ public final class Bootstrap extends CuracaoDispatcherServlet {
     @Override
     public final void myInit(final ServletConfig servletConfig,
         final ServletContext context) throws ServletException {
-        
+
     }
 
     @Override
-    public void myDestroy() {
+    public final void myDestroy() {
 
     }
 
