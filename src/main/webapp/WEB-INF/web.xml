@@ -13,13 +13,13 @@
 	</context-param>
 		
 	<servlet>
-		<servlet-name>Bootstrap</servlet-name>
-		<servlet-class>com.kolich.blog.Bootstrap</servlet-class>
+		<servlet-name>BootstrapServlet</servlet-name>
+		<servlet-class>com.kolich.blog.BootstrapServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Bootstrap</servlet-name>
+		<servlet-name>BootstrapServlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 

@@ -59,6 +59,7 @@ object Dependencies {
   private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
 
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
+  private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
 
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
@@ -66,7 +67,7 @@ object Dependencies {
     typesafeConfig,
     commonsLang, commonsCodec,
     logback, logbackClassic, slf4j,
-    jGit)
+    jGit, pegdown)
 
 }
 

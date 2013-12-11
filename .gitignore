@@ -10,3 +10,4 @@ bin
 config
 
 src/main/webapp/WEB-INF/work
+src/main/webapp/WEB-INF/git
