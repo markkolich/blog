@@ -1,13 +1,12 @@
 *.class
-*.log
 
-# sbt specific
-dist/*
-target/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
+.project
+.classpath
+project/target
+lib_managed
+dist
+target
+bin
+config
 
-# Scala-IDE specific
-.scala_dependencies
+src/main/webapp/WEB-INF/work
