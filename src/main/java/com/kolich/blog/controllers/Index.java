@@ -21,6 +21,17 @@ public final class Index {
         return repository_.getContentRepository().toString();
     }
 
+    @GET("/about")
+    public final String about() {
+        return "about page!";
+    }
+
+    @GET("/about/site")
+    public final String aboutSite() {
+        return "about site page!";
+    }
+
+
     @GET("/{content}/**")
     public final String content(@Path("content") final String content) {
         return content;

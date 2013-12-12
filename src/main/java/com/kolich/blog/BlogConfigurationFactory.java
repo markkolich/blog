@@ -19,12 +19,15 @@ public class BlogConfigurationFactory {
 
     // Public static's
 
+    private static final String DEV_MODE_PROPERTY =
+        "blog.dev-mode";
+
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
-        "blog.repo-clone-url";
+        "blog.clone.url";
     private static final String CLONE_FROM_SCRATCH_ON_STARTUP_PROPERTY =
-        "blog.clone-from-scratch-on-startup";
+        "blog.clone.from-scratch-on-startup";
     private static final String CLONE_PATH_DIRECTORY_PROPERTY =
-        "blog.clone-path";
+        "blog.clone.path";
 
     // Private static's
 
@@ -126,6 +129,11 @@ public class BlogConfigurationFactory {
     // ******************************************************************
     // Config property getters (helper methods)
     // ******************************************************************
+
+    public static final Boolean isDevMode() {
+        return getConfigInstance().getBoolean(
+            DEV_MODE_PROPERTY);
+    }
 
     public static final String getBlogRepoCloneUrl() {
         return getConfigInstance().getString(
