@@ -24,6 +24,7 @@ final class BlogRepository extends CuracaoComponent with Logging {
   var git: Git = _
 
   override def initialize(context: ServletContext) = {
+    // Discover the right path to the local repository on disk.
     repoDir = Path(devMode match {
       case true => System.getProperty("user.dir")
       case _ => clonePath.startsWith(File.separator) match {
@@ -33,7 +34,7 @@ final class BlogRepository extends CuracaoComponent with Logging {
     })
     logger.info("Using repository clone path: " + repoDir.toCanonical)
     val clone: Boolean = (repoDir.notExists || cloneFromScratchOnStartup)
-    if(devMode && clone) {
+    if(!devMode && clone) {
       logger.info("Clone path does not exist, or we were asked to re-clone" +
         "fresh on startup. So, cloning from: " + repoUrl)
       repoDir.deleteRecursively()

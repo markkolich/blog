@@ -28,8 +28,8 @@ object ApplicationConfig extends Logging {
           }
         } catch {
           case e: Exception => {
-            logger.error("Failed to load and parse override " +
-              "configuration file: " + f.toCanonical, e)
+            logger.error("Failed to load and parse override configuration " +
+              "file: " + f.toCanonical, e)
             None
           }
         }
