@@ -14,7 +14,7 @@ Here's some scala code:
 private[this] val x = "foobar"
 ```
 
-Looks syntatically valid.
+Looks syntactically valid.
 
 Download the bits <a href="#">here</a>.
 

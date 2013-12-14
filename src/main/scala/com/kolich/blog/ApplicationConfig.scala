@@ -60,4 +60,6 @@ object ApplicationConfig extends Logging {
   final val cloneFromScratchOnStartup: Boolean = blogConfig getBoolean("clone.from-scratch-on-startup")
   final val clonePath: String = blogConfig getString("clone.path")
 
+  final val markdownDir: String = blogConfig getString("markdown-dir")
+
 }
