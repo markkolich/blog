@@ -54,28 +54,34 @@ object Dependencies {
   private val logback = "ch.qos.logback" % "logback-core" % "1.0.13" % "compile"
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5" % "compile"
+  private val scalaLogging = "com.typesafe" %% "scalalogging-slf4j" % "1.0.1" % "compile"
 
-  private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
-  private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
+  //private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
+  //private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
 
+  //private val gitective = "org.gitective" % "gitective-core" % "0.9.9" % "compile" exclude("org.eclipse.jgit", "org.eclipse.jgit")
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
+  private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
 
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
     typesafeConfig,
-    commonsLang, commonsCodec,
-    logback, logbackClassic, slf4j,
-    jGit, pegdown)
+    //commonsLang, commonsCodec,
+    logback, logbackClassic, slf4j, scalaLogging,
+    jGit, /*gitective,*/
+    gitblit,
+    pegdown)
 
 }
 
 object Resolvers {
 
   private val kolichRepo = "Kolich repo" at "http://markkolich.github.io/repo"
+  private val gitblitRepo = "Gitblit repo" at "http://gitblit.github.io/gitblit-maven"
 
-  val depResolvers = Seq(kolichRepo)
+  val depResolvers = Seq(kolichRepo, gitblitRepo)
 
 }
 
@@ -94,7 +100,7 @@ object Blog extends Build {
     settings = Defaults.defaultSettings ++ Seq(resolvers := depResolvers) ++ Seq(
       version := aVer,
       organization := aOrg,
-      scalaVersion := "2.10.1",
+      scalaVersion := "2.10.3",
       javacOptions ++= Seq(
         "-Xlint", "-g"/*,
         // Java "cross compiling" against Java 6. Note you need to provide the "rt"
@@ -116,9 +122,12 @@ object Blog extends Build {
       // Only add src/main/java and src/test/java as source folders in the project.
       // Not a "Scala" project at this time.
       unmanagedSourceDirectories in Compile <<= baseDirectory(new File(_, "src/main/java"))(Seq(_)),
+      unmanagedSourceDirectories in Compile <++= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
       unmanagedSourceDirectories in Test <<= baseDirectory(new File(_, "src/test/java"))(Seq(_)),
+      unmanagedSourceDirectories in Test <++= baseDirectory(new File(_, "src/test/scala"))(Seq(_)),
       // Tell SBT to include our .java files when packaging up the source JAR.
       unmanagedSourceDirectories in Compile in packageSrc <<= baseDirectory(new File(_, "src/main/java"))(Seq(_)),
+      unmanagedSourceDirectories in Compile in packageSrc <<= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
       // Override the SBT default "target" directory for compiled classes.
       classDirectory in Compile <<= baseDirectory(new File(_, "target/classes")),
       // Add the local 'config' directory to the classpath at runtime,

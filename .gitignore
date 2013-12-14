@@ -2,6 +2,9 @@
 
 .project
 .classpath
+.idea
+.idea_modules
+.cache
 project/target
 lib_managed
 dist
@@ -10,4 +13,4 @@ bin
 config
 
 src/main/webapp/WEB-INF/work
-src/main/webapp/WEB-INF/git
+src/main/webapp/WEB-INF/clone
