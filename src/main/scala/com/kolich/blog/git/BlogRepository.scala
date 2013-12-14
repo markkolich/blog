@@ -44,7 +44,7 @@ final class BlogRepository extends CuracaoComponent with Logging {
     repo = new FileRepositoryBuilder().setWorkTree(repoDir.jfile)
       .readEnvironment.build
     git = new Git(repo)
-    if(devMode) {
+    if(!devMode) {
       git.pull.call
     }
     logger.info("Successfully initialized Git repository: " + repo)
