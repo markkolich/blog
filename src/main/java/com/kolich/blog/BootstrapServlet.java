@@ -3,9 +3,10 @@ package com.kolich.blog;
 import com.kolich.curacao.CuracaoDispatcherServlet;
 import org.slf4j.Logger;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+
+import java.io.IOException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 

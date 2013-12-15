@@ -11,7 +11,7 @@
 		<param-name>webAppRootKey</param-name>
 		<param-value>blog.root</param-value>
 	</context-param>
-		
+
 	<servlet>
 		<servlet-name>BootstrapServlet</servlet-name>
 		<servlet-class>com.kolich.blog.BootstrapServlet</servlet-class>
