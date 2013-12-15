@@ -44,7 +44,10 @@ final class Index @Injectable()(blogRepo: BlogRepository) {
       }).map(_.name).map(file => {
         val format = RFC822DateFormat.getNewInstance
         format.setTimeZone(TimeZone.getTimeZone("GMT-8"))
-        commit.getId.name + " " + format.format(new Date(commit.getCommitTime.toLong * 1000L)) + " " + file
+        commit.getId.name + " " +
+          format.format(new Date(commit.getCommitTime.toLong * 1000L)) + " " +
+          commit.getAuthorIdent.getName + " " +
+          file
       }).mkString("\n")
     }).mkString("\n\n")
   }

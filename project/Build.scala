@@ -59,10 +59,11 @@ object Dependencies {
   //private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
   //private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
 
-  //private val gitective = "org.gitective" % "gitective-core" % "0.9.9" % "compile" exclude("org.eclipse.jgit", "org.eclipse.jgit")
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
+
+  private val liftJson = "net.liftweb" %% "lift-json" % "2.5.1" % "compile"
 
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
@@ -70,9 +71,9 @@ object Dependencies {
     typesafeConfig,
     //commonsLang, commonsCodec,
     logback, logbackClassic, slf4j, scalaLogging,
-    jGit, /*gitective,*/
-    gitblit,
-    pegdown)
+    jGit, gitblit,
+    pegdown,
+    liftJson)
 
 }
 
@@ -119,14 +120,11 @@ object Blog extends Build {
       crossPaths := false,
       // Keep the scala-lang library out of the generated POM's for this artifact. 
       autoScalaLibrary := false,
-      // Only add src/main/java and src/test/java as source folders in the project.
-      // Not a "Scala" project at this time.
-      unmanagedSourceDirectories in Compile <<= baseDirectory(new File(_, "src/main/java"))(Seq(_)),
-      unmanagedSourceDirectories in Compile <++= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
-      unmanagedSourceDirectories in Test <<= baseDirectory(new File(_, "src/test/java"))(Seq(_)),
-      unmanagedSourceDirectories in Test <++= baseDirectory(new File(_, "src/test/scala"))(Seq(_)),
-      // Tell SBT to include our .java files when packaging up the source JAR.
-      unmanagedSourceDirectories in Compile in packageSrc <<= baseDirectory(new File(_, "src/main/java"))(Seq(_)),
+      // Only add src/main/scala and src/test/scala as source folders in the project.
+      // Not a "Java" project at this time.
+      unmanagedSourceDirectories in Compile <<= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
+      unmanagedSourceDirectories in Test <<= baseDirectory(new File(_, "src/test/scala"))(Seq(_)),
+      // Tell SBT to include our .scala files when packaging up the source JAR.
       unmanagedSourceDirectories in Compile in packageSrc <<= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
       // Override the SBT default "target" directory for compiled classes.
       classDirectory in Compile <<= baseDirectory(new File(_, "target/classes")),

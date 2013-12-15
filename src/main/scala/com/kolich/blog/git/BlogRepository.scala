@@ -35,7 +35,7 @@ final class BlogRepository extends CuracaoComponent with Logging {
     logger.info("Using repository clone path: " + repoDir.toCanonical)
     val clone: Boolean = (repoDir.notExists || cloneFromScratchOnStartup)
     if(!devMode && clone) {
-      logger.info("Clone path does not exist, or we were asked to re-clone" +
+      logger.info("Clone path does not exist, or we were asked to re-clone " +
         "fresh on startup. So, cloning from: " + repoUrl)
       repoDir.deleteRecursively()
       Git.cloneRepository().setURI(repoUrl).setDirectory(repoDir.jfile)
