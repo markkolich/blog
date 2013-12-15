@@ -54,7 +54,6 @@ object Dependencies {
   private val logback = "ch.qos.logback" % "logback-core" % "1.0.13" % "compile"
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5" % "compile"
-  private val scalaLogging = "com.typesafe" %% "scalalogging-slf4j" % "1.0.1" % "compile"
 
   //private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
   //private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
@@ -63,17 +62,14 @@ object Dependencies {
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
 
-  private val liftJson = "net.liftweb" %% "lift-json" % "2.5.1" % "compile"
-
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
     typesafeConfig,
     //commonsLang, commonsCodec,
-    logback, logbackClassic, slf4j, scalaLogging,
+    logback, logbackClassic, slf4j,
     jGit, gitblit,
-    pegdown,
-    liftJson)
+    pegdown)
 
 }
 
@@ -120,12 +116,10 @@ object Blog extends Build {
       crossPaths := false,
       // Keep the scala-lang library out of the generated POM's for this artifact. 
       autoScalaLibrary := false,
-      // Only add src/main/scala and src/test/scala as source folders in the project.
-      // Not a "Java" project at this time.
-      unmanagedSourceDirectories in Compile <<= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
-      unmanagedSourceDirectories in Test <<= baseDirectory(new File(_, "src/test/scala"))(Seq(_)),
-      // Tell SBT to include our .scala files when packaging up the source JAR.
-      unmanagedSourceDirectories in Compile in packageSrc <<= baseDirectory(new File(_, "src/main/scala"))(Seq(_)),
+      // Only add src/main/java and src/test/java as source folders in the project.
+      // Not a "Scala" project at this time.
+      unmanagedSourceDirectories in Compile <<= baseDirectory(new File(_, "src/main/java"))(Seq(_)),
+      unmanagedSourceDirectories in Test <<= baseDirectory(new File(_, "src/test/java"))(Seq(_)),
       // Override the SBT default "target" directory for compiled classes.
       classDirectory in Compile <<= baseDirectory(new File(_, "target/classes")),
       // Add the local 'config' directory to the classpath at runtime,
@@ -136,7 +130,7 @@ object Blog extends Build {
       // like when you run Jetty via the xsbt-web-plugin that looks for some
       // configuration file or .properties file on the classpath.
       unmanagedClasspath in Runtime <+= (baseDirectory) map { bd => Attributed.blank(bd / "config") },
-      // Do not bother trying to publish artifact docs (scaladoc, javadoc). Meh.
+      // Do not bother trying to publish artifact docs (javadoc). Meh.
       publishArtifact in packageDoc := false,
       // Override the global name of the artifact.
       artifactName <<= (name in (Compile, packageBin)) { projectName =>
