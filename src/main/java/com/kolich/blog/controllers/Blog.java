@@ -1,6 +1,5 @@
 package com.kolich.blog.controllers;
 
-import com.kolich.blog.components.ContextComponent;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
 import com.kolich.curacao.annotations.Controller;
@@ -12,12 +11,10 @@ import com.kolich.curacao.annotations.parameters.Path;
 public final class Blog {
 
     private final GitRepository git_;
-    private final ContextComponent context_;
 
     @Injectable
-    public Blog(final GitRepository git, final ContextComponent context) {
+    public Blog(final GitRepository git) {
         git_ = git;
-        context_ = context;
     }
 
     @GET("/")
