@@ -1,4 +1,4 @@
-package com.kolich.blog.mappers;
+package com.kolich.blog.mappers.handlers;
 
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.mediatype.document.TextPlainCuracaoEntity;

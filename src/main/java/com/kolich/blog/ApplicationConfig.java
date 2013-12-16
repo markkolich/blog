@@ -20,8 +20,8 @@ public final class ApplicationConfig {
 
     private static final String DEV_MODE_PROPERTY =
         "dev-mode";
-    private static final String MARKDOWN_DIR =
-        "markdown-dir";
+    private static final String MARKDOWN_ROOT =
+        "markdown-root";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -135,9 +135,9 @@ public final class ApplicationConfig {
             DEV_MODE_PROPERTY);
     }
 
-    public static final String getMarkdownDir() {
+    public static final String getMarkdownRootDir() {
         return getConfigInstance().getString(
-            MARKDOWN_DIR);
+            MARKDOWN_ROOT);
     }
 
     public static final String getBlogRepoCloneUrl() {
@@ -147,7 +147,7 @@ public final class ApplicationConfig {
 
     public static final Boolean shouldCloneOnStartup() {
         return getConfigInstance().getBoolean(
-                CLONE_ON_STARTUP_PROPERTY);
+            CLONE_ON_STARTUP_PROPERTY);
     }
 
     public static final String getClonePath() {

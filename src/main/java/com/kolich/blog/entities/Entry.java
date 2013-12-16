@@ -1,15 +1,9 @@
 package com.kolich.blog.entities;
 
-public final class Entry {
-
-    private final String name_;
+public final class Entry extends MarkdownDrivenContent {
 
     public Entry(final String name) {
-        name_ = name;
-    }
-
-    public final String getName() {
-        return name_;
+        super(name);
     }
 
 }

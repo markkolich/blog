@@ -10,7 +10,6 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.Logger;
 
 import javax.servlet.ServletContext;
-
 import java.io.File;
 
 import static org.slf4j.LoggerFactory.getLogger;

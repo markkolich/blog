@@ -1,4 +1,4 @@
-package com.kolich.blog.mappers;
+package com.kolich.blog.mappers.handlers;
 
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.CuracaoEntity;
@@ -18,13 +18,13 @@ public final class FileNotFoundExceptionHandler
         new TextPlainCuracaoEntity(404, "Not Found");
 
     @Override
-    public void render(final AsyncContext context,
+    public final void render(final AsyncContext context,
                        final HttpServletResponse response,
                        @Nonnull final FileNotFoundException entity) throws Exception {
         RenderingResponseTypeMapper.renderEntity(response, notFound__);
     }
 
-    public void render(final AsyncContext context,
+    public final void render(final AsyncContext context,
                        final HttpServletResponse response) throws Exception {
         render(context, response, null);
     }

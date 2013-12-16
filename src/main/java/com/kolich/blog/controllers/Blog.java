@@ -2,6 +2,7 @@ package com.kolich.blog.controllers;
 
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.Page;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.methods.GET;
@@ -23,13 +24,13 @@ public final class Blog {
     }
 
     @GET("/about")
-    public final String about() {
-        return "About page";
+    public final Page about() {
+        return new Page("about");
     }
 
     @GET("/contact")
-    public final String contact() {
-        return "Contact page";
+    public final Page contact() {
+        return new Page("contact");
     }
 
     @GET("/{name}/**")
