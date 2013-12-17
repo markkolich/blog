@@ -10,6 +10,7 @@ import com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
@@ -120,7 +121,8 @@ public final class GitRepository implements CuracaoComponent {
                 final DiffEntry.ChangeType type = change.changeType;
                 if(name.startsWith(entryDirName__) && type.equals(DiffEntry.ChangeType.ADD)) {
                     final File markdown = new File(repo.getWorkTree(), name);
-                    cache.put(markdown.getName(), new Entry(markdown, hash, type));
+                    cache.put(FilenameUtils.removeExtension(markdown.getName()),
+                        new Entry(markdown, hash, type));
                 }
             }
         }
