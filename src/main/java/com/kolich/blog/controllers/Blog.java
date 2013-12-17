@@ -23,6 +23,7 @@ public final class Blog {
         return "Home page";
     }
 
+    /*
     @GET("/about")
     public final Page about() {
         return new Page("about");
@@ -32,10 +33,11 @@ public final class Blog {
     public final Page contact() {
         return new Page("contact");
     }
+    */
 
     @GET("/{name}/**")
     public final Entry entry(@Path("name") final String name) {
-        return new Entry(name);
+        return git_.getEntry(name);
     }
 
 }

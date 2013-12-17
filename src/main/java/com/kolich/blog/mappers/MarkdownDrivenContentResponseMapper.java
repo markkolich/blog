@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownDrivenContent;
 import com.kolich.blog.mappers.handlers.FileNotFoundExceptionHandler;
+import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.mediatype.AbstractBinaryContentTypeCuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
 import org.apache.commons.codec.binary.StringUtils;
@@ -24,35 +25,27 @@ import static com.google.common.net.MediaType.HTML_UTF_8;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public abstract class MarkdownDrivenContentResponseMapper
+@ControllerReturnTypeMapper(MarkdownDrivenContent.class)
+public final class MarkdownDrivenContentResponseMapper
     extends RenderingResponseTypeMapper<MarkdownDrivenContent> {
 
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
 
-    private final GitRepository git_;
-
-    public MarkdownDrivenContentResponseMapper(final GitRepository git) {
-        git_ = git;
-    }
-
     @Override
     public final void render(final AsyncContext context,
                              final HttpServletResponse response,
                              @Nonnull final MarkdownDrivenContent md) throws Exception {
-        final String path = getPathToMarkdown(md).toString();
-        final File entryFile = new File(git_.getRepo().getWorkTree(), path);
-        try(final InputStream is = new FileInputStream(entryFile)) {
+        try(final InputStream is = new FileInputStream(md.getMarkdown())) {
             final String html = new PegDownProcessor(Extensions.ALL)
                 .markdownToHtml(IOUtils.toString(is, Charsets.UTF_8));
             renderMarkdown(response, html);
         } catch(Exception e) {
-            logger__.warn("Failed to load/render content for: " + path, e);
+            logger__.warn("Failed to load/render content for: " +
+                md.getMarkdown().getCanonicalPath(), e);
             new FileNotFoundExceptionHandler().render(context, response);
         }
     }
-
-    public abstract Path getPathToMarkdown(@Nonnull final MarkdownDrivenContent md);
 
     private static final void renderMarkdown(final HttpServletResponse response,
                                              final String html) throws Exception {

@@ -1,17 +1,20 @@
 package com.kolich.blog.entities;
 
+import javax.annotation.Nonnull;
+import java.io.File;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class MarkdownDrivenContent {
 
-    private final String name_;
+    private final File markdown_;
 
-    public MarkdownDrivenContent(final String name) {
-        name_ = checkNotNull(name, "Content name cannot be null.");
+    public MarkdownDrivenContent(@Nonnull final File markdown) {
+        markdown_ = checkNotNull(markdown, "Markdown file cannot be null.");
     }
 
-    public final String getName() {
-        return name_;
+    public final File getMarkdown() {
+        return markdown_;
     }
 
 }
