@@ -1,13 +1,17 @@
 package com.kolich.blog.entities;
 
+import org.eclipse.jgit.diff.DiffEntry;
+
 import java.io.File;
 
 public final class Page extends MarkdownDrivenContent {
 
-    public static final String PAGE_CONTENT_DIR_NAME = "pages";
-
-    public Page(final File markdown) {
-        super(markdown);
+    public Page(final String name,
+                final File markdown,
+                final String hash,
+                final Long timestamp,
+                final DiffEntry.ChangeType changeType) {
+        super(name, markdown, hash, timestamp, changeType);
     }
 
 }

@@ -1,28 +1,17 @@
 package com.kolich.blog.components;
 
-import com.gitblit.models.PathModel;
-import com.gitblit.utils.JGitUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.entities.Entry;
-import com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -33,8 +22,6 @@ public final class GitRepository implements CuracaoComponent {
 
     private static final Boolean isDevMode__ =
         ApplicationConfig.isDevMode();
-    private static final String markdownRootDir__ =
-        ApplicationConfig.getMarkdownRootDir();
     private static final String blogRepoCloneUrl__ =
         ApplicationConfig.getBlogRepoCloneUrl();
     private static final String clonePath__ =
@@ -43,11 +30,6 @@ public final class GitRepository implements CuracaoComponent {
         ApplicationConfig.shouldCloneOnStartup();
 
     private static final String userDir__ = System.getProperty("user.dir");
-
-    private static final String entryDirName__ = markdownRootDir__ +
-        File.separator + Entry.ENTRIES_CONTENT_DIR_NAME;
-
-    private Map<String,Entry> entryCache_;
 
     private Repository repo_;
     private Git git_;
@@ -83,7 +65,6 @@ public final class GitRepository implements CuracaoComponent {
             git_.pull().call();
         }
         logger__.info("Successfully initialized Git repository: " + repo_);
-        entryCache_ = buildEntryCache(git_, repo_);
     }
 
     @Override
@@ -112,33 +93,14 @@ public final class GitRepository implements CuracaoComponent {
         return repoDir;
     }
 
-    private static final Map<String,Entry> buildEntryCache(final Git git,
-        final Repository repo) throws Exception {
-        final Map<String,Entry> cache = Maps.newLinkedHashMap();
-        for(final RevCommit commit : git.log().call()) {
-            for(final PathModel.PathChangeModel change : JGitUtils.getFilesInCommit(repo, commit)) {
-                final String hash = change.objectId, name = change.name;
-                final DiffEntry.ChangeType type = change.changeType;
-                if(name.startsWith(entryDirName__) && type.equals(DiffEntry.ChangeType.ADD)) {
-                    final File markdown = new File(repo.getWorkTree(), name);
-                    cache.put(FilenameUtils.removeExtension(markdown.getName()),
-                        new Entry(markdown, hash, type));
-                }
-            }
-        }
-        return cache;
-    }
-
+    @Nonnull
     public final Git getGit() {
         return git_;
     }
 
+    @Nonnull
     public final Repository getRepo() {
         return repo_;
-    }
-
-    public final Entry getEntry(final String name) {
-        return entryCache_.get(name);
     }
 
 }
