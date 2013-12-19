@@ -20,17 +20,12 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
     }
 
     @Override
-    public final MarkdownEntityBuilder<Entry> getBuilder() {
-        return new MarkdownEntityBuilder<Entry>() {
-            @Override
-            public Entry build(final String name,
-                               final File markdown,
-                               final String hash,
-                               final Long timestamp,
-                               final DiffEntry.ChangeType changeType) {
-                return new Entry(name, markdown, hash, timestamp, changeType);
-            }
-        };
+    public final Entry getEntity(final String name,
+                                 final File markdown,
+                                 final String hash,
+                                 final Long timestamp,
+                                 final DiffEntry.ChangeType changeType) {
+        return new Entry(name, markdown, hash, timestamp, changeType);
     }
 
     @Override

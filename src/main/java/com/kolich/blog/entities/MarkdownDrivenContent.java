@@ -9,18 +9,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class MarkdownDrivenContent {
 
     private final String name_;
-    private final File markdown_;
+    private final File file_;
     private final String hash_;
     private final Long timestamp_;
     private final DiffEntry.ChangeType changeType_;
 
     public MarkdownDrivenContent(final String name,
-                                 final File markdown,
+                                 final File file,
                                  final String hash,
                                  final Long timestamp,
                                  final DiffEntry.ChangeType changeType) {
         name_ = checkNotNull(name, "Content name cannot be null.");
-        markdown_ = checkNotNull(markdown, "Markdown file cannot be null.");
+        file_ = checkNotNull(file, "Markdown file cannot be null.");
         hash_ = checkNotNull(hash, "Git commit hash cannot be null.");
         timestamp_ = checkNotNull(timestamp, "Commit timestamp cannot be null.");
         changeType_ = checkNotNull(changeType, "Change type cannot be null.");
@@ -30,8 +30,8 @@ public abstract class MarkdownDrivenContent {
         return name_;
     }
 
-    public final File getMarkdown() {
-        return markdown_;
+    public final File getFile() {
+        return file_;
     }
 
     public final String getHash() {

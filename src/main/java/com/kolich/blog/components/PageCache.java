@@ -20,17 +20,12 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
     }
 
     @Override
-    public final MarkdownEntityBuilder<Page> getBuilder() {
-        return new MarkdownEntityBuilder<Page>() {
-            @Override
-            public Page build(final String name,
-                              final File markdown,
-                              final String hash,
-                              final Long timestamp,
-                              final DiffEntry.ChangeType changeType) {
-                return new Page(name, markdown, hash, timestamp, changeType);
-            }
-        };
+    public final Page getEntity(final String name,
+                                final File markdown,
+                                final String hash,
+                                final Long timestamp,
+                                final DiffEntry.ChangeType changeType) {
+        return new Page(name, markdown, hash, timestamp, changeType);
     }
 
     @Override

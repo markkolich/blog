@@ -1,7 +1,6 @@
 package com.kolich.blog.mappers;
 
 import com.google.common.base.Charsets;
-import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownDrivenContent;
 import com.kolich.blog.mappers.handlers.FileNotFoundExceptionHandler;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
@@ -16,10 +15,8 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.Path;
 
 import static com.google.common.net.MediaType.HTML_UTF_8;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
@@ -36,13 +33,13 @@ public final class MarkdownDrivenContentResponseMapper
     public final void render(final AsyncContext context,
                              final HttpServletResponse response,
                              @Nonnull final MarkdownDrivenContent md) throws Exception {
-        try(final InputStream is = new FileInputStream(md.getMarkdown())) {
+        try(final InputStream is = new FileInputStream(md.getFile())) {
             final String html = new PegDownProcessor(Extensions.ALL)
                 .markdownToHtml(IOUtils.toString(is, Charsets.UTF_8));
             renderMarkdown(response, html);
         } catch(Exception e) {
             logger__.warn("Failed to load/render content for: " +
-                md.getMarkdown().getCanonicalPath(), e);
+                md.getFile().getCanonicalPath(), e);
             new FileNotFoundExceptionHandler().render(context, response);
         }
     }
