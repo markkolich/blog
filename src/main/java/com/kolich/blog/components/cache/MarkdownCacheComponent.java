@@ -1,4 +1,4 @@
-package com.kolich.blog.components.util;
+package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
 import com.gitblit.utils.JGitUtils;
@@ -14,6 +14,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.FileSystems;
 import java.util.Map;
 

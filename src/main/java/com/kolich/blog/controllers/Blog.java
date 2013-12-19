@@ -1,7 +1,7 @@
 package com.kolich.blog.controllers;
 
-import com.kolich.blog.components.EntryCache;
-import com.kolich.blog.components.PageCache;
+import com.kolich.blog.components.cache.EntryCache;
+import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Page;
 import com.kolich.curacao.annotations.Controller;

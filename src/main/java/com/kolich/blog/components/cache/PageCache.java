@@ -1,7 +1,8 @@
-package com.kolich.blog.components;
+package com.kolich.blog.components.cache;
 
-import com.kolich.blog.components.util.MarkdownCacheComponent;
+import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Page;
+import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -35,7 +36,12 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
 
     @Nullable
     public final Page getPage(final String name) {
-        return get(name);
+        final Page p;
+        if((p = get(name)) == null) {
+            throw new ContentNotFoundException("Failed to load page for " +
+                "key: " + name);
+        }
+        return p;
     }
 
 }

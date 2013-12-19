@@ -2,7 +2,7 @@ package com.kolich.blog.mappers;
 
 import com.google.common.base.Charsets;
 import com.kolich.blog.entities.MarkdownDrivenContent;
-import com.kolich.blog.mappers.handlers.FileNotFoundExceptionHandler;
+import com.kolich.blog.mappers.handlers.ContentNotFoundExceptionHandler;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.mediatype.AbstractBinaryContentTypeCuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
@@ -40,7 +40,7 @@ public final class MarkdownDrivenContentResponseMapper
         } catch(Exception e) {
             logger__.warn("Failed to load/render content for: " +
                 md.getFile().getCanonicalPath(), e);
-            new FileNotFoundExceptionHandler().render(context, response);
+            new ContentNotFoundExceptionHandler().render(context, response);
         }
     }
 
