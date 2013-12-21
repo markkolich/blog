@@ -29,6 +29,8 @@ public final class ApplicationConfig {
         "clone.on-startup";
     private static final String CLONE_PATH_DIRECTORY_PROPERTY =
         "clone.path";
+    private static final String CLONE_PULL_INTERVAL =
+        "clone.pull-interval";
 
     // Private static's
 
@@ -153,6 +155,11 @@ public final class ApplicationConfig {
     public static final String getClonePath() {
         return getConfigInstance().getString(
             CLONE_PATH_DIRECTORY_PROPERTY);
+    }
+
+    public static final Long getGitPullInterval() {
+        return getConfigInstance().getMilliseconds(
+            CLONE_PULL_INTERVAL);
     }
 
 }
