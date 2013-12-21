@@ -22,11 +22,12 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
 
     @Override
     public final Page getEntity(final String name,
+                                final String title,
                                 final File markdown,
                                 final String hash,
                                 final Long timestamp,
                                 final DiffEntry.ChangeType changeType) {
-        return new Page(name, markdown, hash, timestamp, changeType);
+        return new Page(name, title, markdown, hash, timestamp, changeType);
     }
 
     @Override

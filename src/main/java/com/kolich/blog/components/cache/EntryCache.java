@@ -22,11 +22,12 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
 
     @Override
     public final Entry getEntity(final String name,
+                                 final String title,
                                  final File markdown,
                                  final String hash,
                                  final Long timestamp,
                                  final DiffEntry.ChangeType changeType) {
-        return new Entry(name, markdown, hash, timestamp, changeType);
+        return new Entry(name, title, markdown, hash, timestamp, changeType);
     }
 
     @Override

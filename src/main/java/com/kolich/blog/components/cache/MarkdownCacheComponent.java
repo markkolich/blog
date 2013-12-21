@@ -1,7 +1,6 @@
 package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
-import com.gitblit.utils.JGitUtils;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
@@ -14,10 +13,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import javax.servlet.ServletContext;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.nio.file.FileSystems;
 import java.util.Map;
 
+import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 
@@ -36,22 +35,23 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
     }
 
     @Override
-    public final void initialize(final ServletContext context) throws Exception {
+    public final synchronized void initialize(final ServletContext context)
+        throws Exception {
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
         final String pathToContent = FileSystems.getDefault().getPath(
             markdownRootDir__, getContentDirectory()).toString();
         for(final RevCommit commit : git.log().call()) {
             for(final PathModel.PathChangeModel change :
-                JGitUtils.getFilesInCommit(repo, commit)) {
-                final String hash = change.objectId, name = change.name;
+                getFilesInCommit(repo, commit)) {
+                final String hash = change.objectId, name = change.name,
+                    title = commit.getShortMessage();
                 final DiffEntry.ChangeType type = change.changeType;
                 final Long timestamp = commit.getCommitTime() * 1000L;
-                if(name.startsWith(pathToContent) &&
-                    type.equals(DiffEntry.ChangeType.ADD)) {
+                if(name.startsWith(pathToContent) && type.equals(DiffEntry.ChangeType.ADD)) {
                     final File markdown = new File(repo.getWorkTree(), name);
                     final String entityName = removeExtension(markdown.getName());
-                    cache_.put(entityName, getEntity(entityName,
+                    cache_.put(entityName, getEntity(entityName, title,
                         markdown, hash, timestamp, type));
                 }
             }
@@ -63,11 +63,16 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
         // Nothing, intentional.
     }
 
-    protected final T get(final String key) {
+    protected final synchronized T get(final String key) {
         return cache_.get(key);
     }
 
+    private final synchronized void update() {
+
+    }
+
     public abstract T getEntity(final String name,
+                                final String title,
                                 final File markdown,
                                 final String hash,
                                 final Long timestamp,
