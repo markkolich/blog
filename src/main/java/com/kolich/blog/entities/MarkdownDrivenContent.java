@@ -8,6 +8,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class MarkdownDrivenContent {
 
+    private static final String CLASS_SN =
+        MarkdownDrivenContent.class.getSimpleName();
+
     private final String name_;
     private final String title_;
     private final File file_;
@@ -51,6 +54,11 @@ public abstract class MarkdownDrivenContent {
 
     public final DiffEntry.ChangeType getChangeType() {
         return changeType_;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s(%s, %s, %s)", CLASS_SN, name_, title_, file_);
     }
 
 }

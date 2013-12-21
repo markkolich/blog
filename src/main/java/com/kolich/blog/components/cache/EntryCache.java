@@ -31,7 +31,7 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
     }
 
     @Override
-    public final String getContentDirectory() {
+    public final String getContentDirectoryName() {
         return ENTRIES_CONTENT_DIR_NAME;
     }
 

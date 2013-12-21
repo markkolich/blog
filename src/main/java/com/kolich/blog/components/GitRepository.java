@@ -59,11 +59,6 @@ public final class GitRepository implements CuracaoComponent {
             .readEnvironment()
             .build();
         git_ = new Git(repo_);
-        if(!isDevMode__) {
-            // Pull a fresh copy of the repo from the remote.  Yes, we may have
-            // just cloned it fresh, but this is what we do, bandwidth is cheap.
-            git_.pull().call();
-        }
         logger__.info("Successfully initialized Git repository: " + repo_);
     }
 
