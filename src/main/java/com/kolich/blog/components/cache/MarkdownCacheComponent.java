@@ -1,11 +1,12 @@
 package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
-import com.kolich.blog.entities.MarkdownDrivenContent;
+import com.kolich.blog.entities.MarkdownContentWithHeaderAndFooter;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -16,6 +17,8 @@ import org.slf4j.Logger;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +30,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
+public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeaderAndFooter>
     implements CuracaoComponent {
 
     private static final Logger logger__ =
@@ -37,8 +40,8 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
         ApplicationConfig.isDevMode();
     private static final String markdownRootDir__ =
         ApplicationConfig.getMarkdownRootDir();
-    private static final Long gitPullUpdateInterval__ =
-        ApplicationConfig.getGitPullInterval();
+    private static final Long gitUpdateInterval =
+        ApplicationConfig.getGitUpdateInterval();
 
     private final GitRepository git_;
     private final Map<String,T> cache_;
@@ -63,7 +66,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
         executor_.scheduleAtFixedRate(
             new CacheUpdater<>(this), // new updater
             0L,  // initial delay, start ~now~
-            gitPullUpdateInterval__, // repeat every
+            gitUpdateInterval, // repeat every
             TimeUnit.MILLISECONDS); // units
     }
 
@@ -80,34 +83,49 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
         }
     }
 
+    protected final Map<String,T> getAll() {
+        synchronized(cache_) {
+            return ImmutableMap.copyOf(cache_);
+        }
+    }
+
     private final void updateCache() throws Exception {
         final Map<String,T> newCache = Maps.newLinkedHashMap();
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
         // Only git pull when we're not in development mode.
         if(!isDevMode__) {
-            // Git pull to update the local clone copy on disk.
             git.pull().call();
         }
+        final String pathToHeader = FileSystems.getDefault().getPath(
+            markdownRootDir__, "templates", "header.html").toString();
+        final String pathToFooter = FileSystems.getDefault().getPath(
+            markdownRootDir__, "templates", "footer.html").toString();
         // Rebuild the new cache using the "updated" content, if any.
         final String pathToContent = FileSystems.getDefault().getPath(
             markdownRootDir__, getContentDirectoryName()).toString();
         for(final RevCommit commit : git.log().call()) {
-            for(final PathModel.PathChangeModel change : getFilesInCommit(repo, commit)) {
+            final List<PathModel.PathChangeModel> files =
+                getFilesInCommit(repo, commit);
+            for(final PathModel.PathChangeModel change : files) {
                 final String hash = change.objectId,
                     name = change.name,
                     title = commit.getShortMessage();
+                final Date date = new Date(commit.getCommitTime() * 1000L);
                 final DiffEntry.ChangeType type = change.changeType;
-                final Long timestamp = commit.getCommitTime() * 1000L;
                 if(name.startsWith(pathToContent) && type.equals(DiffEntry.ChangeType.ADD)) {
+                    final File header = new File(repo.getWorkTree(), pathToHeader);
+                    final File footer = new File(repo.getWorkTree(), pathToFooter);
                     final File markdown = new File(repo.getWorkTree(), name);
-                    final String entityName = removeExtension(markdown.getName());
-                    final T entity =  getEntity(entityName, title, markdown,
-                        hash, timestamp, type);
-                    if(logger__.isDebugEnabled()) {
-                        logger__.debug("Built entity: " + entity);
+                    // Only bother adding the markdown content to the map if
+                    // the file exists on disk.  Git history may show that
+                    // content was added with a given commit, but
+                    if(markdown.exists()) {
+                        final String entityName = removeExtension(markdown.getName());
+                        final T entity = getEntity(entityName, title, hash,
+                            date, markdown, header, footer);
+                        newCache.put(entityName, entity);
                     }
-                    newCache.put(entityName, entity);
                 }
             }
         }
@@ -123,14 +141,15 @@ public abstract class MarkdownCacheComponent<T extends MarkdownDrivenContent>
 
     public abstract T getEntity(final String name,
                                 final String title,
-                                final File markdown,
                                 final String hash,
-                                final Long timestamp,
-                                final DiffEntry.ChangeType changeType);
+                                final Date date,
+                                final File content,
+                                final File header,
+                                final File footer);
 
     public abstract String getContentDirectoryName();
 
-    private static class CacheUpdater<S extends MarkdownDrivenContent>
+    private static class CacheUpdater<S extends MarkdownContentWithHeaderAndFooter>
         implements Runnable {
 
         private final AtomicBoolean lock_;

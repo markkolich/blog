@@ -6,6 +6,12 @@ Oh hai first post ever.
 
 Does this work?
 
+@{hash}
+
+@{title}
+
+@{date}
+
 ### Code
 
 Here's some scala code:

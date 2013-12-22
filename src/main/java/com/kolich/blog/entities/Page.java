@@ -1,18 +1,19 @@
 package com.kolich.blog.entities;
 
-import org.eclipse.jgit.diff.DiffEntry;
-
 import java.io.File;
+import java.util.Date;
 
-public final class Page extends MarkdownDrivenContent {
+public final class Page extends MarkdownContentWithHeaderAndFooter {
 
     public Page(final String name,
                 final String title,
-                final File markdown,
                 final String hash,
-                final Long timestamp,
-                final DiffEntry.ChangeType changeType) {
-        super(name, title, markdown, hash, timestamp, changeType);
+                final Date date,
+                final File content,
+                final File header,
+                final File footer) {
+        super(ContentType.PAGE, name, title, hash, date, content,
+            header, footer);
     }
 
 }

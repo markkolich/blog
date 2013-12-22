@@ -5,10 +5,10 @@ import com.kolich.blog.entities.Page;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
-import org.eclipse.jgit.diff.DiffEntry;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.util.Date;
 
 @Component
 public final class PageCache extends MarkdownCacheComponent<Page> {
@@ -23,11 +23,12 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
     @Override
     public final Page getEntity(final String name,
                                 final String title,
-                                final File markdown,
                                 final String hash,
-                                final Long timestamp,
-                                final DiffEntry.ChangeType changeType) {
-        return new Page(name, title, markdown, hash, timestamp, changeType);
+                                final Date date,
+                                final File content,
+                                final File header,
+                                final File footer) {
+        return new Page(name, title, hash, date, content, header, footer);
     }
 
     @Override

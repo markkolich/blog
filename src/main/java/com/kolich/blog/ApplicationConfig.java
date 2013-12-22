@@ -21,7 +21,7 @@ public final class ApplicationConfig {
     private static final String DEV_MODE_PROPERTY =
         "dev-mode";
     private static final String MARKDOWN_ROOT =
-        "markdown-root";
+        "markdown.root";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -29,8 +29,8 @@ public final class ApplicationConfig {
         "clone.on-startup";
     private static final String CLONE_PATH_DIRECTORY_PROPERTY =
         "clone.path";
-    private static final String CLONE_PULL_INTERVAL =
-        "clone.pull-interval";
+    private static final String GIT_UPDATE_REPO_INTERVAL =
+        "clone.update-interval";
 
     // Private static's
 
@@ -119,7 +119,7 @@ public final class ApplicationConfig {
                 // No valid external config file found, return null.
                 null;
         } catch (Exception e) {
-            // Usually get here when the provided blog.conf override file
+            // Usually getByName here when the provided blog.conf override file
             // is malformed or something went wrong while loading it.
             logger__.warn("Failed to parse override " +
                 BLOG_EXTERNAL_CONFIG_FILENAME + " configuration file.", e);
@@ -157,9 +157,9 @@ public final class ApplicationConfig {
             CLONE_PATH_DIRECTORY_PROPERTY);
     }
 
-    public static final Long getGitPullInterval() {
+    public static final Long getGitUpdateInterval() {
         return getConfigInstance().getMilliseconds(
-            CLONE_PULL_INTERVAL);
+            GIT_UPDATE_REPO_INTERVAL);
     }
 
 }

@@ -2,13 +2,14 @@ package com.kolich.blog.components.cache;
 
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.EntryList;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
-import org.eclipse.jgit.diff.DiffEntry;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.util.Date;
 
 @Component
 public final class EntryCache extends MarkdownCacheComponent<Entry> {
@@ -23,11 +24,12 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
     @Override
     public final Entry getEntity(final String name,
                                  final String title,
-                                 final File markdown,
                                  final String hash,
-                                 final Long timestamp,
-                                 final DiffEntry.ChangeType changeType) {
-        return new Entry(name, title, markdown, hash, timestamp, changeType);
+                                 final Date date,
+                                 final File content,
+                                 final File header,
+                                 final File footer) {
+        return new Entry(name, title, hash, date, content, header, footer);
     }
 
     @Override
@@ -43,6 +45,10 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
                 "key: " + name);
         }
         return e;
+    }
+
+    public final EntryList getEntryList() {
+        return new EntryList(getAll().values());
     }
 
 }

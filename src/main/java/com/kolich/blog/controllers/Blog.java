@@ -3,6 +3,7 @@ package com.kolich.blog.controllers;
 import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.EntryList;
 import com.kolich.blog.entities.Page;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
@@ -34,6 +35,11 @@ public final class Blog {
     @GET("/contact")
     public final Page contact() {
         return pages_.getPage("contact");
+    }
+
+    @GET("/blog.json")
+    public final EntryList getEntries() {
+        return entries_.getEntryList();
     }
 
     @GET("/{name}/**")
