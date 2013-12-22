@@ -61,6 +61,7 @@ object Dependencies {
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
+  private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
@@ -69,7 +70,8 @@ object Dependencies {
     //commonsLang, commonsCodec,
     logback, logbackClassic, slf4j,
     jGit, gitblit,
-    pegdown)
+    pegdown,
+    htmlCompressor)
 
 }
 
@@ -180,8 +182,9 @@ object PackageCss extends AntHelpers {
       IO.createDirectory(release)
       println("Compiling CSS...")
       val libs = getFileList(css / "lib", Seq(
-        "bootstrap.min.css",
-        "bootstrap-theme.min.css",
+        //"bootstrap.min.css",
+        //"bootstrap-theme.min.css",
+        "spacelab.css",
         "prettify-desert.css"))
       val sources = getFileList(css, Seq(
         "blog.css"))
@@ -235,7 +238,7 @@ object Blog extends Build {
       organization := aOrg,
       scalaVersion := "2.10.3",
       javacOptions ++= Seq(
-        "-Xlint", "-g"/*,
+        "-Xlint", "-Xlint:-path", "-g"/*,
         // Java "cross compiling" against Java 6. Note you need to provide the "rt"
         // and "jce" (Java crypto extension) JAR's and place them in a place where
         // 'javac' can pick them up as specified by the "-bootclasspath" compiler

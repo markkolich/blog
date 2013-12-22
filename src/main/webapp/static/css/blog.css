@@ -1,3 +1,10 @@
+.page-header {
+  margin-top: 10px;
+}
+
 pre.prettyprint {
   padding: 9.5px !important;
 }
+
+footer{margin:5em 0 30px 0;}footer li{float:left;margin-right:1.5em;margin-bottom:1.5em}
+footer p{clear:left;margin-bottom:0}

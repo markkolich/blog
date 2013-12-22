@@ -1,6 +1,7 @@
 package com.kolich.blog.mappers;
 
 import com.google.common.base.Charsets;
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.google.common.net.MediaType.HTML_UTF_8;
@@ -67,7 +69,7 @@ public final class MarkdownDrivenContentResponseMapper
             sb.append(fileToString(header_));
             sb.append(markdownToString(md.getContent()));
             sb.append(fileToString(footer_));
-            final String html = TemplateEngine.process(md, sb.toString());
+            final String html = compressHtml(TemplateEngine.process(md, sb.toString()));
             RenderingResponseTypeMapper.renderEntity(response,
                 new Utf8HtmlEntity(html));
         } catch (Exception e) {
@@ -90,6 +92,12 @@ public final class MarkdownDrivenContentResponseMapper
         }
     }
 
+    public static final String compressHtml(final String uncompressed) {
+        final HtmlCompressor compressor = new HtmlCompressor();
+        compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MAX);
+        return compressor.compress(uncompressed);
+    }
+
     private static final class TemplateEngine {
 
         private static final Pattern NAME = compile(quote("@{name}"));
@@ -98,9 +106,12 @@ public final class MarkdownDrivenContentResponseMapper
         private static final Pattern DATE = compile(quote("@{date}"));
 
         private abstract static class Razor {
-            public final Pattern p_;
+            private final Pattern p_;
             public Razor(final Pattern p) {
                 p_ = p;
+            }
+            public Pattern getPattern() {
+                return p_;
             }
             public abstract String getReplacement(final MarkdownContent md);
         }
@@ -136,8 +147,8 @@ public final class MarkdownDrivenContentResponseMapper
                                            final String input) {
             String result = input;
             for(final Razor razor : razors__) {
-                result = razor.p_.matcher(result).replaceAll(
-                    razor.getReplacement(md));
+                final Matcher m = razor.getPattern().matcher(result);
+                result = m.replaceAll(razor.getReplacement(md));
             }
             return result;
         }
