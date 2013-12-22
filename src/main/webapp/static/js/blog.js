@@ -1,3 +1,0 @@
-$(function() {
-    $('pre').addClass('prettyprint');
-});

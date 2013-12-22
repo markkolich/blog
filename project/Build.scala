@@ -126,7 +126,8 @@ object PackageJs extends AntHelpers {
         "bootstrap.min.js",
         "prettify.js"))
       val sources = getFileList(js, Seq(
-        "blog.js"))
+        "kolich.js",
+        "kolich.blog.js"))
       println("Compiling JavaScript...")
       // Concat libs together
       concatenate(build / "blog.lib.js", libs)
