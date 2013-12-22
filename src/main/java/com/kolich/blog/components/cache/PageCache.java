@@ -25,10 +25,8 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
                                 final String title,
                                 final String hash,
                                 final Date date,
-                                final File content,
-                                final File header,
-                                final File footer) {
-        return new Page(name, title, hash, date, content, header, footer);
+                                final File content) {
+        return new Page(name, title, hash, date, content);
     }
 
     @Override

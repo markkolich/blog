@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
-import com.kolich.blog.entities.MarkdownContentWithHeaderAndFooter;
+import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -30,7 +30,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeaderAndFooter>
+public abstract class MarkdownCacheComponent<T extends MarkdownContent>
     implements CuracaoComponent {
 
     private static final Logger logger__ =
@@ -97,10 +97,6 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeader
         if(!isDevMode__) {
             git.pull().call();
         }
-        final String pathToHeader = FileSystems.getDefault().getPath(
-            markdownRootDir__, "templates", "header.html").toString();
-        final String pathToFooter = FileSystems.getDefault().getPath(
-            markdownRootDir__, "templates", "footer.html").toString();
         // Rebuild the new cache using the "updated" content, if any.
         final String pathToContent = FileSystems.getDefault().getPath(
             markdownRootDir__, getContentDirectoryName()).toString();
@@ -114,8 +110,6 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeader
                 final Date date = new Date(commit.getCommitTime() * 1000L);
                 final DiffEntry.ChangeType type = change.changeType;
                 if(name.startsWith(pathToContent) && type.equals(DiffEntry.ChangeType.ADD)) {
-                    final File header = new File(repo.getWorkTree(), pathToHeader);
-                    final File footer = new File(repo.getWorkTree(), pathToFooter);
                     final File markdown = new File(repo.getWorkTree(), name);
                     // Only bother adding the markdown content to the map if
                     // the file exists on disk.  Git history may show that
@@ -123,7 +117,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeader
                     if(markdown.exists()) {
                         final String entityName = removeExtension(markdown.getName());
                         final T entity = getEntity(entityName, title, hash,
-                            date, markdown, header, footer);
+                            date, markdown);
                         newCache.put(entityName, entity);
                     }
                 }
@@ -143,13 +137,11 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContentWithHeader
                                 final String title,
                                 final String hash,
                                 final Date date,
-                                final File content,
-                                final File header,
-                                final File footer);
+                                final File content);
 
     public abstract String getContentDirectoryName();
 
-    private static class CacheUpdater<S extends MarkdownContentWithHeaderAndFooter>
+    private static class CacheUpdater<S extends MarkdownContent>
         implements Runnable {
 
         private final AtomicBoolean lock_;

@@ -82,6 +82,128 @@ object Resolvers {
 
 }
 
+object PackageJs {
+
+  import org.apache.tools.ant.types._
+  import org.apache.tools.ant.taskdefs._
+
+  import com.google.javascript.jscomp.ant._
+
+  private lazy val packageJs = TaskKey[Unit](
+    "package:js",
+    "Compile and package application JavaScript with Google's Closure Compiler."
+  )
+
+  val settings = Seq(
+    packageJs <<= baseDirectory(new File(_, "src/main/webapp/static")) map { base =>
+      val js = base / "js"
+      val build = js / "build"
+      val release = base / "release"
+      val sources = getFileList(js, Seq(
+        "json2.js",
+        "jquery-1.10.2.min.js",
+        "bootstrap.min.js",
+        "blog.js"))
+      println("Compiling JavaScript...")
+      // Concatenate the library related JavaScript files together.
+      // Compile using the "simple" compilation level.
+      concatenate(build / "blog.js", sources)
+      closureCompile(release / "blog.js", getFileList(build, "blog.js"))
+    },
+    compile in Compile <<= (compile in Compile) dependsOn (packageJs),
+    packageWar in Compile <<= (packageWar in Compile) dependsOn (packageJs)
+  )
+
+  private def closureCompile(output: File, sources: FileList,
+                             externs: Option[FileList] = None, compilationLevel: String = "whitespace") {
+    val compile = new CompileTask()
+    compile.setCompilationLevel(compilationLevel) // Could be "simple" or "advanced"
+    compile.setWarning("quiet") // Could be "verbose"
+    compile.setDebug(false)
+    compile.setOutput(output)
+    compile.addSources(sources)
+    compile.setForceRecompile(false) // False is the default, but here for doc purposes
+    if (externs != None) {
+      compile.addExterns(externs.get)
+    }
+    compile.execute
+  }
+  private def getFileList(dir: File, files: Seq[String]): FileList = {
+    val list = new FileList()
+    list.setDir(dir)
+    list.setFiles(files.mkString(", "))
+    list
+  }
+  private def getFileList(dir: File, file: String): FileList = {
+    getFileList(dir, Seq(file))
+  }
+  private def concatenate(dest: File, fileList: FileList) {
+    val concat = new Concat()
+    concat.setDestfile(dest)
+    concat.addFilelist(fileList)
+    concat.execute
+  }
+
+}
+
+object PackageCss {
+
+  import java.io._
+
+  import org.apache.tools.ant.types._
+  import org.apache.tools.ant.taskdefs._
+
+  import com.yahoo.platform.yui.compressor._
+
+  private lazy val packageCss = TaskKey[Unit](
+    "package:css",
+    "Minify CSS using YUI's CSS compressor."
+  )
+
+  val settings = Seq(
+    packageCss <<= baseDirectory(new File(_, "src/main/webapp/static")) map { base =>
+      val css = base / "css"
+      val build = css / "build"
+      val release = base / "release"
+      // Create the "release" directory if it does not exist (YUI does not
+      // create this destination directory for us... it has to exist before
+      // we attempt to use it).
+      IO.createDirectory(release)
+      println("Compiling CSS...")
+      val sources = getFileList(css, Seq(
+        "bootstrap.min.css",
+        "blog.css"))
+      concatenate(build / "blog.css", sources)
+      // Setup the input reader and the output writer.
+      var reader:Reader = null
+      var writer:Writer = null
+      try {
+        reader = new InputStreamReader(new FileInputStream(build / "blog.css"), "UTF-8")
+        writer = new OutputStreamWriter(new FileOutputStream(release / "blog.css"), "UTF-8")
+        new CssCompressor(reader).compress(writer, -1)
+      } finally {
+        if(reader != null) { reader.close }
+        if(writer != null) { writer.close }
+      }
+    },
+    compile in Compile <<= (compile in Compile) dependsOn (packageCss),
+    packageWar in Compile <<= (packageWar in Compile) dependsOn (packageCss)
+  )
+
+  private def getFileList(dir: File, files: Seq[String]): FileList = {
+    val list = new FileList()
+    list.setDir(dir)
+    list.setFiles(files.mkString(", "))
+    list
+  }
+  private def concatenate(dest: File, fileList: FileList) {
+    val concat = new Concat()
+    concat.setDestfile(dest)
+    concat.addFilelist(fileList)
+    concat.execute
+  }
+}
+
 object Blog extends Build {
 
   import Dependencies._
@@ -166,7 +288,8 @@ object Blog extends Build {
       // xsbt-web-plugin.
       artifactPath in (Compile, packageWar) ~= { defaultPath =>
         file("dist") / defaultPath.getName
-      })
+      }) ++
+      PackageJs.settings ++ PackageCss.settings
   )
 
 }

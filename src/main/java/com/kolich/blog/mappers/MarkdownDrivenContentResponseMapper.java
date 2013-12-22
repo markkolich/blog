@@ -1,11 +1,13 @@
 package com.kolich.blog.mappers;
 
 import com.google.common.base.Charsets;
+import com.kolich.blog.ApplicationConfig;
+import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
-import com.kolich.blog.entities.MarkdownContentWithHeaderAndFooter;
 import com.kolich.blog.entities.MarkdownFile;
 import com.kolich.blog.exceptions.ContentRenderException;
 import com.kolich.blog.mappers.handlers.ContentNotFoundExceptionHandler;
+import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.mediatype.AbstractBinaryContentTypeCuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -31,22 +34,39 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
 import static org.slf4j.LoggerFactory.getLogger;
 
-@ControllerReturnTypeMapper(MarkdownContentWithHeaderAndFooter.class)
+@ControllerReturnTypeMapper(MarkdownContent.class)
 public final class MarkdownDrivenContentResponseMapper
-    extends RenderingResponseTypeMapper<MarkdownContentWithHeaderAndFooter> {
+    extends RenderingResponseTypeMapper<MarkdownContent> {
 
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
 
+    private final File header_;
+    private final File footer_;
+
+    private static final String markdownRootDir__ =
+        ApplicationConfig.getMarkdownRootDir();
+    private static final String pathToHeader = FileSystems.getDefault()
+        .getPath(markdownRootDir__, "templates", "header.html").toString();
+    private static final String pathToFooter = FileSystems.getDefault()
+        .getPath(markdownRootDir__, "templates", "footer.html").toString();
+
+    @Injectable
+    public MarkdownDrivenContentResponseMapper(final GitRepository git) {
+        final File gitWorkTree = git.getRepo().getWorkTree();
+        header_ = new File(gitWorkTree, pathToHeader);
+        footer_ = new File(gitWorkTree, pathToFooter);
+    }
+
     @Override
     public final void render(final AsyncContext context,
                              final HttpServletResponse response,
-                             @Nonnull final MarkdownContentWithHeaderAndFooter md) throws Exception {
+                             @Nonnull final MarkdownContent md) throws Exception {
         try {
             final StringBuilder sb = new StringBuilder();
-            sb.append(fileToString(md.getHeader()));
+            sb.append(fileToString(header_));
             sb.append(markdownToString(md.getContent()));
-            sb.append(fileToString(md.getFooter()));
+            sb.append(fileToString(footer_));
             final String html = TemplateEngine.process(md, sb.toString());
             RenderingResponseTypeMapper.renderEntity(response,
                 new Utf8HtmlEntity(html));
