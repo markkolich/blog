@@ -1,3 +1,3 @@
 $(function() {
-    window.prettyPrint && prettyPrint()
+    $('pre').addClass('prettyprint');
 });

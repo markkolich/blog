@@ -20,7 +20,16 @@ Here's some scala code:
 private[this] val x = "foobar"
 ```
 
+Here's some JavaScript:
+
+```javascript
+// Comments
+(function(w) {
+  var x = "baz";
+  w.title = x;
+}(window));
+```
+
 Looks syntactically valid.
 
 Download the bits <a href="#">here</a>.
-

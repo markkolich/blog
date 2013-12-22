@@ -82,11 +82,32 @@ object Resolvers {
 
 }
 
-object PackageJs {
+sealed trait AntHelpers {
 
   import org.apache.tools.ant.types._
   import org.apache.tools.ant.taskdefs._
 
+  def getFileList(dir: File, files: Seq[String]): FileList = {
+    val list = new FileList()
+    list.setDir(dir)
+    list.setFiles(files.mkString(", "))
+    list
+  }
+  def getFileList(dir: File, file: String): FileList = {
+    getFileList(dir, Seq(file))
+  }
+  def concatenate(dest: File, fileList: FileList) {
+    val concat = new Concat()
+    concat.setDestfile(dest)
+    concat.addFilelist(fileList)
+    concat.execute
+  }
+
+}
+
+object PackageJs extends AntHelpers {
+
+  import org.apache.tools.ant.types._
   import com.google.javascript.jscomp.ant._
 
   private lazy val packageJs = TaskKey[Unit](
@@ -99,23 +120,30 @@ object PackageJs {
       val js = base / "js"
       val build = js / "build"
       val release = base / "release"
-      val sources = getFileList(js, Seq(
+      val libs = getFileList(js / "lib", Seq(
         "json2.js",
         "jquery-1.10.2.min.js",
         "bootstrap.min.js",
+        "prettify.js"))
+      val sources = getFileList(js, Seq(
         "blog.js"))
       println("Compiling JavaScript...")
-      // Concatenate the library related JavaScript files together.
-      // Compile using the "simple" compilation level.
+      // Concat libs together
+      concatenate(build / "blog.lib.js", libs)
+      // Concat sources together
       concatenate(build / "blog.js", sources)
-      closureCompile(release / "blog.js", getFileList(build, "blog.js"))
+      // Actual closer compiler complation
+      closureCompile(release / "blog.js", getFileList(build, Seq("blog.lib.js", "blog.js")))
+      IO.delete(build) // recursive
     },
     compile in Compile <<= (compile in Compile) dependsOn (packageJs),
     packageWar in Compile <<= (packageWar in Compile) dependsOn (packageJs)
   )
 
-  private def closureCompile(output: File, sources: FileList,
-                             externs: Option[FileList] = None, compilationLevel: String = "whitespace") {
+  private def closureCompile(output: File,
+                             sources: FileList,
+                             externs: Option[FileList] = None,
+                             compilationLevel: String = "whitespace") {
     val compile = new CompileTask()
     compile.setCompilationLevel(compilationLevel) // Could be "simple" or "advanced"
     compile.setWarning("quiet") // Could be "verbose"
@@ -128,30 +156,10 @@ object PackageJs {
     }
     compile.execute
   }
-  private def getFileList(dir: File, files: Seq[String]): FileList = {
-    val list = new FileList()
-    list.setDir(dir)
-    list.setFiles(files.mkString(", "))
-    list
-  }
-  private def getFileList(dir: File, file: String): FileList = {
-    getFileList(dir, Seq(file))
-  }
-  private def concatenate(dest: File, fileList: FileList) {
-    val concat = new Concat()
-    concat.setDestfile(dest)
-    concat.addFilelist(fileList)
-    concat.execute
-  }
 
 }
 
-object PackageCss {
-
-  import java.io._
-
-  import org.apache.tools.ant.types._
-  import org.apache.tools.ant.taskdefs._
+object PackageCss extends AntHelpers {
 
   import com.yahoo.platform.yui.compressor._
 
@@ -170,38 +178,43 @@ object PackageCss {
       // we attempt to use it).
       IO.createDirectory(release)
       println("Compiling CSS...")
-      val sources = getFileList(css, Seq(
+      val libs = getFileList(css / "lib", Seq(
         "bootstrap.min.css",
+        "bootstrap-theme.min.css",
+        "prettify-desert.css"))
+      val sources = getFileList(css, Seq(
         "blog.css"))
-      concatenate(build / "blog.css", sources)
-      // Setup the input reader and the output writer.
-      var reader:Reader = null
-      var writer:Writer = null
-      try {
-        reader = new InputStreamReader(new FileInputStream(build / "blog.css"), "UTF-8")
-        writer = new OutputStreamWriter(new FileOutputStream(release / "blog.css"), "UTF-8")
-        new CssCompressor(reader).compress(writer, -1)
-      } finally {
-        if(reader != null) { reader.close }
-        if(writer != null) { writer.close }
-      }
+      // Concat libs together
+      concatenate(build / "blog.lib.css", libs)
+      // Concat sources together
+      concatenate(build / "blog.src.css", sources)
+      // Final file for "compilation"
+      concatenate(build / "blog.css", getFileList(build,
+        Seq("blog.lib.css", "blog.src.css")))
+      // Actually do the compression
+      compress(build / "blog.css", release / "blog.css")
+      IO.delete(build) // recursive
     },
     compile in Compile <<= (compile in Compile) dependsOn (packageCss),
     packageWar in Compile <<= (packageWar in Compile) dependsOn (packageCss)
   )
 
-  private def getFileList(dir: File, files: Seq[String]): FileList = {
-    val list = new FileList()
-    list.setDir(dir)
-    list.setFiles(files.mkString(", "))
-    list
+  private def compress(input: File,
+                       output: File) {
+    import java.io._
+    // Setup the input reader and the output writer.
+    var reader:Reader = null
+    var writer:Writer = null
+    try {
+      reader = new InputStreamReader(new FileInputStream(input), "UTF-8")
+      writer = new OutputStreamWriter(new FileOutputStream(output), "UTF-8")
+      new CssCompressor(reader).compress(writer, -1)
+    } finally {
+      if(reader != null) { reader.close }
+      if(writer != null) { writer.close }
+    }
   }
-  private def concatenate(dest: File, fileList: FileList) {
-    val concat = new Concat()
-    concat.setDestfile(dest)
-    concat.addFilelist(fileList)
-    concat.execute
-  }
+
 }
 
 object Blog extends Build {
