@@ -28,6 +28,8 @@ public final class GitRepository implements CuracaoComponent {
         ApplicationConfig.getClonePath();
     private static final Boolean shouldCloneOnStartup__ =
         ApplicationConfig.shouldCloneOnStartup();
+    private static final String markdownRootDir__ =
+        ApplicationConfig.getMarkdownRootDir();
 
     private static final String userDir__ = System.getProperty("user.dir");
 
@@ -96,6 +98,16 @@ public final class GitRepository implements CuracaoComponent {
     @Nonnull
     public final Repository getRepo() {
         return repo_;
+    }
+
+    @Nonnull
+    public final File getMarkdownRoot() {
+        return new File(repo_.getWorkTree(), markdownRootDir__);
+    }
+
+    @Nonnull
+    public final File getFileRelativeToMarkdownRoot(final String child) {
+        return new File(getMarkdownRoot(), child);
     }
 
 }

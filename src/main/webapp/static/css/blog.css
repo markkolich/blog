@@ -2,6 +2,28 @@
   margin-top: 10px;
 }
 
+div.headerpic {
+  float: left;
+  margin: 15px 20px 0 0;
+}
+
+div.headerpic img {
+  border: 1px solid #666;
+}
+
+h2.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+p.hash {
+  margin-bottom: 0;
+}
+
+p.date {
+  margin-bottom: 20px;
+}
+
 pre.prettyprint {
   padding: 9.5px !important;
 }

@@ -1,18 +1,19 @@
 package com.kolich.blog.mappers;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.Maps;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
-import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.MarkdownFile;
-import com.kolich.blog.exceptions.ContentRenderException;
 import com.kolich.blog.mappers.handlers.ContentNotFoundExceptionHandler;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
-import com.kolich.curacao.entities.mediatype.AbstractBinaryContentTypeCuracaoEntity;
+import com.kolich.curacao.entities.AppendableCuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
-import org.apache.commons.io.IOUtils;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import org.apache.commons.codec.binary.StringUtils;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.slf4j.Logger;
@@ -20,20 +21,13 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
+import java.util.Map;
 
 import static com.google.common.net.MediaType.HTML_UTF_8;
-import static java.util.regex.Pattern.compile;
-import static java.util.regex.Pattern.quote;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static org.apache.commons.codec.binary.StringUtils.getBytesUtf8;
+import static org.apache.commons.io.FileUtils.readFileToString;
+import static org.apache.commons.io.IOUtils.copyLarge;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(MarkdownContent.class)
@@ -43,21 +37,14 @@ public final class MarkdownDrivenContentResponseMapper
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
 
-    private final File header_;
-    private final File footer_;
-
-    private static final String markdownRootDir__ =
-        ApplicationConfig.getMarkdownRootDir();
-    private static final String pathToHeader = FileSystems.getDefault()
-        .getPath(markdownRootDir__, "templates", "header.html").toString();
-    private static final String pathToFooter = FileSystems.getDefault()
-        .getPath(markdownRootDir__, "templates", "footer.html").toString();
+    private final Configuration config_;
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final GitRepository git) {
-        final File gitWorkTree = git.getRepo().getWorkTree();
-        header_ = new File(gitWorkTree, pathToHeader);
-        footer_ = new File(gitWorkTree, pathToFooter);
+    public MarkdownDrivenContentResponseMapper(final GitRepository git) throws Exception {
+        final File templateRoot = git.getFileRelativeToMarkdownRoot("templates");
+        config_ = new Configuration();
+        config_.setDirectoryForTemplateLoading(templateRoot);
+        config_.setDefaultEncoding(Charsets.UTF_8.name());
     }
 
     @Override
@@ -65,101 +52,77 @@ public final class MarkdownDrivenContentResponseMapper
                              final HttpServletResponse response,
                              @Nonnull final MarkdownContent md) throws Exception {
         try {
-            final StringBuilder sb = new StringBuilder();
-            sb.append(fileToString(header_));
-            sb.append(markdownToString(md.getContent()));
-            sb.append(fileToString(footer_));
-            final String html = compressHtml(TemplateEngine.process(md, sb.toString()));
-            RenderingResponseTypeMapper.renderEntity(response,
-                new Utf8HtmlEntity(html));
+            final Template t = config_.getTemplate(md.getTemplateName());
+            try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
+                final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
+                t.process(markdownContentToDataMap(md), w);
+                RenderingResponseTypeMapper.renderEntity(response,
+                    new Utf8CompressedHtmlEntity(os));
+            }
         } catch (Exception e) {
             logger__.debug("Content rendering exception: " + md, e);
             new ContentNotFoundExceptionHandler().render(context, response);
         }
     }
 
+    private static final Map<String,Object> markdownContentToDataMap(
+        final MarkdownContent md) throws Exception {
+        final Map<String,Object> data = Maps.newLinkedHashMap();
+        data.put("name", md.getName());
+        data.put("title", md.getTitle());
+        data.put("hash", md.getHash());
+        data.put("date", md.getDateFormatted());
+        data.put("content", markdownToString(md.getContent()));
+        return data;
+    }
+
     public static final String markdownToString(final MarkdownFile mdf)
         throws Exception {
         final PegDownProcessor p = new PegDownProcessor(Extensions.ALL);
-        return p.markdownToHtml(fileToString(mdf.getFile()));
+        return p.markdownToHtml(readFileToString(mdf.getFile(), Charsets.UTF_8));
     }
 
-    public static final String fileToString(final File file) {
-        try(final InputStream is = new FileInputStream(file)) {
-            return IOUtils.toString(is, Charsets.UTF_8);
-        } catch (Exception e) {
-            throw new ContentRenderException("Failed to read file: " + file, e);
-        }
-    }
-
-    public static final String compressHtml(final String uncompressed) {
+    private static final String compressHtml(final String uncompressed) {
         final HtmlCompressor compressor = new HtmlCompressor();
         compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MAX);
         return compressor.compress(uncompressed);
     }
 
-    private static final class TemplateEngine {
+    private static final class Utf8CompressedHtmlEntity
+        extends AppendableCuracaoEntity {
 
-        private static final Pattern NAME = compile(quote("@{name}"));
-        private static final Pattern TITLE = compile(quote("@{title}"));
-        private static final Pattern HASH = compile(quote("@{hash}"));
-        private static final Pattern DATE = compile(quote("@{date}"));
+        private static final String HTML_UTF_8_STRING = HTML_UTF_8.toString();
 
-        private abstract static class Razor {
-            private final Pattern p_;
-            public Razor(final Pattern p) {
-                p_ = p;
-            }
-            public Pattern getPattern() {
-                return p_;
-            }
-            public abstract String getReplacement(final MarkdownContent md);
+        private final String html_;
+
+        public Utf8CompressedHtmlEntity(final String html) {
+            super();
+            html_ = compressHtml(html);
         }
 
-        private static final List<Razor> razors__ = Arrays.asList(
-            new Razor(NAME) {
-                @Override
-                public String getReplacement(final MarkdownContent md) {
-                    return md.getName();
-                }
-            },
-            new Razor(TITLE) {
-                @Override
-                public String getReplacement(final MarkdownContent md) {
-                    return md.getTitle();
-                }
-            },
-            new Razor(HASH) {
-                @Override
-                public String getReplacement(final MarkdownContent md) {
-                    return md.getHash();
-                }
-            },
-            new Razor(DATE) {
-                @Override
-                public String getReplacement(final MarkdownContent md) {
-                    return md.getDateFormatted();
-                }
-            }
-        );
-
-        public static final String process(final MarkdownContent md,
-                                           final String input) {
-            String result = input;
-            for(final Razor razor : razors__) {
-                final Matcher m = razor.getPattern().matcher(result);
-                result = m.replaceAll(razor.getReplacement(md));
-            }
-            return result;
+        public Utf8CompressedHtmlEntity(final byte[] html) {
+            this(StringUtils.newStringUtf8(html));
         }
 
-    }
+        public Utf8CompressedHtmlEntity(final ByteArrayOutputStream html) {
+            this(html.toByteArray());
+        }
 
-    private static final class Utf8HtmlEntity
-        extends AbstractBinaryContentTypeCuracaoEntity {
+        @Override
+        public final int getStatus() {
+            return SC_OK;
+        }
 
-        public Utf8HtmlEntity(final String html) {
-            super(SC_OK, HTML_UTF_8, getBytesUtf8(html));
+        @Override
+        public final String getContentType() {
+            return HTML_UTF_8_STRING;
+        }
+
+        @Override
+        public final void toWriter(final Writer writer) throws Exception {
+            try(final Reader reader = new StringReader(html_)) {
+                copyLarge(reader, writer);
+            }
         }
 
     }

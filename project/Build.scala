@@ -61,6 +61,7 @@ object Dependencies {
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
+  private val freemarker = "org.freemarker" % "freemarker" % "2.3.20" % "compile"
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
   val deps = Seq(kolichCommon,
@@ -71,7 +72,7 @@ object Dependencies {
     logback, logbackClassic, slf4j,
     jGit, gitblit,
     pegdown,
-    htmlCompressor)
+    freemarker, htmlCompressor)
 
 }
 

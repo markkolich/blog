@@ -14,7 +14,7 @@ public abstract class MarkdownContent {
         MarkdownContent.class.getSimpleName();
 
     public static enum ContentType {
-        ENTRY, PAGE;
+        INDEX, ENTRY, PAGE;
     }
 
     @SerializedName("type")
@@ -80,5 +80,7 @@ public abstract class MarkdownContent {
     public final String toString() {
         return String.format("%s(%s, %s, %s)", CLASS_SN, name_, title_, content_);
     }
+
+    public abstract String getTemplateName();
 
 }

@@ -3,16 +3,16 @@ package com.kolich.blog.entities;
 import java.io.File;
 import java.util.Date;
 
-public final class Entry extends MarkdownContent {
+public final class Index extends MarkdownContent {
 
-    private static final String TEMPLATE_NAME = "entry.ftl";
+    private static final String TEMPLATE_NAME = "index.ftl";
 
-    public Entry(final String name,
+    public Index(final String name,
                  final String title,
                  final String hash,
                  final Date date,
                  final File content) {
-        super(ContentType.ENTRY, name, title, hash, date, content);
+        super(ContentType.INDEX, name, title, hash, date, content);
     }
 
     @Override
