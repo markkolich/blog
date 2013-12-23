@@ -1,5 +1,5 @@
 <#include "common/header.ftl">
 
-Oh hey I'm an page!
+${content}
 
 <#include "common/footer.ftl">
