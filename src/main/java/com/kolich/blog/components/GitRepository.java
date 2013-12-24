@@ -1,5 +1,7 @@
 package com.kolich.blog.components;
 
+import com.google.common.collect.Sets;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
@@ -12,7 +14,12 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.Set;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
@@ -30,11 +37,25 @@ public final class GitRepository implements CuracaoComponent {
         ApplicationConfig.shouldCloneOnStartup();
     private static final String markdownRootDir__ =
         ApplicationConfig.getMarkdownRootDir();
+    private static final Long gitUpdateInterval__ =
+        ApplicationConfig.getGitPullUpdateInterval();
 
     private static final String userDir__ = System.getProperty("user.dir");
 
     private Repository repo_;
     private Git git_;
+
+    private final ScheduledExecutorService executor_;
+    private final Set<PullListener> listeners_;
+
+    public GitRepository() {
+        executor_ = newSingleThreadScheduledExecutor(
+            new ThreadFactoryBuilder()
+                .setDaemon(true)
+                .setNameFormat("git-pull'er")
+                .build());
+        listeners_ = Sets.newLinkedHashSet();
+    }
 
     @Override
     public void initialize(final ServletContext context) throws Exception {
@@ -62,11 +83,21 @@ public final class GitRepository implements CuracaoComponent {
             .build();
         git_ = new Git(repo_);
         logger__.info("Successfully initialized Git repository: " + repo_);
+        // Schedule a new updater at a "fixed" interval that has no
+        // initial delay to fetch/pull in new content immediately.
+        executor_.scheduleAtFixedRate(
+            new GitPuller(this), // new puller
+            0L,  // initial delay, start ~now~
+            gitUpdateInterval__, // repeat every
+            TimeUnit.MILLISECONDS); // units
     }
 
     @Override
     public void destroy(final ServletContext context) throws Exception {
         repo_.close();
+        if(executor_ != null) {
+            executor_.shutdown();
+        }
     }
 
     private static final File getRepoDir(final ServletContext context) {
@@ -108,6 +139,54 @@ public final class GitRepository implements CuracaoComponent {
     @Nonnull
     public final File getFileRelativeToMarkdownRoot(final String child) {
         return new File(getMarkdownRoot(), child);
+    }
+
+    public final boolean registerListener(final PullListener listener) {
+        return listeners_.add(listener);
+    }
+    public final boolean unRegisterListener(final PullListener listener) {
+        return listeners_.remove(listener);
+    }
+
+    public interface PullListener {
+        public void onPull() throws Exception;
+    }
+
+    private class GitPuller implements Runnable {
+
+        private final AtomicBoolean lock_;
+
+        public GitPuller(final GitRepository gitRepo) {
+            lock_ = new AtomicBoolean(false);
+        }
+
+        @Override
+        public final void run() {
+            if(lock_.compareAndSet(false, true)) {
+                try {
+                    // Only attempt a "pull" if we're not in development mode.
+                    // We should not pull when in dev mode, because of pending
+                    // changes that are likely waiting to be committed may
+                    // unexpectedly interfere with the pull command (merge
+                    // conflicts, etc.).
+                    if(!isDevMode__) {
+                        git_.pull().call();
+                    }
+                    for(final PullListener listener : listeners_) {
+                        try {
+                            listener.onPull();
+                        } catch (Exception e) {
+                            logger__.warn("Pull listener failed to update.", e);
+                        }
+                    }
+                } catch (Exception e) {
+                    logger__.warn("Failed to Git 'pull'", e);
+                } finally {
+                    lock_.set(false);
+                }
+            }
+        }
+
     }
 
 }

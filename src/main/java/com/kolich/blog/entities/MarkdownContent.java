@@ -41,12 +41,12 @@ public abstract class MarkdownContent {
                            final String hash,
                            final Date date,
                            final File content) {
-        type_ = checkNotNull(type, "Content type cannot be null.");
-        name_ = checkNotNull(name, "Content name cannot be null.");
-        title_ = checkNotNull(title, "Content title cannot be null.");
-        hash_ = checkNotNull(hash, "Git commit hash cannot be null.");
-        date_ = checkNotNull(date, "Commit date/timestamp cannot be null.");
-        content_ = new MarkdownFile(content);
+        type_ = type;
+        name_ = name;
+        title_ = title;
+        hash_ = hash;
+        date_ = date;
+        content_ = (content != null) ? new MarkdownFile(content) : null;
     }
 
     public final ContentType getType() {
@@ -69,7 +69,7 @@ public abstract class MarkdownContent {
         return date_;
     }
     public final String getDateFormatted() {
-        return BlogContentDateFormat.getNewInstance().format(date_);
+        return (date_ != null) ? BlogContentDateFormat.getNewInstance().format(date_) : null;
     }
 
     public final MarkdownFile getContent() {

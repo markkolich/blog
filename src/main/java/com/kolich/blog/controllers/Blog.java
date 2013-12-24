@@ -1,7 +1,6 @@
 package com.kolich.blog.controllers;
 
 import com.kolich.blog.components.cache.EntryCache;
-import com.kolich.blog.components.cache.IndexCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.EntryList;
@@ -15,22 +14,18 @@ import com.kolich.curacao.annotations.parameters.Path;
 @Controller
 public final class Blog {
 
-    private final IndexCache indexes_;
     private final EntryCache entries_;
     private final PageCache pages_;
 
     @Injectable
-    public Blog(final IndexCache indexes,
-                final EntryCache entries,
-                final PageCache pages) {
-        indexes_ = indexes;
+    public Blog(final EntryCache entries, final PageCache pages) {
         entries_ = entries;
         pages_ = pages;
     }
 
     @GET("/")
     public final Index index() {
-        return indexes_.getIndex("home");
+        return new Index(entries_.getEntries());
     }
 
     @GET("/about")
@@ -45,7 +40,7 @@ public final class Blog {
 
     @GET("/blog.json")
     public final EntryList getEntries() {
-        return entries_.getEntryList();
+        return new EntryList(entries_.getEntries());
     }
 
     @GET("/{name}/**")

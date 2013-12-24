@@ -29,8 +29,8 @@ public final class ApplicationConfig {
         "clone.on-startup";
     private static final String CLONE_PATH_DIRECTORY_PROPERTY =
         "clone.path";
-    private static final String GIT_UPDATE_REPO_INTERVAL =
-        "clone.update-interval";
+    private static final String GIT_PULL_UPDATE_INTERVAL =
+        "clone.pull-update-interval";
 
     // Private static's
 
@@ -157,9 +157,9 @@ public final class ApplicationConfig {
             CLONE_PATH_DIRECTORY_PROPERTY);
     }
 
-    public static final Long getGitUpdateInterval() {
+    public static final Long getGitPullUpdateInterval() {
         return getConfigInstance().getMilliseconds(
-            GIT_UPDATE_REPO_INTERVAL);
+            GIT_PULL_UPDATE_INTERVAL);
     }
 
 }

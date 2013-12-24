@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.kolich.blog.components.GitRepository;
+import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.MarkdownFile;
 import com.kolich.blog.mappers.handlers.ContentNotFoundExceptionHandler;
@@ -55,24 +56,44 @@ public final class MarkdownDrivenContentResponseMapper
             final Template t = config_.getTemplate(md.getTemplateName());
             try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
                 final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
-                t.process(markdownContentToDataMap(md), w);
+                t.process(markdownContentToDataMap(md, t), w);
                 RenderingResponseTypeMapper.renderEntity(response,
                     new Utf8CompressedHtmlEntity(os));
             }
         } catch (Exception e) {
-            logger__.debug("Content rendering exception: " + md, e);
+            logger__.warn("Content rendering exception: " + md, e);
             new ContentNotFoundExceptionHandler().render(context, response);
         }
     }
 
     private static final Map<String,Object> markdownContentToDataMap(
-        final MarkdownContent md) throws Exception {
+        final MarkdownContent md, final Template t) throws Exception {
         final Map<String,Object> data = Maps.newLinkedHashMap();
-        data.put("name", md.getName());
-        data.put("title", md.getTitle());
-        data.put("hash", md.getHash());
-        data.put("date", md.getDateFormatted());
-        data.put("content", markdownToString(md.getContent()));
+        if(md instanceof Index) {
+            data.put("entries", ((Index)md).getEntries());
+        }
+        final String name;
+        if((name = md.getName()) != null) {
+            data.put("name", name);
+        }
+        final String title;
+        if((title = md.getTitle()) != null) {
+            data.put("title", title);
+        } else {
+            data.put("title", t.getCustomAttribute("title"));
+        }
+        final String hash;
+        if((hash = md.getHash()) != null) {
+            data.put("hash", hash);
+        }
+        final String date;
+        if((date = md.getDateFormatted()) != null) {
+            data.put("date", date);
+        }
+        final MarkdownFile content;
+        if((content = md.getContent()) != null) {
+            data.put("content", markdownToString(content));
+        }
         return data;
     }
 

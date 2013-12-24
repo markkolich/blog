@@ -31,72 +31,38 @@ import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class MarkdownCacheComponent<T extends MarkdownContent>
-    implements CuracaoComponent {
+    implements CuracaoComponent, GitRepository.PullListener {
 
     private static final Logger logger__ =
         getLogger(MarkdownCacheComponent.class);
 
-    private static final Boolean isDevMode__ =
-        ApplicationConfig.isDevMode();
     private static final String markdownRootDir__ =
         ApplicationConfig.getMarkdownRootDir();
-    private static final Long gitUpdateInterval =
-        ApplicationConfig.getGitUpdateInterval();
 
     private final GitRepository git_;
     private final Map<String,T> cache_;
 
-    private final ScheduledExecutorService executor_;
-
     public MarkdownCacheComponent(final GitRepository git) {
         git_ = checkNotNull(git, "Git repository object cannot be null.");
         cache_ = Maps.newLinkedHashMap();
-        executor_ = newSingleThreadScheduledExecutor(
-            new ThreadFactoryBuilder()
-                .setDaemon(true)
-                .setNameFormat("blog-git-updater")
-                .build());
     }
 
     @Override
     public final void initialize(final ServletContext context)
         throws Exception {
-        // Schedule a new updater at a "fixed" interval that has no
-        // initial delay to fetch/pull in new content immediately.
-        executor_.scheduleAtFixedRate(
-            new CacheUpdater<>(this), // new updater
-            0L,  // initial delay, start ~now~
-            gitUpdateInterval, // repeat every
-            TimeUnit.MILLISECONDS); // units
+        git_.registerListener(this);
     }
 
     @Override
     public final void destroy(final ServletContext context) throws Exception {
-        if(executor_ != null) {
-            executor_.shutdown();
-        }
+        git_.unRegisterListener(this);
     }
 
-    protected final T get(final String key) {
-        synchronized(cache_) {
-            return cache_.get(key);
-        }
-    }
-
-    protected final Map<String,T> getAll() {
-        synchronized(cache_) {
-            return ImmutableMap.copyOf(cache_);
-        }
-    }
-
-    private final void updateCache() throws Exception {
+    @Override
+    public final void onPull() throws Exception {
         final Map<String,T> newCache = Maps.newLinkedHashMap();
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
-        // Only git pull when we're not in development mode.
-        if(!isDevMode__) {
-            git.pull().call();
-        }
         // Rebuild the new cache using the "updated" content, if any.
         final String pathToContent = FileSystems.getDefault().getPath(
             markdownRootDir__, getContentDirectoryName()).toString();
@@ -133,6 +99,18 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         }
     }
 
+    protected final T get(final String key) {
+        synchronized(cache_) {
+            return cache_.get(key);
+        }
+    }
+
+    protected final Map<String,T> getAll() {
+        synchronized(cache_) {
+            return ImmutableMap.copyOf(cache_);
+        }
+    }
+
     public abstract T getEntity(final String name,
                                 final String title,
                                 final String hash,
@@ -140,33 +118,5 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                                 final File content);
 
     public abstract String getContentDirectoryName();
-
-    private static class CacheUpdater<S extends MarkdownContent>
-        implements Runnable {
-
-        private final AtomicBoolean lock_;
-        private final MarkdownCacheComponent<S> component_;
-
-        public CacheUpdater(MarkdownCacheComponent<S> component) {
-            lock_ = new AtomicBoolean(false);
-            component_ = component;
-        }
-
-        @Override
-        public final void run() {
-            if(lock_.compareAndSet(false, true)) {
-                try {
-                    logger__.debug("Starting cache update...");
-                    component_.updateCache();
-                } catch (Exception e) {
-                    logger__.warn("Failed to Git pull update " +
-                        "markdown cache.", e);
-                } finally {
-                    lock_.set(false);
-                }
-            }
-        }
-
-    }
 
 }

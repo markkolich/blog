@@ -1,5 +1,6 @@
 package com.kolich.blog.components.cache;
 
+import com.google.common.collect.Sets;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.EntryList;
@@ -10,6 +11,7 @@ import com.kolich.curacao.annotations.Injectable;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.util.Date;
+import java.util.Set;
 
 @Component
 public final class EntryCache extends MarkdownCacheComponent<Entry> {
@@ -45,8 +47,8 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
         return e;
     }
 
-    public final EntryList getEntryList() {
-        return new EntryList(getAll().values());
+    public final Set<Entry> getEntries() {
+        return Sets.newLinkedHashSet(getAll().values());
     }
 
 }

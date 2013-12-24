@@ -1,18 +1,20 @@
 package com.kolich.blog.entities;
 
-import java.io.File;
-import java.util.Date;
+import java.util.Set;
 
 public final class Index extends MarkdownContent {
 
     private static final String TEMPLATE_NAME = "index.ftl";
 
-    public Index(final String name,
-                 final String title,
-                 final String hash,
-                 final Date date,
-                 final File content) {
-        super(ContentType.INDEX, name, title, hash, date, content);
+    private final Set<Entry> entries_;
+
+    public Index(final Set<Entry> entries) {
+        super(ContentType.INDEX, null, null, null, null, null);
+        entries_ = entries;
+    }
+
+    public final Set<Entry> getEntries() {
+        return entries_;
     }
 
     @Override
