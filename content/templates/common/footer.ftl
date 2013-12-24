@@ -1,5 +1,18 @@
 
+    </div>
+    <div class="col-md-3" style="background-color: red;">
+        Right column.
+    </div>
+
+    <!-- /row -->
+    </div>
+
     <footer>
+
+        <div class="well clone text-center">
+        git clone https://github.com/markkolich/blog.git
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
 
@@ -18,6 +31,7 @@
 
             </div>
         </div>
+
     </footer>
 
     <!-- /container -->
