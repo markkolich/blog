@@ -86,7 +86,7 @@ public final class GitRepository implements CuracaoComponent {
         // Schedule a new updater at a "fixed" interval that has no
         // initial delay to fetch/pull in new content immediately.
         executor_.scheduleAtFixedRate(
-            new GitPuller(this), // new puller
+            new GitPuller(), // new puller
             0L,  // initial delay, start ~now~
             gitUpdateInterval__, // repeat every
             TimeUnit.MILLISECONDS); // units
@@ -156,7 +156,7 @@ public final class GitRepository implements CuracaoComponent {
 
         private final AtomicBoolean lock_;
 
-        public GitPuller(final GitRepository gitRepo) {
+        public GitPuller() {
             lock_ = new AtomicBoolean(false);
         }
 
