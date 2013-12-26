@@ -9,7 +9,7 @@
 
         <div class="page-header" id="banner">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="headerpic"><img src="static/images/mark.png"></div>
                     <h1>Mark S. Kolich</h1>
                     <p class="lead">software engineer</p>

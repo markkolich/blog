@@ -136,8 +136,10 @@ object PackageJs extends AntHelpers {
       concatenate(build / "blog.lib.js", libs)
       // Concat sources together
       concatenate(build / "blog.js", sources)
-      // Actual closer compiler complation
-      closureCompile(release / "blog.js", getFileList(build, Seq("blog.lib.js", "blog.js")))
+      // Actual closer compiler compilation
+      closureCompile(release / "blog.js", getFileList(build, Seq(
+        "blog.lib.js",
+        "blog.js")))
       IO.delete(build) // recursive
     },
     compile in Compile <<= (compile in Compile) dependsOn (packageJs),
