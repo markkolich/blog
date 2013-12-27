@@ -74,8 +74,8 @@
 
                 <ul class="list-unstyled">
                     <li class="pull-right"><a href="#top">Back to top</a></li>
-                    <li class="pull-right"><a href="contact">Contact</a></li>
-                    <li class="pull-right"><a href="about">About</a></li>
+                    <li class="pull-right"><a href="${context}contact">Contact</a></li>
+                    <li class="pull-right"><a href="${context}about">About</a></li>
                     <li><a href="https://twitter.com/markkolich">Twitter</a></li>
                     <li><a href="https://github.com/markkolich">GitHub</a></li>
                     <li><a href="http://www.linkedin.com/in/markkolich">LinkedIn</a></li>
