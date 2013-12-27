@@ -19,7 +19,7 @@ public abstract class MarkdownContent {
         INDEX, ENTRY, PAGE;
     }
 
-    private static class BlogContentDateFormat {
+    public static class BlogContentDateFormat {
 
         private static final String GIT_DATE_FORMAT_STRING =
             "EEE dd MMM yyyy HH:mm:ss Z";
@@ -27,7 +27,7 @@ public abstract class MarkdownContent {
         private static final DateFormat format__;
         static {
             format__ = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
-            format__.setTimeZone(getTimeZone("GMT-8:00"));
+            format__.setTimeZone(getTimeZone("America/Los_Angeles"));
         }
 
         public static final DateFormat getNewInstance() {

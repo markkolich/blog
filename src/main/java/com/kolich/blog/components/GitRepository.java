@@ -65,7 +65,8 @@ public final class GitRepository implements CuracaoComponent {
     @Override
     public void initialize(final ServletContext context) throws Exception {
         final File repoDir = getRepoDir(context);
-        logger__.info("Activated repository path: " + repoDir.getCanonicalFile());
+        logger__.info("Activated repository path: " +
+            repoDir.getCanonicalFile());
         // If were not in dev mode, and the clone path doesn't exist or we need
         // to force clone from scratch, do that now.
         final boolean clone = (!repoDir.exists() || shouldCloneOnStartup__);

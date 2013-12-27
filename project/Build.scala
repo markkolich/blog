@@ -40,6 +40,7 @@ object Dependencies {
   // External dependencies
 
   private val curacao = "com.kolich.curacao" % "curacao" % "2.0-M7" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0-M7" % "compile"
 
   // Jetty 9.1 "stable", version 9.1.0.v20131115 (as of 11/25/13)
   private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.0.v20131115" % "container"
@@ -61,7 +62,7 @@ object Dependencies {
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
   val deps = Seq(kolichCommon,
-    curacao,
+    curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
     typesafeConfig,
     logback, logbackClassic, slf4j,

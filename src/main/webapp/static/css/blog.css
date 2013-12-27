@@ -60,6 +60,10 @@ pre.prettyprint {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
+button.more {
+  width: 25%;
+  margin-left: 15px;
+}
 
 div.well.clone {
   width: 400px;
@@ -67,8 +71,18 @@ div.well.clone {
   font-weight: bold;
 }
 
-footer{margin:30px 0 30px 0;}footer li{float:left;margin-right:1.5em;margin-bottom:1.5em}
-footer p{clear:left;margin-bottom:0}
+footer {
+  margin: 30px 0 30px 0;
+}
+footer li {
+  float: left;
+  margin-right: 1.5em;
+  margin-bottom: 1.5em;
+}
+footer p {
+  clear: left;
+  margin-bottom: 0;
+}
 
 div.translate { clear: both; }
 p.translateflag { cursor: pointer; background:url(../images/translate/flag-sprite.png) no-repeat; margin: 0px 5px 5px 0px; padding: 0px; height: 11px; width: 16px; font-size: 1px; }

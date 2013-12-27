@@ -15,7 +15,7 @@
                 var node = e.target.nodeName;
                 if(node != 'A') {
                     $(this).find('div.fader').remove();
-                    $(this).css('max-height','none');
+                    $(this).css('max-height','none').css('cursor','auto');
                     e.preventDefault();
                 }
             });
