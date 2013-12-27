@@ -1,14 +1,14 @@
 package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.kolich.blog.entities.gson.BlogContentDateFormat;
-import com.kolich.blog.exceptions.ContentRenderException;
-import com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper.markdownToString;
+import static java.util.TimeZone.getTimeZone;
 
 public abstract class MarkdownContent {
 
@@ -17,6 +17,23 @@ public abstract class MarkdownContent {
 
     public static enum ContentType {
         INDEX, ENTRY, PAGE;
+    }
+
+    private static class BlogContentDateFormat {
+
+        private static final String GIT_DATE_FORMAT_STRING =
+            "EEE dd MMM yyyy HH:mm:ss Z";
+
+        private static final DateFormat format__;
+        static {
+            format__ = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
+            format__.setTimeZone(getTimeZone("GMT-8:00"));
+        }
+
+        public static final DateFormat getNewInstance() {
+            return new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
+        }
+
     }
 
     @SerializedName("type")
@@ -74,15 +91,13 @@ public abstract class MarkdownContent {
         return (date_ != null) ? BlogContentDateFormat.getNewInstance().format(date_) : null;
     }
 
-    public final MarkdownFile getContentFile() {
+    public final MarkdownFile getMarkdownFile() {
         return content_;
     }
     public final String getContent() {
         String result = null;
         try {
-            result = (content_ != null) ?
-                MarkdownDrivenContentResponseMapper.markdownToString(content_) :
-                null;
+            result = (content_ != null) ? markdownToString(content_) : null;
         } catch (Exception e) {
             result = null;
         }

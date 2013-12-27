@@ -41,6 +41,8 @@ public final class MarkdownDrivenContentResponseMapper
 
     private static final String appContextPath__ =
         ApplicationConfig.getContextPath();
+    private static final String templatesDir__ =
+        ApplicationConfig.getTemplatesDir();
 
     private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
 
@@ -56,7 +58,8 @@ public final class MarkdownDrivenContentResponseMapper
     @Injectable
     public MarkdownDrivenContentResponseMapper(final GitRepository git)
         throws Exception {
-        final File templateRoot = git.getFileRelativeToContentRoot("templates");
+        final File templateRoot = git.getFileRelativeToContentRoot(
+            templatesDir__);
         config_ = new Configuration();
         config_.setDirectoryForTemplateLoading(templateRoot);
         config_.setDefaultEncoding(Charsets.UTF_8.name());
@@ -92,9 +95,9 @@ public final class MarkdownDrivenContentResponseMapper
         final Object date = tmpl.getCustomAttribute(TEMPLATE_ATTR_DATE);
         data.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
         // Attach the Markdown content converted to a String to the data map.
-        final MarkdownFile content;
-        if((content = md.getContentFile()) != null) {
-            data.put(TEMPLATE_ATTR_CONTENT, markdownToString(content));
+        final String content;
+        if((content = md.getContent()) != null) {
+            data.put(TEMPLATE_ATTR_CONTENT, content);
         }
         // Only Index types get a list of entries attached to its data map.
         if(md instanceof Index) {

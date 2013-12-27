@@ -69,7 +69,8 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                     name = change.name, // Name of file that was "changed"
                     title = commit.getShortMessage(); // Commit message
                 // Commit timestamp, in seconds. Note the conversion to
-                // milliseconds.
+                // milliseconds because JGit gives us the commit time in
+                // seconds... sigh.
                 final Date date = new Date(commit.getCommitTime() * 1000L);
                 // Change type.
                 final DiffEntry.ChangeType type = change.changeType;

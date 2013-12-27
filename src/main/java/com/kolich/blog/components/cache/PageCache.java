@@ -1,5 +1,6 @@
 package com.kolich.blog.components.cache;
 
+import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Page;
 import com.kolich.blog.exceptions.ContentNotFoundException;
@@ -13,7 +14,8 @@ import java.util.Date;
 @Component
 public final class PageCache extends MarkdownCacheComponent<Page> {
 
-    private static final String PAGE_CONTENT_DIR_NAME = "pages";
+    private static final String pagesDir__ =
+        ApplicationConfig.getPagesDir();
 
     @Injectable
     public PageCache(final GitRepository git) {
@@ -31,7 +33,7 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
 
     @Override
     public final String getCachedContentDirName() {
-        return PAGE_CONTENT_DIR_NAME;
+        return pagesDir__;
     }
 
     @Nullable

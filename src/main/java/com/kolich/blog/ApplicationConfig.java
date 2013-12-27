@@ -23,7 +23,13 @@ public final class ApplicationConfig {
     private static final String CONTEXT_PATH_PROPERTY =
         "context-path";
     private static final String CONTENT_ROOT_PROPERTY =
-        "content-root";
+        "content.root";
+    private static final String CONTENT_TEMPLATES_PROPERTY =
+        "content.templates";
+    private static final String CONTENT_ENTRIES_PROPERTY =
+        "content.entries";
+    private static final String CONTENT_PAGES_PROPERTY =
+        "content.pages";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -31,7 +37,7 @@ public final class ApplicationConfig {
         "clone.on-startup";
     private static final String CLONE_PATH_DIRECTORY_PROPERTY =
         "clone.path";
-    private static final String GIT_PULL_UPDATE_INTERVAL =
+    private static final String GIT_PULL_UPDATE_INTERVAL_PROPERTY =
         "clone.pull-update-interval";
 
     // Private static's
@@ -149,6 +155,21 @@ public final class ApplicationConfig {
             CONTENT_ROOT_PROPERTY);
     }
 
+    public static final String getTemplatesDir() {
+        return getConfigInstance().getString(
+            CONTENT_TEMPLATES_PROPERTY);
+    }
+
+    public static final String getEntriesDir() {
+        return getConfigInstance().getString(
+            CONTENT_ENTRIES_PROPERTY);
+    }
+
+    public static final String getPagesDir() {
+        return getConfigInstance().getString(
+            CONTENT_PAGES_PROPERTY);
+    }
+
     public static final String getBlogRepoCloneUrl() {
         return getConfigInstance().getString(
             BLOG_REPO_CLONE_URL_PROPERTY);
@@ -166,7 +187,7 @@ public final class ApplicationConfig {
 
     public static final Long getGitPullUpdateInterval() {
         return getConfigInstance().getMilliseconds(
-            GIT_PULL_UPDATE_INTERVAL);
+            GIT_PULL_UPDATE_INTERVAL_PROPERTY);
     }
 
 }

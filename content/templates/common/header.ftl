@@ -11,7 +11,7 @@
             <div class="row">
 
                 <div class="col-xs-12">
-                    <p class="header-pic"><a href="${context}"><img src="static/images/mark.png"></a></p>
+                    <p class="header-pic"><a href="${context}"><img src="${context}static/images/mark.jpg"></a></p>
                     <h1>Mark S. Kolich</h1>
                     <p class="lead">Software Engineer</p>
                 </div>

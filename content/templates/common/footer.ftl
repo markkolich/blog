@@ -7,6 +7,10 @@
 
         <div class="row">
 
+            <h4>Twitter</h4>
+
+            <h4>Translate</h4>
+
             <div class="translate">
               <div>
                 <p class="translateflag croatia" tl="hr"></p>
@@ -82,7 +86,7 @@
                 </ul>
 
                 <p>All content licensed under the <a href="https://github.com/markkolich/blog/blob/master/LICENSE">MIT License</a>.</p>
-                <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Designed and built by <a href="${context}">me</a>.</p>
+                <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Designed and built by <a href="${context}">Mark S. Kolich</a>.</p>
 
             </div>
         </div>

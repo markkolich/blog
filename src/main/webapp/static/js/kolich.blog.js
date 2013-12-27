@@ -11,6 +11,14 @@
 		init = function() {
             $('pre').addClass('prettyprint');
             window.prettyPrint && prettyPrint();
+            $('div.entry').click(function(e) {
+                var node = e.target.nodeName;
+                if(node != 'A') {
+                    $(this).find('div.fader').remove();
+                    $(this).css('max-height','none');
+                    e.preventDefault();
+                }
+            });
         };
 
     init();
