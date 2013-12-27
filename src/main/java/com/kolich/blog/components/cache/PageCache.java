@@ -30,7 +30,7 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
     }
 
     @Override
-    public final String getContentDirectoryName() {
+    public final String getCachedContentDirName() {
         return PAGE_CONTENT_DIR_NAME;
     }
 

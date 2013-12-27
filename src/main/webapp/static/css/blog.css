@@ -2,28 +2,33 @@ body {
   line-height: 1.7;
 }
 
+h1, h2, h3 {
+  margin-top: 0;
+}
+
+article h2, h3 {
+  margin: 20px 0 20px 0;
+}
+
 .page-header {
   margin-top: 10px;
 }
+.page-header h1 {
+  margin-bottom: 4px;
+  margin-top: 25px;
+}
 
-div.headerpic {
+p.headerpic {
   float: left;
   margin: 15px 20px 0 0;
 }
-
-div.headerpic img {
-  border: 1px solid #666;
-}
-
-h2.title {
-  margin-top: 0;
-  margin-bottom: 10px;
+p.headerpic img {
+  border: 1px solid #999;
 }
 
 p.hash {
   margin-bottom: 0;
 }
-
 p.date {
   margin-bottom: 20px;
 }
@@ -32,11 +37,59 @@ pre.prettyprint {
   padding: 9.5px !important;
 }
 
+.entry {
+  cursor: pointer;
+  max-height: 200px;
+  overflow: hidden;
+  background-image: linear-gradient(to top,rgba(245,240,220,1.0),rgba(245,240,220,0));
+  margin-bottom: 30px;
+}
+
 div.well.clone {
   width: 400px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 30px auto;
   font-weight: bold;
 }
 
 footer{margin:30px 0 30px 0;}footer li{float:left;margin-right:1.5em;margin-bottom:1.5em}
 footer p{clear:left;margin-bottom:0}
+
+div.translate { clear: both; }
+p.translateflag { cursor: pointer; background:url(../images/translate/flag-sprite.png) no-repeat; margin: 0px 5px 5px 0px; padding: 0px; height: 11px; width: 16px; font-size: 1px; }
+
+p.usa { background-position: 0px 0px; float: left; }
+p.spain { background-position: 0px -11px; float: left; }
+p.mexico { background-position: 0px -22px; float: left; }
+p.finland { background-position: 0px -33px; float: left; }
+p.france { background-position: 0px -44px; float: left; }
+p.india { background-position: 0px -55px; float: left; }
+p.croatia { background-position: 0px -66px; float: left; }
+p.hungary { background-position: 0px -77px; float: left; }
+p.indonesia { background-position: 0px -88px; float: left; }
+p.italy { background-position: 0px -110px; float: left; }
+p.israel { background-position: 0px -121px; float: left; }
+p.japan { background-position: 0px -132px; float: left; }
+p.korea { background-position: 0px -143px; float: left; }
+p.lithuania { background-position: 0px -165px; float: left; }
+p.netherlands { background-position: 0px -183px; float: left; }
+p.norway { background-position: 0px -194px; float: left; }
+p.poland { background-position: 0px -205px; float: left; }
+p.portgual { background-position: 0px -216px; float: left; }
+p.romania { background-position: 0px -238px; float: left; }
+p.russia { background-position: 0px -249px; float: left; }
+p.slovakia { background-position: 0px -260px; float: left; }
+p.slovenia { background-position: 0px -271px; float: left; }
+p.serbia { background-position: 0px -282px; float: left; }
+p.sweden { background-position: 0px -293px; float: left; }
+p.philippines { background-position: 0px -304px; float: left; }
+p.turkey { background-position: 0px -315px; float: left; }
+p.ukraine { background-position: 0px -326px; float: left; }
+p.vietnam { background-position: 0px -337px; float: left; }
+p.chinese-simple { background-position: 0px -348px; float: left; }
+p.chinese-traditional { background-position: 0px -359px; float: left; }
+p.bulgaria { background-position: 0px -370px; float: left; }
+p.catalan { background-position: 0px -381px; float: left; }
+p.arabic { background-position: 0px -392px; float: left; }
+p.denmark { background-position: 0px -414px; float: left; }
+p.germany { background-position: 0px -425px; float: left; }
+p.greece { background-position: 0px -436px; float: left; }

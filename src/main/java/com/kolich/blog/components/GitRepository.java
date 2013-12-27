@@ -17,7 +17,6 @@ import java.io.File;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -35,8 +34,8 @@ public final class GitRepository implements CuracaoComponent {
         ApplicationConfig.getClonePath();
     private static final Boolean shouldCloneOnStartup__ =
         ApplicationConfig.shouldCloneOnStartup();
-    private static final String markdownRootDir__ =
-        ApplicationConfig.getMarkdownRootDir();
+    private static final String contentRootDir__ =
+        ApplicationConfig.getContentRootDir();
     private static final Long gitUpdateInterval__ =
         ApplicationConfig.getGitPullUpdateInterval();
 
@@ -46,13 +45,19 @@ public final class GitRepository implements CuracaoComponent {
     private Git git_;
 
     private final ScheduledExecutorService executor_;
+
+    /**
+     * A set of {@link PullListener}'s which are notified in order when this
+     * Git repository is updated on disk (e.g., when a "pull" request
+     * finishes).
+     */
     private final Set<PullListener> listeners_;
 
     public GitRepository() {
         executor_ = newSingleThreadScheduledExecutor(
             new ThreadFactoryBuilder()
                 .setDaemon(true)
-                .setNameFormat("git-pull'er")
+                .setNameFormat("git-puller")
                 .build());
         listeners_ = Sets.newLinkedHashSet();
     }
@@ -60,7 +65,7 @@ public final class GitRepository implements CuracaoComponent {
     @Override
     public void initialize(final ServletContext context) throws Exception {
         final File repoDir = getRepoDir(context);
-        logger__.info("Active repository path: " + repoDir.getCanonicalFile());
+        logger__.info("Activated repository path: " + repoDir.getCanonicalFile());
         // If were not in dev mode, and the clone path doesn't exist or we need
         // to force clone from scratch, do that now.
         final boolean clone = (!repoDir.exists() || shouldCloneOnStartup__);
@@ -82,7 +87,7 @@ public final class GitRepository implements CuracaoComponent {
             .readEnvironment()
             .build();
         git_ = new Git(repo_);
-        logger__.info("Successfully initialized Git repository: " + repo_);
+        logger__.info("Successfully initialized repository at: " + repo_);
         // Schedule a new updater at a "fixed" interval that has no
         // initial delay to fetch/pull in new content immediately.
         executor_.scheduleAtFixedRate(
@@ -94,7 +99,9 @@ public final class GitRepository implements CuracaoComponent {
 
     @Override
     public void destroy(final ServletContext context) throws Exception {
+        // Close our handle to the repository on shutdown.
         repo_.close();
+        // Ask the single thread updater pool to "shutdown".
         if(executor_ != null) {
             executor_.shutdown();
         }
@@ -132,13 +139,13 @@ public final class GitRepository implements CuracaoComponent {
     }
 
     @Nonnull
-    public final File getMarkdownRoot() {
-        return new File(repo_.getWorkTree(), markdownRootDir__);
+    public final File getContentRoot() {
+        return new File(repo_.getWorkTree(), contentRootDir__);
     }
 
     @Nonnull
-    public final File getFileRelativeToMarkdownRoot(final String child) {
-        return new File(getMarkdownRoot(), child);
+    public final File getFileRelativeToContentRoot(final String child) {
+        return new File(getContentRoot(), child);
     }
 
     public final boolean registerListener(final PullListener listener) {
@@ -154,36 +161,28 @@ public final class GitRepository implements CuracaoComponent {
 
     private class GitPuller implements Runnable {
 
-        private final AtomicBoolean lock_;
-
-        public GitPuller() {
-            lock_ = new AtomicBoolean(false);
-        }
-
         @Override
         public final void run() {
-            if(lock_.compareAndSet(false, true)) {
-                try {
-                    // Only attempt a "pull" if we're not in development mode.
-                    // We should not pull when in dev mode, because of pending
-                    // changes that are likely waiting to be committed may
-                    // unexpectedly interfere with the pull command (merge
-                    // conflicts, etc.).
-                    if(!isDevMode__) {
-                        git_.pull().call();
-                    }
-                    for(final PullListener listener : listeners_) {
-                        try {
-                            listener.onPull();
-                        } catch (Exception e) {
-                            logger__.warn("Pull listener failed to update.", e);
-                        }
-                    }
-                } catch (Exception e) {
-                    logger__.warn("Failed to Git 'pull'", e);
-                } finally {
-                    lock_.set(false);
+            try {
+                // Only attempt a "pull" if we're not in development mode.
+                // We should not pull when in dev mode, because of pending
+                // changes that are likely waiting to be committed may
+                // unexpectedly interfere with the pull (merge conflicts, etc.)
+                if(!isDevMode__) {
+                    git_.pull().call();
                 }
+                // Notify each pull listener that the pull is done and they can
+                // update their caches as needed.
+                for(final PullListener listener : listeners_) {
+                    try {
+                        listener.onPull();
+                    } catch (Exception e) {
+                        logger__.warn("Failure notifying pull listener.", e);
+                    }
+                }
+            } catch (Exception e) {
+                logger__.warn("Failed to Git 'pull', raw Git operation " +
+                    "did not complete successfully.", e);
             }
         }
 

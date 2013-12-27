@@ -55,9 +55,6 @@ object Dependencies {
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5" % "compile"
 
-  //private val commonsLang = "org.apache.commons" % "commons-lang3" % "3.1" % "compile"
-  //private val commonsCodec = "commons-codec" % "commons-codec" % "1.6" % "compile"
-
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
@@ -68,7 +65,6 @@ object Dependencies {
     curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
     typesafeConfig,
-    //commonsLang, commonsCodec,
     logback, logbackClassic, slf4j,
     jGit, gitblit,
     pegdown,
@@ -130,7 +126,8 @@ object PackageJs extends AntHelpers {
         "prettify.js"))
       val sources = getFileList(js, Seq(
         "kolich.js",
-        "kolich.blog.js"))
+        "kolich.blog.js",
+        "kolich.blog.translate.js"))
       println("Compiling JavaScript...")
       // Concat libs together
       concatenate(build / "blog.lib.js", libs)
@@ -149,7 +146,7 @@ object PackageJs extends AntHelpers {
   private def closureCompile(output: File,
                              sources: FileList,
                              externs: Option[FileList] = None,
-                             compilationLevel: String = "whitespace") {
+                             compilationLevel: String = "simple") {
     val compile = new CompileTask()
     compile.setCompilationLevel(compilationLevel) // Could be "simple" or "advanced"
     compile.setWarning("quiet") // Could be "verbose"
@@ -188,6 +185,7 @@ object PackageCss extends AntHelpers {
         //"bootstrap.min.css",
         //"bootstrap-theme.min.css",
         "spacelab.css",
+        "prettify.css",
         "prettify-desert.css"))
       val sources = getFileList(css, Seq(
         "blog.css"))
@@ -206,8 +204,7 @@ object PackageCss extends AntHelpers {
     packageWar in Compile <<= (packageWar in Compile) dependsOn (packageCss)
   )
 
-  private def compress(input: File,
-                       output: File) {
+  private def compress(input: File, output: File) {
     import java.io._
     // Setup the input reader and the output writer.
     var reader:Reader = null

@@ -1,9 +1,16 @@
-<#ftl attributes={"title":"software engineer"}>
+<#ftl attributes={"title":"Software Engineer"}>
 
 <#include "common/header.ftl">
 
 <#list entries as e>
-  ${e_index + 1}. <a href="${e.name}">${e.title}</a><#if e_has_next><br /></#if>
+
+    <div class="entry">
+        <h2 class="title"><a href="${e.name}">${e.title}</a></h2>
+        <p class="hash">${e.hash}</p>
+        <p class="date">${e.dateFormatted}</p>
+        <p>${e.content}</p>
+    </div>
+
 </#list>
 
 <#include "common/footer.ftl">

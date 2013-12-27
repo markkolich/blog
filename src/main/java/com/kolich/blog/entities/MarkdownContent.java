@@ -2,6 +2,8 @@ package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.kolich.blog.entities.gson.BlogContentDateFormat;
+import com.kolich.blog.exceptions.ContentRenderException;
+import com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper;
 
 import java.io.File;
 import java.util.Date;
@@ -72,8 +74,19 @@ public abstract class MarkdownContent {
         return (date_ != null) ? BlogContentDateFormat.getNewInstance().format(date_) : null;
     }
 
-    public final MarkdownFile getContent() {
+    public final MarkdownFile getContentFile() {
         return content_;
+    }
+    public final String getContent() {
+        String result = null;
+        try {
+            result = (content_ != null) ?
+                MarkdownDrivenContentResponseMapper.markdownToString(content_) :
+                null;
+        } catch (Exception e) {
+            result = null;
+        }
+        return result;
     }
 
     @Override

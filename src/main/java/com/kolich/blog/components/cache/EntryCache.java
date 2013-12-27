@@ -3,7 +3,6 @@ package com.kolich.blog.components.cache;
 import com.google.common.collect.Sets;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
-import com.kolich.blog.entities.EntryList;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
@@ -33,7 +32,7 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
     }
 
     @Override
-    public final String getContentDirectoryName() {
+    public final String getCachedContentDirName() {
         return ENTRIES_CONTENT_DIR_NAME;
     }
 

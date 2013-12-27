@@ -20,8 +20,8 @@ public final class ApplicationConfig {
 
     private static final String DEV_MODE_PROPERTY =
         "dev-mode";
-    private static final String MARKDOWN_ROOT =
-        "markdown.root";
+    private static final String CONTENT_ROOT =
+        "content-root";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -137,9 +137,9 @@ public final class ApplicationConfig {
             DEV_MODE_PROPERTY);
     }
 
-    public static final String getMarkdownRootDir() {
+    public static final String getContentRootDir() {
         return getConfigInstance().getString(
-            MARKDOWN_ROOT);
+            CONTENT_ROOT);
     }
 
     public static final String getBlogRepoCloneUrl() {

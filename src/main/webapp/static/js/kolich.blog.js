@@ -10,6 +10,7 @@
 
 		init = function() {
             $('pre').addClass('prettyprint');
+            window.prettyPrint && prettyPrint();
         };
 
     init();

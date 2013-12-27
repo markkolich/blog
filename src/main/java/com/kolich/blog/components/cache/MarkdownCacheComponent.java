@@ -3,7 +3,6 @@ package com.kolich.blog.components.cache;
 import com.gitblit.models.PathModel;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
@@ -20,13 +19,9 @@ import java.nio.file.FileSystems;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -36,8 +31,8 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
     private static final Logger logger__ =
         getLogger(MarkdownCacheComponent.class);
 
-    private static final String markdownRootDir__ =
-        ApplicationConfig.getMarkdownRootDir();
+    private static final String contentRootDir__ =
+        ApplicationConfig.getContentRootDir();
 
     private final GitRepository git_;
     private final Map<String,T> cache_;
@@ -65,15 +60,18 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         final Repository repo = git_.getRepo();
         // Rebuild the new cache using the "updated" content, if any.
         final String pathToContent = FileSystems.getDefault().getPath(
-            markdownRootDir__, getContentDirectoryName()).toString();
+            contentRootDir__, getCachedContentDirName()).toString();
         for(final RevCommit commit : git.log().call()) {
             final List<PathModel.PathChangeModel> files =
                 getFilesInCommit(repo, commit);
             for(final PathModel.PathChangeModel change : files) {
-                final String hash = change.objectId,
-                    name = change.name,
-                    title = commit.getShortMessage();
+                final String hash = commit.getName(), // Commit SHA-1 hash
+                    name = change.name, // Name of file that was "changed"
+                    title = commit.getShortMessage(); // Commit message
+                // Commit timestamp, in seconds. Note the conversion to
+                // milliseconds.
                 final Date date = new Date(commit.getCommitTime() * 1000L);
+                // Change type.
                 final DiffEntry.ChangeType type = change.changeType;
                 if(name.startsWith(pathToContent) && type.equals(DiffEntry.ChangeType.ADD)) {
                     final File markdown = new File(repo.getWorkTree(), name);
@@ -117,6 +115,6 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                                 final Date date,
                                 final File content);
 
-    public abstract String getContentDirectoryName();
+    public abstract String getCachedContentDirName();
 
 }

@@ -38,11 +38,19 @@ public final class MarkdownDrivenContentResponseMapper
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
 
+    private static final String TEMPLATE_ATTR_NAME = "name";
+    private static final String TEMPLATE_ATTR_TITLE = "title";
+    private static final String TEMPLATE_ATTR_HASH = "hash";
+    private static final String TEMPLATE_ATTR_DATE = "date";
+    private static final String TEMPLATE_ATTR_CONTENT = "content";
+    private static final String TEMPLATE_ATTR_ENTRIES = "entries";
+
     private final Configuration config_;
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final GitRepository git) throws Exception {
-        final File templateRoot = git.getFileRelativeToMarkdownRoot("templates");
+    public MarkdownDrivenContentResponseMapper(final GitRepository git)
+        throws Exception {
+        final File templateRoot = git.getFileRelativeToContentRoot("templates");
         config_ = new Configuration();
         config_.setDirectoryForTemplateLoading(templateRoot);
         config_.setDefaultEncoding(Charsets.UTF_8.name());
@@ -53,10 +61,10 @@ public final class MarkdownDrivenContentResponseMapper
                              final HttpServletResponse response,
                              @Nonnull final MarkdownContent md) throws Exception {
         try {
-            final Template t = config_.getTemplate(md.getTemplateName());
+            final Template tmpl = config_.getTemplate(md.getTemplateName());
             try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
                 final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
-                t.process(markdownContentToDataMap(md, t), w);
+                tmpl.process(markdownContentToDataMap(md, tmpl), w);
                 RenderingResponseTypeMapper.renderEntity(response,
                     new Utf8CompressedHtmlEntity(os));
             }
@@ -67,32 +75,24 @@ public final class MarkdownDrivenContentResponseMapper
     }
 
     private static final Map<String,Object> markdownContentToDataMap(
-        final MarkdownContent md, final Template t) throws Exception {
+        final MarkdownContent md, final Template tmpl) throws Exception {
         final Map<String,Object> data = Maps.newLinkedHashMap();
-        if(md instanceof Index) {
-            data.put("entries", ((Index)md).getEntries());
-        }
-        final String name;
-        if((name = md.getName()) != null) {
-            data.put("name", name);
-        }
-        final String title;
-        if((title = md.getTitle()) != null) {
-            data.put("title", title);
-        } else {
-            data.put("title", t.getCustomAttribute("title"));
-        }
-        final String hash;
-        if((hash = md.getHash()) != null) {
-            data.put("hash", hash);
-        }
-        final String date;
-        if((date = md.getDateFormatted()) != null) {
-            data.put("date", date);
-        }
+        final Object name = tmpl.getCustomAttribute(TEMPLATE_ATTR_NAME);
+        data.put(TEMPLATE_ATTR_NAME, (name == null) ? md.getName() : name);
+        final Object title = tmpl.getCustomAttribute(TEMPLATE_ATTR_TITLE);
+        data.put(TEMPLATE_ATTR_TITLE, (title == null) ? md.getTitle() : title);
+        final Object hash = tmpl.getCustomAttribute(TEMPLATE_ATTR_HASH);
+        data.put(TEMPLATE_ATTR_HASH, (hash == null) ? md.getHash() : hash);
+        final Object date = tmpl.getCustomAttribute(TEMPLATE_ATTR_DATE);
+        data.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
+        // Attach the Markdown content converted to a String to the data map.
         final MarkdownFile content;
-        if((content = md.getContent()) != null) {
-            data.put("content", markdownToString(content));
+        if((content = md.getContentFile()) != null) {
+            data.put(TEMPLATE_ATTR_CONTENT, markdownToString(content));
+        }
+        // Only Index types get a list of entries attached to its data map.
+        if(md instanceof Index) {
+            data.put(TEMPLATE_ATTR_ENTRIES, ((Index)md).getEntries());
         }
         return data;
     }
@@ -101,12 +101,6 @@ public final class MarkdownDrivenContentResponseMapper
         throws Exception {
         final PegDownProcessor p = new PegDownProcessor(Extensions.ALL);
         return p.markdownToHtml(readFileToString(mdf.getFile(), Charsets.UTF_8));
-    }
-
-    private static final String compressHtml(final String uncompressed) {
-        final HtmlCompressor compressor = new HtmlCompressor();
-        compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MAX);
-        return compressor.compress(uncompressed);
     }
 
     private static final class Utf8CompressedHtmlEntity
@@ -144,6 +138,12 @@ public final class MarkdownDrivenContentResponseMapper
             try(final Reader reader = new StringReader(html_)) {
                 copyLarge(reader, writer);
             }
+        }
+
+        private static final String compressHtml(final String uncompressed) {
+            final HtmlCompressor compressor = new HtmlCompressor();
+            compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MAX);
+            return compressor.compress(uncompressed);
         }
 
     }
