@@ -14,15 +14,15 @@ article h2, h3 {
   margin-top: 10px;
 }
 .page-header h1 {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   margin-top: 25px;
 }
 
-p.headerpic {
+p.header-pic {
   float: left;
   margin: 15px 20px 0 0;
 }
-p.headerpic img {
+p.header-pic img {
   border: 1px solid #999;
 }
 

@@ -3,6 +3,7 @@ package com.kolich.blog.mappers;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
+import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
@@ -37,6 +38,11 @@ public final class MarkdownDrivenContentResponseMapper
 
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
+
+    private static final String appContextPath__ =
+        ApplicationConfig.getContextPath();
+
+    private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
 
     private static final String TEMPLATE_ATTR_NAME = "name";
     private static final String TEMPLATE_ATTR_TITLE = "title";
@@ -94,6 +100,7 @@ public final class MarkdownDrivenContentResponseMapper
         if(md instanceof Index) {
             data.put(TEMPLATE_ATTR_ENTRIES, ((Index)md).getEntries());
         }
+        data.put(TEMPLATE_ATTR_CONTEXT_PATH, appContextPath__);
         return data;
     }
 

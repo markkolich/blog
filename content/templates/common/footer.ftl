@@ -82,7 +82,7 @@
                 </ul>
 
                 <p>All content licensed under the <a href="https://github.com/markkolich/blog/blob/master/LICENSE">MIT License</a>.</p>
-                <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Designed and built by <a href="/">me</a>.</p>
+                <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Designed and built by <a href="${context}">me</a>.</p>
 
             </div>
         </div>
@@ -92,7 +92,7 @@
     <!-- /container -->
     </div>
 
-    <script src="static/release/blog.js"></script>
+    <script src="${context}static/release/blog.js"></script>
 
 </body>
 </html>

@@ -20,7 +20,9 @@ public final class ApplicationConfig {
 
     private static final String DEV_MODE_PROPERTY =
         "dev-mode";
-    private static final String CONTENT_ROOT =
+    private static final String CONTEXT_PATH_PROPERTY =
+        "context-path";
+    private static final String CONTENT_ROOT_PROPERTY =
         "content-root";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
@@ -137,9 +139,14 @@ public final class ApplicationConfig {
             DEV_MODE_PROPERTY);
     }
 
+    public static final String getContextPath() {
+        return getConfigInstance().getString(
+            CONTEXT_PATH_PROPERTY);
+    }
+
     public static final String getContentRootDir() {
         return getConfigInstance().getString(
-            CONTENT_ROOT);
+            CONTENT_ROOT_PROPERTY);
     }
 
     public static final String getBlogRepoCloneUrl() {
