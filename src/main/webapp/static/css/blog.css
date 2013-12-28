@@ -65,6 +65,23 @@ div.panel.twitter .panel-body ul {
   padding-left: 0;
 }
 
+li.tweet {
+  margin-top: 10px;
+}
+
+li.tweet.first {
+  margin-top: 0;
+}
+
+div.panel.twitter .panel-body li.small p {
+  margin-bottom: 0;
+}
+
+div.panel.twitter .panel-body li.small p.smaller {
+  font-size: 75%;
+  margin-top: 0;
+}
+
 button.more {
   width: 25%;
   margin-left: 15px;
