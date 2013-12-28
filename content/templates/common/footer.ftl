@@ -5,9 +5,9 @@
     <!-- right column -->
     <div class="col-xs-3">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default twitter">
             <div class="panel-heading">Twitter (<a href="https://twitter.com/markkolich">@markkolich</a>)</div>
-            <div class="panel-body">Panel content</div>
+            <div class="panel-body"></div>
         </div>
 
         <div class="panel panel-default">

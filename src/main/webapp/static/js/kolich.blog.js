@@ -5,9 +5,6 @@
 		// Namespace.
 		self = parent.Blog = parent.Blog || {},
 
-		baseAppUrl = parent['baseAppUrl'],
-		api = parent['api'],
-
 		init = function() {
             $('pre').addClass('prettyprint');
             window.prettyPrint && prettyPrint();
@@ -21,6 +18,12 @@
             });
             //alert($('p.hash').last().html());
         };
+
+    self['path'] = parent['path'];
+    self['baseAppUrl'] = parent['baseAppUrl'];
+
+    self['debug'] = parent['debug'];
+    self['console'] = parent['console'];
 
     init();
 

@@ -60,6 +60,11 @@ pre.prettyprint {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
+div.panel.twitter .panel-body ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 button.more {
   width: 25%;
   margin-left: 15px;

@@ -122,11 +122,13 @@ object PackageJs extends AntHelpers {
       val libs = getFileList(js / "lib", Seq(
         "json2.js",
         "jquery-1.10.2.min.js",
+        "jquery.localtime-0.8.0.js",
         "bootstrap.min.js",
         "prettify.js"))
       val sources = getFileList(js, Seq(
         "kolich.js",
         "kolich.blog.js",
+        "kolich.blog.twitter.js",
         "kolich.blog.translate.js"))
       println("Compiling JavaScript...")
       // Concat libs together

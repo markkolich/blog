@@ -128,7 +128,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
             new Predicate<T>() {
             @Override
             public boolean apply(@Nullable final T input) {
-                return commit.equals(input.getCommit());
+                return commit != null && commit.equals(input.getCommit());
             }
         });
         if(index < 0) {
