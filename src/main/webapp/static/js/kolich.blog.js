@@ -19,6 +19,7 @@
                     e.preventDefault();
                 }
             });
+            //alert($('p.hash').last().html());
         };
 
     init();

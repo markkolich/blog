@@ -1,7 +1,9 @@
 package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
@@ -13,6 +15,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.slf4j.Logger;
 
+import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -74,11 +77,13 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                 final Date date = new Date(commit.getCommitTime() * 1000L);
                 // Change type.
                 final DiffEntry.ChangeType type = change.changeType;
-                if(name.startsWith(pathToContent) && type.equals(DiffEntry.ChangeType.ADD)) {
+                if(name.startsWith(pathToContent) &&
+                   type.equals(DiffEntry.ChangeType.ADD)) {
                     final File markdown = new File(repo.getWorkTree(), name);
                     // Only bother adding the markdown content to the map if
                     // the file exists on disk.  Git history may show that
-                    // content was added with a given commit, but
+                    // content was added with a given commit, but may have been
+                    // since deleted.
                     if(markdown.exists()) {
                         final String entityName = removeExtension(markdown.getName());
                         final T entity = getEntity(entityName, title, hash,
@@ -104,15 +109,38 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         }
     }
 
-    protected final Map<String,T> getAll() {
+    protected final List<T> getAll() {
         synchronized(cache_) {
-            return ImmutableMap.copyOf(cache_);
+            return ImmutableList.copyOf(cache_.values());
+        }
+    }
+
+    /**
+     * Returns all cached content that was committed to the repo before
+     * (older, prior to) the given commit.
+     */
+    protected final List<T> getAllBefore(final String commit) {
+        // Get an immutable list of all "values" in the current cache map.
+        final ImmutableList<T> entries = (ImmutableList<T>)getAll();
+        // Find the index of the content corresponding to the
+        // provided commit.
+        final int index = Iterables.indexOf(entries,
+            new Predicate<T>() {
+            @Override
+            public boolean apply(@Nullable final T input) {
+                return commit.equals(input.getCommit());
+            }
+        });
+        if(index < 0) {
+            return ImmutableList.of(); // Empty, immutable list.
+        } else {
+            return entries.subList(index+1, entries.size());
         }
     }
 
     public abstract T getEntity(final String name,
                                 final String title,
-                                final String hash,
+                                final String commit,
                                 final Date date,
                                 final File content);
 

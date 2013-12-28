@@ -25,10 +25,10 @@ public final class PageCache extends MarkdownCacheComponent<Page> {
     @Override
     public final Page getEntity(final String name,
                                 final String title,
-                                final String hash,
+                                final String commit,
                                 final Date date,
                                 final File content) {
-        return new Page(name, title, hash, date, content);
+        return new Page(name, title, commit, date, content);
     }
 
     @Override

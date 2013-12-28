@@ -10,6 +10,7 @@ import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.methods.GET;
 import com.kolich.curacao.annotations.parameters.Path;
+import com.kolich.curacao.annotations.parameters.Query;
 
 @Controller
 public final class Blog {
@@ -39,8 +40,10 @@ public final class Blog {
     }
 
     @GET("/blog.json")
-    public final EntryList getEntries() {
-        return new EntryList(entries_.getEntries());
+    public final EntryList getEntries(@Query("before") final String commit) {
+        return new EntryList((commit == null) ?
+            entries_.getEntries() :
+            entries_.getEntriesBefore(commit));
     }
 
     @GET("/{name}/**")

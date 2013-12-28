@@ -24,14 +24,14 @@ public abstract class MarkdownContent {
         private static final String GIT_DATE_FORMAT_STRING =
             "EEE dd MMM yyyy HH:mm:ss Z";
 
-        private static final DateFormat format__;
-        static {
-            format__ = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
-            format__.setTimeZone(getTimeZone("America/Los_Angeles"));
+        public static final DateFormat getNewInstance() {
+            final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
+            df.setTimeZone(getTimeZone("America/Los_Angeles"));
+            return df;
         }
 
-        public static final DateFormat getNewInstance() {
-            return new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
+        public static final String format(final Date d) {
+            return getNewInstance().format(d);
         }
 
     }
@@ -46,7 +46,7 @@ public abstract class MarkdownContent {
     private final String title_;
 
     @SerializedName("commit")
-    private final String hash_;
+    private final String commit_;
 
     @SerializedName("date")
     private final Date date_;
@@ -57,13 +57,13 @@ public abstract class MarkdownContent {
     public MarkdownContent(final ContentType type,
                            final String name,
                            final String title,
-                           final String hash,
+                           final String commit,
                            final Date date,
                            final File content) {
         type_ = type;
         name_ = name;
         title_ = title;
-        hash_ = hash;
+        commit_ = commit;
         date_ = date;
         content_ = (content != null) ? new MarkdownFile(content) : null;
     }
@@ -80,15 +80,15 @@ public abstract class MarkdownContent {
         return title_;
     }
 
-    public final String getHash() {
-        return hash_;
+    public final String getCommit() {
+        return commit_;
     }
 
     public final Date getDate() {
         return date_;
     }
     public final String getDateFormatted() {
-        return (date_ != null) ? BlogContentDateFormat.getNewInstance().format(date_) : null;
+        return (date_ != null) ? BlogContentDateFormat.format(date_) : null;
     }
 
     public final MarkdownFile getMarkdownFile() {

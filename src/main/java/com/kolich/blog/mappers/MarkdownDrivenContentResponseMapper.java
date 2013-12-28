@@ -48,7 +48,7 @@ public final class MarkdownDrivenContentResponseMapper
 
     private static final String TEMPLATE_ATTR_NAME = "name";
     private static final String TEMPLATE_ATTR_TITLE = "title";
-    private static final String TEMPLATE_ATTR_HASH = "hash";
+    private static final String TEMPLATE_ATTR_COMMIT = "commit";
     private static final String TEMPLATE_ATTR_DATE = "date";
     private static final String TEMPLATE_ATTR_CONTENT = "content";
     private static final String TEMPLATE_ATTR_ENTRIES = "entries";
@@ -90,8 +90,8 @@ public final class MarkdownDrivenContentResponseMapper
         data.put(TEMPLATE_ATTR_NAME, (name == null) ? md.getName() : name);
         final Object title = tmpl.getCustomAttribute(TEMPLATE_ATTR_TITLE);
         data.put(TEMPLATE_ATTR_TITLE, (title == null) ? md.getTitle() : title);
-        final Object hash = tmpl.getCustomAttribute(TEMPLATE_ATTR_HASH);
-        data.put(TEMPLATE_ATTR_HASH, (hash == null) ? md.getHash() : hash);
+        final Object hash = tmpl.getCustomAttribute(TEMPLATE_ATTR_COMMIT);
+        data.put(TEMPLATE_ATTR_COMMIT, (hash == null) ? md.getCommit() : hash);
         final Object date = tmpl.getCustomAttribute(TEMPLATE_ATTR_DATE);
         data.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
         // Attach the Markdown content converted to a String to the data map.

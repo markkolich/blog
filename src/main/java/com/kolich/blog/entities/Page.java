@@ -9,10 +9,10 @@ public final class Page extends MarkdownContent {
 
     public Page(final String name,
                 final String title,
-                final String hash,
+                final String commit,
                 final Date date,
                 final File content) {
-        super(ContentType.PAGE, name, title, hash, date, content);
+        super(ContentType.PAGE, name, title, commit, date, content);
     }
 
     @Override

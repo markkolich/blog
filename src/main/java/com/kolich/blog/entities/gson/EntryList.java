@@ -4,17 +4,17 @@ import com.google.gson.annotations.SerializedName;
 import com.kolich.blog.entities.Entry;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class EntryList extends GsonAppendableBlogEntity {
 
     @SerializedName("entries")
-    private final Set<Entry> entries_;
+    private final List<Entry> entries_;
 
-    public EntryList(@Nonnull final Set<Entry> entries) {
-        entries_ = checkNotNull(entries, "Entry collection cannot be null.");
+    public EntryList(@Nonnull final List<Entry> entries) {
+        entries_ = checkNotNull(entries, "Entry list cannot be null.");
     }
 
 }

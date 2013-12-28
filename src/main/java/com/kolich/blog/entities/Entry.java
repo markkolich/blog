@@ -9,10 +9,10 @@ public final class Entry extends MarkdownContent {
 
     public Entry(final String name,
                  final String title,
-                 final String hash,
+                 final String commit,
                  final Date date,
                  final File content) {
-        super(ContentType.ENTRY, name, title, hash, date, content);
+        super(ContentType.ENTRY, name, title, commit, date, content);
     }
 
     @Override
