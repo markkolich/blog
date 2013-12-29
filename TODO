@@ -1,4 +1,0 @@
-== In MarkdownDrivenContentResponseMapper t.getCustomAttribute("title")
-   should be the default which is then overriden by the MarkdownContent instance
-
-==

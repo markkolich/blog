@@ -61,7 +61,7 @@
                 for(var i in tweets) {
                     var tweet = tweets[i], li = $('<li>').addClass('tweet small');
                     var text = $('<p>').append(linkify(tweet.text));
-                    var timestamp = $('<p>').append(tweet.created_at).addClass('smaller');
+                    var timestamp = $('<p>').append($.localtime.toLocalTime(tweet.created_at,'h:mm:ss a')).addClass('smaller');
                     li.append(text).append(timestamp);
                     ul.append(li);
                 }

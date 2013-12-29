@@ -63,6 +63,7 @@ pre.prettyprint {
 div.panel.twitter .panel-body ul {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
 }
 
 li.tweet {
