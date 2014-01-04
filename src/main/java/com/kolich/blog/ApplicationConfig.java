@@ -30,6 +30,8 @@ public final class ApplicationConfig {
         "content.entries";
     private static final String CONTENT_PAGES_PROPERTY =
         "content.pages";
+    private static final String CONTENT_ENTRY_LIMIT_PROPERTY =
+        "content.entry-limit";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -168,6 +170,11 @@ public final class ApplicationConfig {
     public static final String getPagesDir() {
         return getConfigInstance().getString(
             CONTENT_PAGES_PROPERTY);
+    }
+
+    public static final int getEntryLimit() {
+        return getConfigInstance().getInt(
+            CONTENT_ENTRY_LIMIT_PROPERTY);
     }
 
     public static final String getBlogRepoCloneUrl() {

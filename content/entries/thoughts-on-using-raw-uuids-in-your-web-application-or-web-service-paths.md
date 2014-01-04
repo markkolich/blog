@@ -1,4 +1,4 @@
-You're probably familiar with UUID's -- those ubiquitous universally unique identifiers used in just about every modern web-application or web-service.  And, if you're a developer living on the JVM, you're probably close friends with java.util.UUID whether you like it or not.
+You're probably familiar with UUID's &mdash; those ubiquitous universally unique identifiers used in just about every modern web-application or web-service.  And, if you're a developer living on the JVM, you're probably close friends with java.util.UUID whether you like it or not.
 
 Generally speaking, UUID's are a convenient way to represent some unique object or entity inside of an application.  After all, they're supposed to be "universally unique" and random enough such that an application can, in theory, generate "random" UUID's forever without any collisions.  In other words, UUID's are represented by a 128-bit number under-the-hood, so the total number of possible UUID's is immense -- 340,282,366,920,938,463,463,374,607,431,768,211,456 unique UUID's to be exact.
 

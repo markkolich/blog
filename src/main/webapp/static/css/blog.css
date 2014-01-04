@@ -84,8 +84,8 @@ div.panel.twitter .panel-body li.small p.smaller {
 }
 
 button.more {
-  width: 25%;
-  margin-left: 15px;
+  width: 30%;
+  margin: 30px auto 30px auto;
 }
 
 div.well.clone {
@@ -101,6 +101,9 @@ footer li {
   float: left;
   margin-right: 1.5em;
   margin-bottom: 1.5em;
+}
+footer li.first {
+  margin-right: 0;
 }
 footer p {
   clear: left;

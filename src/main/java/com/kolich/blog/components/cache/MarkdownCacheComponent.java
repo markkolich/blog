@@ -109,17 +109,27 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         }
     }
 
-    protected final List<T> getAll() {
+    protected final List<T> getAll(final int limit) {
         synchronized(cache_) {
-            return ImmutableList.copyOf(cache_.values());
+            final ImmutableList<T> list = ImmutableList.copyOf(cache_.values());
+            return (limit > 0 && limit <= list.size()) ?
+                list.subList(0, limit) : list;
         }
+    }
+
+    protected final List<T> getAll() {
+        return getAll(-1);
     }
 
     /**
      * Returns all cached content that was committed to the repo before
      * (older, prior to) the given commit.
      */
-    protected final List<T> getAllBefore(final String commit) {
+    protected final List<T> getAllBefore(@Nullable final String commit,
+                                         final int limit) {
+        if(commit == null) {
+            return ImmutableList.of(); // Empty, immutable list.
+        }
         // Get an immutable list of all "values" in the current cache map.
         final ImmutableList<T> entries = (ImmutableList<T>)getAll();
         // Find the index of the content corresponding to the
@@ -128,13 +138,17 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
             new Predicate<T>() {
             @Override
             public boolean apply(@Nullable final T input) {
-                return commit != null && commit.equals(input.getCommit());
+                return commit.equals(input.getCommit());
             }
         });
         if(index < 0) {
             return ImmutableList.of(); // Empty, immutable list.
         } else {
-            return entries.subList(index+1, entries.size());
+            final int offset = index + 1;
+            final Integer endIndex =
+                (limit > 0 && offset+limit <= entries.size()) ?
+                    offset+limit : entries.size();
+            return entries.subList(offset, endIndex);
         }
     }
 
