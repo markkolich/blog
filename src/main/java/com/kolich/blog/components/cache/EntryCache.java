@@ -51,7 +51,7 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
         return getAll(limit);
     }
 
-    public final List<Entry> getEntriesBefore(final String commit,
+    public final List<Entry> getEntriesBefore(@Nullable final String commit,
                                               final int limit) {
         return getAllBefore(commit, limit);
     }

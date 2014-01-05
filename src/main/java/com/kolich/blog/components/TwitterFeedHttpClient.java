@@ -1,15 +1,21 @@
 package com.kolich.blog.components;
 
+import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
+import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.util.concurrent.Future;
 
+import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.net.MediaType.JSON_UTF_8;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.IOUtils.copyLarge;
@@ -17,14 +23,27 @@ import static org.apache.commons.io.IOUtils.copyLarge;
 @Component
 public class TwitterFeedHttpClient implements CuracaoComponent {
 
+    private static final String twitterFeedUrl__ =
+        ApplicationConfig.getTwitterFeedUrl();
+
     private final AsyncHttpClient asyncHttpClient_;
 
     public TwitterFeedHttpClient() {
         asyncHttpClient_ = new AsyncHttpClient();
     }
 
-    public final AsyncHttpClient getClient() {
-        return asyncHttpClient_;
+    public final Future<TwitterFeed> getTweets() throws IOException {
+        return asyncHttpClient_.prepareGet(twitterFeedUrl__)
+            .execute(new AsyncCompletionHandler<TwitterFeed>() {
+                @Override
+                public TwitterFeed onCompleted(final Response response) throws Exception {
+                    return new TwitterFeed(response.getResponseBody(UTF_8.toString()));
+                }
+                @Override
+                public void onThrowable(final Throwable t) {
+                    // TODO
+                }
+            });
     }
 
     @Override
@@ -37,13 +56,13 @@ public class TwitterFeedHttpClient implements CuracaoComponent {
         asyncHttpClient_.close();
     }
 
-    public static final class TwitterFeedEntity extends AppendableCuracaoEntity {
+    public static final class TwitterFeed extends AppendableCuracaoEntity {
 
         private static final String JSON_UTF_8_TYPE = JSON_UTF_8.toString();
 
         private final String jsonString_;
 
-        public TwitterFeedEntity(final String jsonString) {
+        public TwitterFeed(final String jsonString) {
             jsonString_ = jsonString;
         }
 

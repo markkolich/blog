@@ -22,6 +22,16 @@ public final class ApplicationConfig {
         "dev-mode";
     private static final String CONTEXT_PATH_PROPERTY =
         "context-path";
+
+    private static final String BLOG_REPO_CLONE_URL_PROPERTY =
+        "clone.url";
+    private static final String CLONE_ON_STARTUP_PROPERTY =
+        "clone.on-startup";
+    private static final String CLONE_PATH_DIRECTORY_PROPERTY =
+        "clone.path";
+    private static final String GIT_PULL_UPDATE_INTERVAL_PROPERTY =
+        "clone.pull-update-interval";
+
     private static final String CONTENT_ROOT_PROPERTY =
         "content.root";
     private static final String CONTENT_TEMPLATES_PROPERTY =
@@ -33,14 +43,8 @@ public final class ApplicationConfig {
     private static final String CONTENT_ENTRY_LIMIT_PROPERTY =
         "content.entry-limit";
 
-    private static final String BLOG_REPO_CLONE_URL_PROPERTY =
-        "clone.url";
-    private static final String CLONE_ON_STARTUP_PROPERTY =
-        "clone.on-startup";
-    private static final String CLONE_PATH_DIRECTORY_PROPERTY =
-        "clone.path";
-    private static final String GIT_PULL_UPDATE_INTERVAL_PROPERTY =
-        "clone.pull-update-interval";
+    private static final String SERVICES_TWITTER_FEED_URL_PROPERTY =
+        "services.twitter.feed-url";
 
     // Private static's
 
@@ -152,6 +156,30 @@ public final class ApplicationConfig {
             CONTEXT_PATH_PROPERTY);
     }
 
+    // Clone property helpers
+
+    public static final String getBlogRepoCloneUrl() {
+        return getConfigInstance().getString(
+            BLOG_REPO_CLONE_URL_PROPERTY);
+    }
+
+    public static final Boolean shouldCloneOnStartup() {
+        return getConfigInstance().getBoolean(
+            CLONE_ON_STARTUP_PROPERTY);
+    }
+
+    public static final String getClonePath() {
+        return getConfigInstance().getString(
+            CLONE_PATH_DIRECTORY_PROPERTY);
+    }
+
+    public static final Long getGitPullUpdateInterval() {
+        return getConfigInstance().getMilliseconds(
+            GIT_PULL_UPDATE_INTERVAL_PROPERTY);
+    }
+
+    // Content property helpers
+
     public static final String getContentRootDir() {
         return getConfigInstance().getString(
             CONTENT_ROOT_PROPERTY);
@@ -177,24 +205,11 @@ public final class ApplicationConfig {
             CONTENT_ENTRY_LIMIT_PROPERTY);
     }
 
-    public static final String getBlogRepoCloneUrl() {
+    // Service property helpers
+
+    public static final String getTwitterFeedUrl() {
         return getConfigInstance().getString(
-            BLOG_REPO_CLONE_URL_PROPERTY);
-    }
-
-    public static final Boolean shouldCloneOnStartup() {
-        return getConfigInstance().getBoolean(
-            CLONE_ON_STARTUP_PROPERTY);
-    }
-
-    public static final String getClonePath() {
-        return getConfigInstance().getString(
-            CLONE_PATH_DIRECTORY_PROPERTY);
-    }
-
-    public static final Long getGitPullUpdateInterval() {
-        return getConfigInstance().getMilliseconds(
-            GIT_PULL_UPDATE_INTERVAL_PROPERTY);
+            SERVICES_TWITTER_FEED_URL_PROPERTY);
     }
 
 }

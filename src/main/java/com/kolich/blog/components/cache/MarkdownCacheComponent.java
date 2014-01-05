@@ -117,21 +117,17 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         }
     }
 
-    protected final List<T> getAll() {
-        return getAll(-1);
-    }
-
     /**
      * Returns all cached content that was committed to the repo before
      * (older, prior to) the given commit.
      */
     protected final List<T> getAllBefore(@Nullable final String commit,
                                          final int limit) {
-        if(commit == null) {
-            return ImmutableList.of(); // Empty, immutable list.
-        }
         // Get an immutable list of all "values" in the current cache map.
-        final ImmutableList<T> entries = (ImmutableList<T>)getAll();
+        final ImmutableList<T> entries = (ImmutableList<T>)getAll(-1);
+        if(commit == null) {
+            return entries;
+        }
         // Find the index of the content corresponding to the
         // provided commit.
         final int index = Iterables.indexOf(entries,
