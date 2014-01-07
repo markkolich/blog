@@ -26,7 +26,7 @@ public abstract class MarkdownContent {
 
         public static final DateFormat getNewInstance() {
             final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
-            df.setTimeZone(getTimeZone("America/Los_Angeles"));
+            df.setTimeZone(getTimeZone("GMT-8"));
             return df;
         }
 

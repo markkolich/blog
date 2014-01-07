@@ -13,6 +13,7 @@ bin
 config
 
 src/main/webapp/WEB-INF/work
-src/main/webapp/static/release
-src/main/webapp/static/js/build
-src/main/webapp/static/css/build
+
+content/static/release
+content/static/js/build
+content/static/css/build

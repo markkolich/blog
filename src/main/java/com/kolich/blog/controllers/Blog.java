@@ -1,6 +1,7 @@
 package com.kolich.blog.controllers;
 
 import com.kolich.blog.ApplicationConfig;
+import com.kolich.blog.components.StaticFileResolver;
 import com.kolich.blog.components.TwitterFeedHttpClient;
 import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
@@ -14,7 +15,10 @@ import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.methods.GET;
 import com.kolich.curacao.annotations.parameters.Path;
 import com.kolich.curacao.annotations.parameters.Query;
+import com.kolich.curacao.annotations.parameters.RequestUri;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -27,14 +31,17 @@ public final class Blog {
     private final PageCache pages_;
 
     private final TwitterFeedHttpClient twitterClient_;
+    private final StaticFileResolver staticResolver_;
 
     @Injectable
     public Blog(final EntryCache entries,
                 final PageCache pages,
-                final TwitterFeedHttpClient twitterClient) {
+                final TwitterFeedHttpClient twitterClient,
+                final StaticFileResolver staticResolver) {
         entries_ = entries;
         pages_ = pages;
         twitterClient_ = twitterClient;
+        staticResolver_ = staticResolver;
     }
 
     @GET("/")
@@ -50,6 +57,11 @@ public final class Blog {
     @GET("/contact")
     public final Page contact() {
         return pages_.getPage("contact");
+    }
+
+    @GET("/static/**")
+    public final File staticFile(@RequestUri final String uri) throws IOException {
+        return staticResolver_.getStaticFileInContentRoot(uri);
     }
 
     @GET("/blog.json")

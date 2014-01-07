@@ -119,7 +119,7 @@ object PackageJs extends AntHelpers {
   )
 
   val settings = Seq(
-    packageJs <<= baseDirectory(new File(_, "src/main/webapp/static")) map { base =>
+    packageJs <<= baseDirectory(new File(_, "content/static")) map { base =>
       val js = base / "js"
       val build = js / "build"
       val release = base / "release"
@@ -178,7 +178,7 @@ object PackageCss extends AntHelpers {
   )
 
   val settings = Seq(
-    packageCss <<= baseDirectory(new File(_, "src/main/webapp/static")) map { base =>
+    packageCss <<= baseDirectory(new File(_, "content/static")) map { base =>
       val css = base / "css"
       val build = css / "build"
       val release = base / "release"

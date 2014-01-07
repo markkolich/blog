@@ -7,10 +7,12 @@
 	<display-name>Blog</display-name>
 	<description>This is my blog. There are many like it, but this one is mine.</description>
 
+    <!--
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
+    -->
 
 	<servlet>
 		<servlet-name>BootstrapServlet</servlet-name>
