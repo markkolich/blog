@@ -3,7 +3,7 @@ package com.kolich.blog.components;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
-import com.kolich.curacao.handlers.components.CuracaoComponent;
+import com.kolich.curacao.handlers.components.ComponentDestroyable;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
@@ -21,7 +21,7 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.IOUtils.copyLarge;
 
 @Component
-public class TwitterFeedHttpClient implements CuracaoComponent {
+public class TwitterFeedHttpClient implements ComponentDestroyable {
 
     private static final String twitterFeedUrl__ =
         ApplicationConfig.getTwitterFeedUrl();
@@ -44,11 +44,6 @@ public class TwitterFeedHttpClient implements CuracaoComponent {
                     // TODO
                 }
             });
-    }
-
-    @Override
-    public final void initialize(final ServletContext context) throws Exception {
-        // Nothing, intentional.
     }
 
     @Override

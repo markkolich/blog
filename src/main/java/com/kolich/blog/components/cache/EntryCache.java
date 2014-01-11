@@ -3,6 +3,7 @@ package com.kolich.blog.components.cache;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
@@ -10,7 +11,6 @@ import com.kolich.curacao.annotations.Injectable;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public final class EntryCache extends MarkdownCacheComponent<Entry> {
@@ -47,12 +47,12 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
         return e;
     }
 
-    public final List<Entry> getEntries(final int limit) {
+    public final PagedContent<Entry> getEntries(final int limit) {
         return getAll(limit);
     }
 
-    public final List<Entry> getEntriesBefore(@Nullable final String commit,
-                                              final int limit) {
+    public final PagedContent<Entry> getEntriesBefore(@Nullable final String commit,
+                                                      final int limit) {
         return getAllBefore(commit, limit);
     }
 

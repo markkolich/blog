@@ -4,14 +4,12 @@ import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.blog.exceptions.DirectoryListingException;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.handlers.components.CuracaoComponent;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.Paths;
 
 @Component
-public final class StaticFileResolver implements CuracaoComponent {
+public final class StaticFileResolver {
 
     private final GitRepository git_;
 
@@ -21,25 +19,16 @@ public final class StaticFileResolver implements CuracaoComponent {
     }
 
     public final File getStaticFileInContentRoot(final String uri) {
-        final File f = new File(git_.getContentRoot(), Paths.get(uri).toString());
-        if(!f.exists()) {
+        final File file = new File(git_.getContentRoot(),
+            Paths.get(uri).toString());
+        if(!file.exists()) {
             throw new ContentNotFoundException("Could not find static " +
-                "resource file: " + f.getAbsolutePath());
-        } else if(f.isDirectory()) {
+                "resource file: " + file.getAbsolutePath());
+        } else if(file.isDirectory()) {
             throw new DirectoryListingException("Will not list contents " +
-                "of 'directory': " + f.getAbsolutePath());
+                "of 'directory': " + file.getAbsolutePath());
         }
-        return f;
-    }
-
-    @Override
-    public final void initialize(final ServletContext context) throws Exception {
-        // Nothing, intentional.
-    }
-
-    @Override
-    public final void destroy(final ServletContext context) throws Exception {
-        // Nothing, intentional.
+        return file;
     }
 
 }

@@ -9,7 +9,7 @@ import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.Page;
-import com.kolich.blog.entities.gson.EntryList;
+import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.methods.GET;
@@ -19,13 +19,15 @@ import com.kolich.curacao.annotations.parameters.RequestUri;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.Future;
 
 @Controller
 public final class Blog {
 
     private static final int entryLimit__ = ApplicationConfig.getEntryLimit();
+
+    private static final String ABOUT = "about";
+    private static final String CONTACT = "contact";
 
     private final EntryCache entries_;
     private final PageCache pages_;
@@ -51,12 +53,12 @@ public final class Blog {
 
     @GET("/about")
     public final Page about() {
-        return pages_.getPage("about");
+        return pages_.getPage(ABOUT);
     }
 
     @GET("/contact")
     public final Page contact() {
-        return pages_.getPage("contact");
+        return pages_.getPage(CONTACT);
     }
 
     @GET("/static/**")
@@ -65,8 +67,8 @@ public final class Blog {
     }
 
     @GET("/blog.json")
-    public final EntryList entries(@Query("before") final String commit) {
-        return new EntryList(entries_.getEntriesBefore(commit, entryLimit__));
+    public final PagedContent<Entry> entries(@Query("before") final String commit) {
+        return entries_.getEntriesBefore(commit, entryLimit__);
     }
 
     @GET("/tweets.json")

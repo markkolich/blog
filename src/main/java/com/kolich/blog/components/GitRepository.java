@@ -4,7 +4,8 @@ import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
-import com.kolich.curacao.handlers.components.CuracaoComponent;
+import com.kolich.curacao.annotations.Injectable;
+import com.kolich.curacao.handlers.components.ComponentDestroyable;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
@@ -22,7 +23,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
-public final class GitRepository implements CuracaoComponent {
+public final class GitRepository implements ComponentDestroyable {
 
     private static final Logger logger__ = getLogger(GitRepository.class);
 
@@ -41,8 +42,8 @@ public final class GitRepository implements CuracaoComponent {
 
     private static final String userDir__ = System.getProperty("user.dir");
 
-    private Repository repo_;
-    private Git git_;
+    private final Repository repo_;
+    private final Git git_;
 
     private final ScheduledExecutorService executor_;
 
@@ -53,17 +54,14 @@ public final class GitRepository implements CuracaoComponent {
      */
     private final Set<PullListener> listeners_;
 
-    public GitRepository() {
+    @Injectable
+    public GitRepository(final ServletContext context) throws Exception {
         executor_ = newSingleThreadScheduledExecutor(
             new ThreadFactoryBuilder()
                 .setDaemon(true)
                 .setNameFormat("git-puller")
                 .build());
         listeners_ = Sets.newLinkedHashSet();
-    }
-
-    @Override
-    public void initialize(final ServletContext context) throws Exception {
         final File repoDir = getRepoDir(context);
         logger__.info("Activated repository path: " +
             repoDir.getCanonicalFile());

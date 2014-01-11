@@ -23,23 +23,27 @@
                 }
                 more = function() {
                     $('button.more').click(function(e) {
-                        var more = $(this).parent();
+                        var moreDiv = $(this).parent();
                         var lastCommit = $('p.hash:last').html();
-                        $.getJSON("blog.json", {before: lastCommit}, function(data) {
-                            var entries = data.entries;
+                        $.getJSON("blog.json", {before: lastCommit}, function(json) {
+                            var entries = json.content;
+                            // Hide the "load more" button if no entries are left.
+                            if(json.remaining <= 0) {
+                                moreDiv.slideUp('fast');
+                            }
                             for(i in entries) {
                                 var entry = entries[i];
-                                var div = $('<div>').addClass('entry').hide(),
+                                var entryDiv = $('<div>').addClass('entry').hide(),
                                     h2 = $('<h2>').addClass('title'),
                                     link = $('<a>').attr('href',entry.name).html(entry.title),
                                     hash = $('<p>').addClass('hash').html(entry.commit),
                                     date = $('<p>').addClass('date').html(entry.date),
                                     content = $('<p>').html(entry.html),
                                     fader = $('<div>').addClass('fader');
-                                div.append(h2.append(link)).append(hash).append(date).append(content);
-                                div.append(fader);
-                                more.before(div);
-                                div.slideDown('fast');
+                                entryDiv.append(h2.append(link)).append(hash).append(date).append(content);
+                                entryDiv.append(fader);
+                                moreDiv.before(entryDiv);
+                                entryDiv.slideDown('fast');
                             }
                             $('html, body').animate({scrollTop:$(document).height()}, 'fast');
                             prettyprint();

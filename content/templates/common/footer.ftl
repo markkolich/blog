@@ -91,8 +91,9 @@
                     <li><a href="http://www.linkedin.com/in/markkolich">LinkedIn</a></li>
                 </ul>
 
-                <p>All content licensed under the <a href="https://github.com/markkolich/blog/blob/master/LICENSE">MIT License</a>.</p>
-                <p>Based on <a href="http://getbootstrap.com">Bootstrap</a>. Designed and built by <a href="${context}">Mark S. Kolich</a>.</p>
+                <p>Designed and built by <a href="${context}">Mark S. Kolich</a>.</p>
+                <p>All content licensed under the <a href="https://github.com/markkolich/blog">MIT License</a>.</p>
+                <p>UI built with <a href="http://getbootstrap.com">Bootstrap</a>. Server side powered by <a href="http://github.com/markkolich/curacao">Curacao</a>.</p>
 
             </div>
         </div>

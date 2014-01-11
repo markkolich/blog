@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
+import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -85,7 +86,8 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                     // content was added with a given commit, but may have been
                     // since deleted.
                     if(markdown.exists()) {
-                        final String entityName = removeExtension(markdown.getName());
+                        final String entityName = removeExtension(
+                            markdown.getName());
                         final T entity = getEntity(entityName, title, hash,
                             date, markdown);
                         newCache.put(entityName, entity);
@@ -109,27 +111,44 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         }
     }
 
-    protected final List<T> getAll(final int limit) {
+    protected final int getCount() {
         synchronized(cache_) {
-            final ImmutableList<T> list = ImmutableList.copyOf(cache_.values());
-            return (limit > 0 && limit <= list.size()) ?
-                list.subList(0, limit) : list;
+            return cache_.size();
         }
+    }
+
+    protected final ImmutableList<T> getAll() {
+        synchronized(cache_) {
+            return ImmutableList.copyOf(cache_.values());
+        }
+    }
+
+    protected final PagedContent<T> getAll(@Nullable final Integer limit) {
+        final ImmutableList<T> list = getAll();
+        final PagedContent<T> result;
+        if(limit != null && limit > 0 && limit <= list.size()) {
+            final ImmutableList<T> sublist = list.subList(0, limit);
+            result = new PagedContent<>(sublist, list.size()-sublist.size());
+        } else {
+            result = new PagedContent<>(list, 0);
+        }
+        return result;
     }
 
     /**
      * Returns all cached content that was committed to the repo before
      * (older, prior to) the given commit.
      */
-    protected final List<T> getAllBefore(@Nullable final String commit,
-                                         final int limit) {
+    protected final PagedContent<T> getAllBefore(@Nullable final String commit,
+                                                 @Nullable final Integer limit) {
         // Get an immutable list of all "values" in the current cache map.
-        final ImmutableList<T> entries = (ImmutableList<T>)getAll(-1);
+        final ImmutableList<T> entries = getAll();
+        // If the provided commit hash is null, then we return ~all~ entries
+        // and zero, indicating none are remaining.
         if(commit == null) {
-            return entries;
+            return new PagedContent<>(entries, 0);
         }
-        // Find the index of the content corresponding to the
-        // provided commit.
+        // Find the index of the content corresponding to the provided commit.
         final int index = Iterables.indexOf(entries,
             new Predicate<T>() {
             @Override
@@ -138,13 +157,20 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
             }
         });
         if(index < 0) {
-            return ImmutableList.of(); // Empty, immutable list.
+            // An entry with the provided commit wasn't found in the set.  This
+            // must mean the hash is unknown, so return all entries in addition
+            // to the size of the list (indicating all remaining).
+            return new PagedContent<>(ImmutableList.<T>of(), entries.size());
         } else {
             final int offset = index + 1;
             final Integer endIndex =
-                (limit > 0 && offset+limit <= entries.size()) ?
+                (limit != null && limit > 0 && offset+limit <= entries.size()) ?
                     offset+limit : entries.size();
-            return entries.subList(offset, endIndex);
+            return new PagedContent<>(
+                // Sub list, enforcing limit.
+                entries.subList(offset, endIndex),
+                // The number of entries that remain.
+                entries.size() - endIndex);
         }
     }
 

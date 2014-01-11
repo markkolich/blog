@@ -4,16 +4,14 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.components.GitRepository;
+import com.kolich.blog.components.FreeMarkerCache;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.MarkdownFile;
-import com.kolich.blog.mappers.handlers.ContentNotFoundExceptionHandler;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.apache.commons.codec.binary.StringUtils;
 import org.pegdown.Extensions;
@@ -41,8 +39,6 @@ public final class MarkdownDrivenContentResponseMapper
 
     private static final String appContextPath__ =
         ApplicationConfig.getContextPath();
-    private static final String templatesDir__ =
-        ApplicationConfig.getTemplatesDir();
 
     private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
 
@@ -51,18 +47,15 @@ public final class MarkdownDrivenContentResponseMapper
     private static final String TEMPLATE_ATTR_COMMIT = "commit";
     private static final String TEMPLATE_ATTR_DATE = "date";
     private static final String TEMPLATE_ATTR_CONTENT = "content";
-    private static final String TEMPLATE_ATTR_ENTRIES = "entries";
 
-    private final Configuration config_;
+    private static final String TEMPLATE_ATTR_ENTRIES = "entries";
+    private static final String TEMPLATE_ATTR_ENTRIES_REMAINING = "remaining";
+
+    private final FreeMarkerCache freemarker_;
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final GitRepository git)
-        throws Exception {
-        final File templateRoot = git.getFileRelativeToContentRoot(
-            templatesDir__);
-        config_ = new Configuration();
-        config_.setDirectoryForTemplateLoading(templateRoot);
-        config_.setDefaultEncoding(Charsets.UTF_8.name());
+    public MarkdownDrivenContentResponseMapper(final FreeMarkerCache freemarker) {
+        freemarker_ = freemarker;
     }
 
     @Override
@@ -70,41 +63,43 @@ public final class MarkdownDrivenContentResponseMapper
                              final HttpServletResponse response,
                              @Nonnull final MarkdownContent md) throws Exception {
         try {
-            final Template tmpl = config_.getTemplate(md.getTemplateName());
+            final Template tp = freemarker_.getConfig()
+                .getTemplate(md.getTemplateName());
             try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
                 final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
-                tmpl.process(markdownContentToDataMap(md, tmpl), w);
-                RenderingResponseTypeMapper.renderEntity(response,
-                    new Utf8CompressedHtmlEntity(os));
+                tp.process(markdownContentToDataMap(md, tp), w);
+                renderEntity(response, new Utf8CompressedHtmlEntity(os));
             }
         } catch (Exception e) {
-            logger__.warn("Content rendering exception: " + md, e);
-            new ContentNotFoundExceptionHandler().render(context, response);
+            logger__.warn("Oops, content rendering exception: " + md, e);
         }
     }
 
     private static final Map<String,Object> markdownContentToDataMap(
-        final MarkdownContent md, final Template tmpl) throws Exception {
-        final Map<String,Object> data = Maps.newLinkedHashMap();
-        final Object name = tmpl.getCustomAttribute(TEMPLATE_ATTR_NAME);
-        data.put(TEMPLATE_ATTR_NAME, (name == null) ? md.getName() : name);
-        final Object title = tmpl.getCustomAttribute(TEMPLATE_ATTR_TITLE);
-        data.put(TEMPLATE_ATTR_TITLE, (title == null) ? md.getTitle() : title);
-        final Object hash = tmpl.getCustomAttribute(TEMPLATE_ATTR_COMMIT);
-        data.put(TEMPLATE_ATTR_COMMIT, (hash == null) ? md.getCommit() : hash);
-        final Object date = tmpl.getCustomAttribute(TEMPLATE_ATTR_DATE);
-        data.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
+        final MarkdownContent md, final Template tp) throws Exception {
+        final Map<String,Object> map = Maps.newLinkedHashMap();
+        final Object name = tp.getCustomAttribute(TEMPLATE_ATTR_NAME);
+        map.put(TEMPLATE_ATTR_NAME, (name == null) ? md.getName() : name);
+        final Object title = tp.getCustomAttribute(TEMPLATE_ATTR_TITLE);
+        map.put(TEMPLATE_ATTR_TITLE, (title == null) ? md.getTitle() : title);
+        final Object hash = tp.getCustomAttribute(TEMPLATE_ATTR_COMMIT);
+        map.put(TEMPLATE_ATTR_COMMIT, (hash == null) ? md.getCommit() : hash);
+        final Object date = tp.getCustomAttribute(TEMPLATE_ATTR_DATE);
+        map.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
         // Attach the Markdown content converted to a String to the data map.
         final String content;
         if((content = md.getContent()) != null) {
-            data.put(TEMPLATE_ATTR_CONTENT, content);
+            map.put(TEMPLATE_ATTR_CONTENT, content);
         }
-        // Only Index types get a list of entries attached to its data map.
+        // Only Index types get a list of entries and a remaining count
+        // attached to their data map.
         if(md instanceof Index) {
-            data.put(TEMPLATE_ATTR_ENTRIES, ((Index)md).getEntries());
+            final Index idx = (Index)md;
+            map.put(TEMPLATE_ATTR_ENTRIES, idx.getEntries());
+            map.put(TEMPLATE_ATTR_ENTRIES_REMAINING, idx.getRemaining());
         }
-        data.put(TEMPLATE_ATTR_CONTEXT_PATH, appContextPath__);
-        return data;
+        map.put(TEMPLATE_ATTR_CONTEXT_PATH, appContextPath__);
+        return map;
     }
 
     public static final String markdownToString(final MarkdownFile mdf)
@@ -113,7 +108,7 @@ public final class MarkdownDrivenContentResponseMapper
         return p.markdownToHtml(readFileToString(mdf.getFile(), Charsets.UTF_8));
     }
 
-    private static final class Utf8CompressedHtmlEntity
+    public static final class Utf8CompressedHtmlEntity
         extends AppendableCuracaoEntity {
 
         private static final String HTML_UTF_8_STRING = HTML_UTF_8.toString();

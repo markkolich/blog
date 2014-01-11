@@ -22,6 +22,8 @@ public final class ApplicationConfig {
         "dev-mode";
     private static final String CONTEXT_PATH_PROPERTY =
         "context-path";
+    private static final String CONTENT_TYPES_CONFIG =
+        "content-types";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY =
         "clone.url";
@@ -210,6 +212,21 @@ public final class ApplicationConfig {
     public static final String getTwitterFeedUrl() {
         return getConfigInstance().getString(
             SERVICES_TWITTER_FEED_URL_PROPERTY);
+    }
+
+    // Content type helpers
+
+    public static final String getContentTypeForExtension(final String ext,
+                                                          final String defaultValue) {
+        String contentType = null;
+        try {
+            contentType = getConfigInstance()
+                .getConfig(CONTENT_TYPES_CONFIG)
+                .getString(ext);
+        } catch (Exception e) {
+            contentType = defaultValue;
+        }
+        return contentType;
     }
 
 }
