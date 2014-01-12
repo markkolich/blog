@@ -6,6 +6,7 @@ import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.handlers.components.ComponentDestroyable;
+import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
@@ -23,7 +24,7 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
-public final class GitRepository implements ComponentDestroyable {
+public final class GitRepository implements CuracaoComponent {
 
     private static final Logger logger__ = getLogger(GitRepository.class);
 
@@ -87,6 +88,10 @@ public final class GitRepository implements ComponentDestroyable {
             .build();
         git_ = new Git(repo_);
         logger__.info("Successfully initialized repository at: " + repo_);
+    }
+
+    @Override
+    public final void initialize(final ServletContext context) throws Exception {
         // Schedule a new updater at a "fixed" interval that has no
         // initial delay to fetch/pull in new content immediately.
         executor_.scheduleAtFixedRate(
@@ -97,7 +102,7 @@ public final class GitRepository implements ComponentDestroyable {
     }
 
     @Override
-    public void destroy(final ServletContext context) throws Exception {
+    public final void destroy(final ServletContext context) throws Exception {
         // Close our handle to the repository on shutdown.
         repo_.close();
         // Ask the single thread updater pool to "shutdown".

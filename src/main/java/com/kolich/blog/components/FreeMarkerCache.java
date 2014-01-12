@@ -15,23 +15,18 @@ public final class FreeMarkerCache {
     private static final String templatesDir__ =
         ApplicationConfig.getTemplatesDir();
 
-    private final GitRepository git_;
+    private final File templateRoot_;
 
     @Injectable
-    public FreeMarkerCache(final GitRepository git) throws IOException {
-        git_ = git;
-    }
-
-    public final Configuration getConfig(final String dirName) throws IOException {
-        final File templateRoot = git_.getFileRelativeToContentRoot(dirName);
-        final Configuration config = new Configuration();
-        config.setDirectoryForTemplateLoading(templateRoot);
-        config.setDefaultEncoding(Charsets.UTF_8.name());
-        return config;
+    public FreeMarkerCache(final GitRepository git) {
+        templateRoot_ = git.getFileRelativeToContentRoot(templatesDir__);
     }
 
     public final Configuration getConfig() throws IOException {
-        return getConfig(templatesDir__);
+        final Configuration config = new Configuration();
+        config.setDirectoryForTemplateLoading(templateRoot_);
+        config.setDefaultEncoding(Charsets.UTF_8.name());
+        return config;
     }
 
 }
