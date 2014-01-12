@@ -39,8 +39,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.0-M8" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0-M8" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.0-M9" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0-M9" % "compile"
 
   // Jetty 9.1 "stable", version 9.1.0.v20131115 (as of 11/25/13)
   private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.0.v20131115" % "container"

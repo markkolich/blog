@@ -7,6 +7,7 @@ import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.CuracaoEntity;
 import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
@@ -22,10 +23,14 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.FilenameUtils.getExtension;
 import static org.apache.commons.io.FilenameUtils.normalize;
 import static org.apache.commons.io.IOUtils.copyLarge;
+import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(File.class)
 public final class StaticFileResponseMapper
     extends RenderingResponseTypeMapper<File> {
+
+    private static final Logger logger__ =
+        getLogger(StaticFileResponseMapper.class);
 
     private static final boolean isDevMode__ = ApplicationConfig.isDevMode();
 
@@ -39,6 +44,8 @@ public final class StaticFileResponseMapper
     public final void render(final AsyncContext context,
                              final HttpServletResponse response,
                              final @Nonnull File entity) throws Exception {
+        logger__.debug("Attempting to render static file: " +
+            entity.getCanonicalPath());
         renderEntity(response, new CuracaoEntity() {
             @Override
             public int getStatus() {

@@ -62,7 +62,8 @@ public final class Blog {
     }
 
     @GET("/static/**")
-    public final File staticFile(@RequestUri final String uri) throws IOException {
+    public final File staticFile(@RequestUri(includeContext=false) final String uri)
+        throws IOException {
         return staticResolver_.getStaticFileInContentRoot(uri);
     }
 
