@@ -31,4 +31,8 @@ public final class StaticFileResolver {
         return file;
     }
 
+    public final File getRobotsTxt() {
+        return getStaticFileInContentRoot("static/robots.txt");
+    }
+
 }

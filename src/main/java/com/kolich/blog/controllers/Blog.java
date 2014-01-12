@@ -66,6 +66,10 @@ public final class Blog {
         throws IOException {
         return staticResolver_.getStaticFileInContentRoot(uri);
     }
+    @GET("/robots.txt")
+    public final File robots() {
+        return staticResolver_.getRobotsTxt();
+    }
 
     @GET("/blog.json")
     public final PagedContent<Entry> entries(@Query("before") final String commit) {
