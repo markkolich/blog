@@ -24,6 +24,11 @@ public final class MarkdownFile {
         return file_;
     }
 
+    @Override
+    public final String toString() {
+        return file_.getAbsolutePath();
+    }
+
     public static final class MarkdownFileGsonAdapter
         implements JsonSerializer<MarkdownFile> {
 

@@ -98,8 +98,11 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
         // In a thread safe manner, clear the existing cache and then add
         // all new entries into it.  This is essentially just a "swap".
         synchronized(cache_) {
-            logger__.debug("Replacing cache with refreshed content " +
-                "(old=" + cache_.size() + ", new=" + newCache.size() + ")");
+            if(cache_.size() != newCache.size()) {
+                logger__.info("Replacing cache with refreshed content (old=" +
+                    cache_.size() + " -> new=" + newCache.size() + "): " +
+                    newCache.toString());
+            }
             cache_.clear();
             cache_.putAll(newCache);
         }
@@ -143,10 +146,10 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                                                  @Nullable final Integer limit) {
         // Get an immutable list of all "values" in the current cache map.
         final ImmutableList<T> entries = getAll();
-        // If the provided commit hash is null, then we return ~all~ entries
-        // and zero, indicating none are remaining.
+        // If the provided commit hash is null, then we return entries up to
+        // a set limit with a remaining zero, indicating none are remaining.
         if(commit == null) {
-            return new PagedContent<>(entries, 0);
+            return getAll(limit);
         }
         // Find the index of the content corresponding to the provided commit.
         final int index = Iterables.indexOf(entries,

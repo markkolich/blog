@@ -3,6 +3,8 @@
 <head>
     <title>Mark S. Kolich: ${title}</title>
     <link href="${context}static/release/blog.css" rel="stylesheet" />
+    <link rel="icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <div class="container">

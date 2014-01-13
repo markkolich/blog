@@ -76,6 +76,8 @@ public final class Blog {
         return entries_.getEntriesBefore(commit, entryLimit__);
     }
 
+
+
     @GET("/tweets.json")
     public final Future<TwitterFeed> tweets() throws Exception {
         return twitterClient_.getTweets();
