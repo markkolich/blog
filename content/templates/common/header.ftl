@@ -5,6 +5,7 @@
     <link href="${context}static/release/blog.css" rel="stylesheet" />
     <link rel="icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
+    <link rel="alternate" type="application/atom+xml" title="Mark S. Kolich" href="${context}blog.xml">
 </head>
 <body>
     <div class="container">

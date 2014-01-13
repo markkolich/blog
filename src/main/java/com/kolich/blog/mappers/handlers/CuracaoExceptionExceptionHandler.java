@@ -5,10 +5,11 @@ import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.FreeMarkerCache;
 import com.kolich.blog.entities.html.Utf8CompressedHtmlEntity;
+import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.exceptions.CuracaoException;
-import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
+import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.slf4j.Logger;
 
@@ -26,7 +27,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(CuracaoException.class)
 public final class CuracaoExceptionExceptionHandler
-    extends RenderingResponseTypeMapper<CuracaoException> {
+    extends AbstractDevModeSafeResponseMapper<CuracaoException> {
 
     private static final Logger logger__ =
         getLogger(CuracaoExceptionExceptionHandler.class);
@@ -37,18 +38,17 @@ public final class CuracaoExceptionExceptionHandler
     private static final String TEMPLATE_ATTR_TITLE = "title";
     private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
 
-    private final FreeMarkerCache freemarker_;
+    private final Configuration fmConfig_;
 
     @Injectable
-    public CuracaoExceptionExceptionHandler(final FreeMarkerCache freemarker)
-        throws IOException {
-        freemarker_ = freemarker;
+    public CuracaoExceptionExceptionHandler(final FreeMarkerCache freemarker) {
+        fmConfig_ = freemarker.getConfig();
     }
 
     @Override
-    public final void render(final AsyncContext context,
-                             final HttpServletResponse response,
-                             @Nonnull final CuracaoException exception) throws Exception {
+    public final void renderSafe(final AsyncContext context,
+                                 final HttpServletResponse response,
+                                 @Nonnull final CuracaoException exception) throws Exception {
         int status = SC_INTERNAL_SERVER_ERROR; // default
         if(exception instanceof CuracaoException.WithEntity) {
             status = ((CuracaoException.WithEntity)exception).getEntity().getStatus();
@@ -74,7 +74,7 @@ public final class CuracaoExceptionExceptionHandler
 
     private final Template getErrorTemplateForStatus(final int status)
         throws IOException {
-        return freemarker_.getConfig().getTemplate(getTemplateName(status));
+        return fmConfig_.getTemplate(getTemplateName(status));
     }
 
     private final String getTemplateName(final int status) {

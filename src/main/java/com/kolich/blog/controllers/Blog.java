@@ -7,6 +7,7 @@ import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.FeedContent;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.Page;
 import com.kolich.blog.entities.gson.PagedContent;
@@ -72,11 +73,13 @@ public final class Blog {
     }
 
     @GET("/blog.json")
-    public final PagedContent<Entry> entries(@Query("before") final String commit) {
+    public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
         return entries_.getEntriesBefore(commit, entryLimit__);
     }
-
-
+    @GET("/blog.xml")
+    public final FeedContent atomFeed() {
+        return entries_.getFeedEntries(entryLimit__);
+    }
 
     @GET("/tweets.json")
     public final Future<TwitterFeed> tweets() throws Exception {

@@ -3,10 +3,8 @@ package com.kolich.blog.mappers;
 import com.google.common.base.Charsets;
 import com.google.common.net.MediaType;
 import com.google.common.primitives.Ints;
-import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.entities.CuracaoEntity;
-import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -17,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static com.google.common.net.HttpHeaders.CACHE_CONTROL;
 import static com.kolich.blog.ApplicationConfig.getContentTypeForExtension;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.FilenameUtils.getExtension;
@@ -27,32 +24,27 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(File.class)
 public final class StaticFileResponseMapper
-    extends RenderingResponseTypeMapper<File> {
+    extends AbstractDevModeSafeResponseMapper<File> {
 
     private static final Logger logger__ =
         getLogger(StaticFileResponseMapper.class);
-
-    private static final boolean isDevMode__ = ApplicationConfig.isDevMode();
-
-    private static final String CACHE_CONTROL_NO_CACHE =
-        "no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
 
     private static final String DEFAULT_CONTENT_TYPE =
         MediaType.OCTET_STREAM.toString();
 
     @Override
-    public final void render(final AsyncContext context,
-                             final HttpServletResponse response,
-                             final @Nonnull File entity) throws Exception {
+    public final void renderSafe(final AsyncContext context,
+                                 final HttpServletResponse response,
+                                 @Nonnull final File entity) throws Exception {
         logger__.debug("Attempting to render static file: " +
             entity.getCanonicalPath());
         renderEntity(response, new CuracaoEntity() {
             @Override
-            public int getStatus() {
+            public final int getStatus() {
                 return SC_OK;
             }
             @Override
-            public String getContentType() {
+            public final String getContentType() {
                 // Normalize (important) and extract the extension from the file.
                 final String extension = getExtension(normalize(
                     entity.getAbsolutePath()));
@@ -70,15 +62,7 @@ public final class StaticFileResponseMapper
                 return mediaType.toString();
             }
             @Override
-            public void write(final OutputStream os) throws Exception {
-                // When in 'development' mode we set this header to prevent
-                // any browser or proxy caching of CSS, JavaScript, or images.
-                // I like to press Cmd-R and see my changes reflected
-                // immediately without worrying about browser caching and
-                // nonstandard proxies.
-                if(isDevMode__) {
-                    response.addHeader(CACHE_CONTROL, CACHE_CONTROL_NO_CACHE);
-                }
+            public final void write(final OutputStream os) throws Exception {
                 // Sigh.  Yep, here we are "safely" casting a Long to an Integer.
                 // This ~should~ be fine, in theory, given that this response
                 // mapper is likely not going to serve up content larger than

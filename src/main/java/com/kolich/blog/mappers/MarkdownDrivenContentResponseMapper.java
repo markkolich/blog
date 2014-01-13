@@ -10,7 +10,7 @@ import com.kolich.blog.entities.MarkdownFile;
 import com.kolich.blog.entities.html.Utf8CompressedHtmlEntity;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
-import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
+import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
@@ -30,7 +29,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(MarkdownContent.class)
 public final class MarkdownDrivenContentResponseMapper
-    extends RenderingResponseTypeMapper<MarkdownContent> {
+    extends AbstractDevModeSafeResponseMapper<MarkdownContent> {
 
     private static final Logger logger__ =
         getLogger(MarkdownDrivenContentResponseMapper.class);
@@ -49,21 +48,19 @@ public final class MarkdownDrivenContentResponseMapper
     private static final String TEMPLATE_ATTR_ENTRIES = "entries";
     private static final String TEMPLATE_ATTR_ENTRIES_REMAINING = "remaining";
 
-    private final FreeMarkerCache freemarker_;
+    private final Configuration fmConfig_;
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final FreeMarkerCache freemarker)
-        throws IOException {
-        freemarker_ = freemarker;
+    public MarkdownDrivenContentResponseMapper(final FreeMarkerCache freemarker) {
+        fmConfig_= freemarker.getConfig();
     }
 
     @Override
-    public final void render(final AsyncContext context,
-                             final HttpServletResponse response,
-                             @Nonnull final MarkdownContent md) throws Exception {
+    public final void renderSafe(final AsyncContext context,
+                                 final HttpServletResponse response,
+                                 @Nonnull final MarkdownContent md) throws Exception {
         try {
-            final Template tp = freemarker_.getConfig().getTemplate(
-                    md.getTemplateName());
+            final Template tp = fmConfig_.getTemplate(md.getTemplateName());
             try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
                 final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
                 tp.process(markdownContentToDataMap(md, tp), w);
