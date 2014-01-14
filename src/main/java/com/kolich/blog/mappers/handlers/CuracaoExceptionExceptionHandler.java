@@ -1,15 +1,12 @@
 package com.kolich.blog.mappers.handlers;
 
 import com.google.common.base.Charsets;
-import com.google.common.collect.Maps;
-import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.html.Utf8XHtmlEntity;
-import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
+import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import com.kolich.curacao.exceptions.CuracaoException;
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.slf4j.Logger;
 
@@ -28,22 +25,14 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(CuracaoException.class)
 public final class CuracaoExceptionExceptionHandler
-    extends AbstractDevModeSafeResponseMapper<CuracaoException> {
+    extends AbstractFreeMarkerAwareResponseMapper<CuracaoException> {
 
     private static final Logger logger__ =
         getLogger(CuracaoExceptionExceptionHandler.class);
 
-    private static final String appContextPath__ =
-        ApplicationConfig.getContextPath();
-
-    private static final String TEMPLATE_ATTR_TITLE = "title";
-    private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
-
-    private final Configuration fmConfig_;
-
     @Injectable
     public CuracaoExceptionExceptionHandler(final FreeMarkerConfig freemarker) {
-        fmConfig_ = freemarker.getConfig();
+        super(freemarker);
     }
 
     @Override
@@ -68,26 +57,25 @@ public final class CuracaoExceptionExceptionHandler
         }
         try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
             final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
-            tp.process(buildDataMap(tp), w);
+            tp.process(getDataMap(tp), w);
             renderEntity(response, new Utf8XHtmlEntity(HTML, status, os));
         }
     }
 
     private final Template getErrorTemplateForStatus(final int status)
         throws IOException {
-        return fmConfig_.getTemplate(getTemplateName(status));
+        return config_.getTemplate(getTemplateName(status));
     }
 
     private final String getTemplateName(final int status) {
         return String.format("errors/%s.ftl", Integer.toString(status));
     }
 
-    private static final Map<String,Object> buildDataMap(final Template tp)
-        throws Exception {
-        final Map<String,Object> map = Maps.newLinkedHashMap();
+    @Override
+    protected final Map<String,Object> getDataMap(final Template tp) {
+        final Map<String,Object> map = super.getDataMap(tp);
         final Object title = tp.getCustomAttribute(TEMPLATE_ATTR_TITLE);
         map.put(TEMPLATE_ATTR_TITLE, title);
-        map.put(TEMPLATE_ATTR_CONTEXT_PATH, appContextPath__);
         return map;
     }
 

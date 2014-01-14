@@ -7,7 +7,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.kolich.blog.mappers.MarkdownDrivenContentResponseMapper.markdownToString;
 import static java.util.TimeZone.getTimeZone;
 
 public abstract class MarkdownContent {
@@ -86,6 +85,14 @@ public abstract class MarkdownContent {
         content_ = (content != null) ? new MarkdownFile(content) : null;
     }
 
+    public MarkdownContent(final ContentType type,
+                           final String name,
+                           final String title,
+                           final String commit,
+                           final Date date) {
+        this(type, name, title, commit, date, null);
+    }
+
     public final ContentType getType() {
         return type_;
     }
@@ -118,7 +125,7 @@ public abstract class MarkdownContent {
     public final String getContent() {
         String result = null;
         try {
-            result = (content_ != null) ? markdownToString(content_) : null;
+            result = (content_ != null) ? content_.getHtmlFromMarkdown() : null;
         } catch (Exception e) {
             result = null;
         }

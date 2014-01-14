@@ -11,7 +11,7 @@ public final class Index extends MarkdownContent {
     private final PagedContent<Entry> entries_;
 
     public Index(final PagedContent<Entry> entries) {
-        super(ContentType.INDEX, null, null, null, null, null);
+        super(ContentType.INDEX, null, null, null, null);
         entries_ = entries;
     }
 
