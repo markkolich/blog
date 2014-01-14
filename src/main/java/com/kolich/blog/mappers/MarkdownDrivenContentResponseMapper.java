@@ -36,8 +36,21 @@ public final class MarkdownDrivenContentResponseMapper
 
     private static final String appContextPath__ =
         ApplicationConfig.getContextPath();
+    private static final String blogTitle__ =
+        ApplicationConfig.getBlogTitle();
+    private static final String getBlogSubTitle__ =
+        ApplicationConfig.getBlogSubTitle();
+    private static final String hostname__  =
+        ApplicationConfig.getHostname();
+    private static final String fullUri__ =
+        ApplicationConfig.getFullUri();
 
     private static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
+
+    private static final String TEMPLATE_ATTR_BLOG_TITLE = "blogTitle";
+    private static final String TEMPLATE_ATTR_BLOG_SUBTITLE = "blogSubTitle";
+    private static final String TEMPLATE_ATTR_HOSTNAME = "hostname";
+    private static final String TEMPLATE_ATTR_FULL_URI = "fullUri";
 
     private static final String TEMPLATE_ATTR_NAME = "name";
     private static final String TEMPLATE_ATTR_TITLE = "title";
@@ -95,6 +108,10 @@ public final class MarkdownDrivenContentResponseMapper
             map.put(TEMPLATE_ATTR_ENTRIES_REMAINING, idx.getRemaining());
         }
         map.put(TEMPLATE_ATTR_CONTEXT_PATH, appContextPath__);
+        map.put(TEMPLATE_ATTR_BLOG_TITLE, blogTitle__);
+        map.put(TEMPLATE_ATTR_BLOG_SUBTITLE, getBlogSubTitle__);
+        map.put(TEMPLATE_ATTR_HOSTNAME, hostname__);
+        map.put(TEMPLATE_ATTR_FULL_URI, fullUri__);
         return map;
     }
 

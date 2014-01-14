@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <title>Mark S. Kolich</title>
-    <link rel="alternate" type="text/html" href="http://mark.koli.ch/"/>
-    <link rel="self" type="application/atom+xml" href="http://mark.koli.ch${context}blog.xml"/>
-    <id>tag:,2008-10-25:/1</id>
+    <title>${blogTitle}</title>
+    <link rel="alternate" type="text/html" href="${fullUri}"/>
+    <link rel="self" type="application/atom+xml" href="${fullUri}atom.xml"/>
+    <id>http://mark.koli.ch</id>
     <updated>2013-08-19T22:43:22Z</updated>
-    <subtitle>Software Engineer</subtitle>
+    <subtitle>${blogSubTitle}</subtitle>
+
+    <#list entries as e>
+
+        <entry>
+
+            <title>${e.title}</title>
+            <id>${e.commit}</id>
+
+            <published>${e.atomFeedDateFormatted}</published>
+            <updated>${e.atomFeedDateFormatted}</updated>
+
+            <author>
+                <name>Mark S. Kolich</name>
+                <uri>${fullUri}</uri>
+            </author>
+
+            <content type="html" xml:lang="en-US" xml:base="${fullUri}">
+                <![CDATA[${e.content}]]>
+            </content>
+
+        </entry>
+
+    </#list>
 
 </feed>

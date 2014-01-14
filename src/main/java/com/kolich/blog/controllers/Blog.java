@@ -76,7 +76,7 @@ public final class Blog {
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
         return entries_.getEntriesBefore(commit, entryLimit__);
     }
-    @GET("/blog.xml")
+    @GET("/atom.xml")
     public final FeedContent atomFeed() {
         return entries_.getFeedEntries(entryLimit__);
     }

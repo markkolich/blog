@@ -36,6 +36,24 @@ public abstract class MarkdownContent {
 
     }
 
+    public static class AtomFeedRFC3339DateFormat {
+
+        private static final String RFC3339_DATE_FORMAT_STRING =
+            "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
+        public static final DateFormat getNewInstance() {
+            final DateFormat df = new SimpleDateFormat(
+                RFC3339_DATE_FORMAT_STRING);
+            df.setTimeZone(getTimeZone("GMT-0"));
+            return df;
+        }
+
+        public static final String format(final Date d) {
+            return getNewInstance().format(d);
+        }
+
+    }
+
     @SerializedName("type")
     private final ContentType type_;
 
@@ -90,6 +108,9 @@ public abstract class MarkdownContent {
     public final String getDateFormatted() {
         return (date_ != null) ? BlogContentDateFormat.format(date_) : null;
     }
+    public final String getAtomFeedDateFormatted() {
+        return (date_ != null) ? AtomFeedRFC3339DateFormat.format(date_) : null;
+    }
 
     public final MarkdownFile getMarkdownFile() {
         return content_;
@@ -106,7 +127,8 @@ public abstract class MarkdownContent {
 
     @Override
     public final String toString() {
-        return String.format("%s(%s, %s, %s)", CLASS_SN, name_, title_, content_);
+        return String.format("%s(%s, %s, %s)", CLASS_SN, name_, title_,
+            content_);
     }
 
     public abstract String getTemplateName();

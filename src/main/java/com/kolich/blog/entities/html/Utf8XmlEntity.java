@@ -1,5 +1,6 @@
 package com.kolich.blog.entities.html;
 
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
 import org.apache.commons.codec.binary.StringUtils;
 
@@ -21,7 +22,7 @@ public final class Utf8XmlEntity extends AppendableCuracaoEntity {
 
     public Utf8XmlEntity(final int status, final String xml) {
         status_ = status;
-        xml_ = xml;
+        xml_ = compressXml(xml);
     }
 
     public Utf8XmlEntity(final String xml) {
@@ -47,6 +48,12 @@ public final class Utf8XmlEntity extends AppendableCuracaoEntity {
     @Override
     public final String getContentType() {
         return XML_UTF_8_STRING;
+    }
+
+    private static final String compressXml(final String uncompressed) {
+        final HtmlCompressor compressor = new HtmlCompressor();
+        compressor.setRemoveSurroundingSpaces(HtmlCompressor.BLOCK_TAGS_MAX);
+        return compressor.compress(uncompressed);
     }
 
 }

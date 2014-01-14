@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
-    <title>Mark S. Kolich: ${title}</title>
+    <title>${blogTitle}: ${title}</title>
     <link href="${context}static/release/blog.css" rel="stylesheet" />
     <link rel="icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="${context}static/images/favicon.ico" type="image/x-icon" />
-    <link rel="alternate" type="application/atom+xml" title="Mark S. Kolich" href="${context}blog.xml">
+    <link rel="alternate" type="application/atom+xml" title="${blogTitle}: ${blogSubTitle}" href="${context}atom.xml">
 </head>
 <body>
     <div class="container">
@@ -15,8 +15,8 @@
 
                 <div class="col-xs-12">
                     <p class="header-pic"><a href="${context}"><img src="${context}static/images/mark.jpg"></a></p>
-                    <h1>Mark S. Kolich</h1>
-                    <p class="lead">Software Engineer</p>
+                    <h1>${blogTitle}</h1>
+                    <p class="lead">${blogSubTitle}</p>
                 </div>
 
             </div>

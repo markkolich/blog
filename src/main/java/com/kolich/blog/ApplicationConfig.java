@@ -20,8 +20,19 @@ public final class ApplicationConfig {
 
     private static final String DEV_MODE_PROPERTY =
         "dev-mode";
+
+    private static final String BLOG_TITLE_PROPERTY =
+        "title";
+    private static final String BLOG_SUBTITLE_PROPERTY =
+        "sub-title";
+
     private static final String CONTEXT_PATH_PROPERTY =
         "context-path";
+    private static final String HOSTNAME_PROPERTY =
+        "hostname";
+    private static final String FULL_URI_PROPERTY =
+        "fullUri";
+
     private static final String CONTENT_TYPES_CONFIG =
         "content-types";
 
@@ -153,9 +164,29 @@ public final class ApplicationConfig {
             DEV_MODE_PROPERTY);
     }
 
+    public static final String getBlogTitle() {
+        return getConfigInstance().getString(
+                BLOG_TITLE_PROPERTY);
+    }
+
+    public static final String getBlogSubTitle() {
+        return getConfigInstance().getString(
+            BLOG_SUBTITLE_PROPERTY);
+    }
+
     public static final String getContextPath() {
         return getConfigInstance().getString(
             CONTEXT_PATH_PROPERTY);
+    }
+
+    public static final String getHostname() {
+        return getConfigInstance().getString(
+            HOSTNAME_PROPERTY);
+    }
+
+    public static final String getFullUri() {
+        return getConfigInstance().getString(
+            FULL_URI_PROPERTY);
     }
 
     // Clone property helpers
