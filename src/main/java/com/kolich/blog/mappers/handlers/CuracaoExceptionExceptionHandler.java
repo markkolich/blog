@@ -3,8 +3,8 @@ package com.kolich.blog.mappers.handlers;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.components.FreeMarkerCache;
-import com.kolich.blog.entities.html.Utf8CompressedHtmlEntity;
+import com.kolich.blog.components.FreeMarkerConfig;
+import com.kolich.blog.entities.html.Utf8XHtmlEntity;
 import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
+import static com.kolich.blog.entities.html.Utf8XHtmlEntity.HtmlEntityType.HTML;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -41,7 +42,7 @@ public final class CuracaoExceptionExceptionHandler
     private final Configuration fmConfig_;
 
     @Injectable
-    public CuracaoExceptionExceptionHandler(final FreeMarkerCache freemarker) {
+    public CuracaoExceptionExceptionHandler(final FreeMarkerConfig freemarker) {
         fmConfig_ = freemarker.getConfig();
     }
 
@@ -68,7 +69,7 @@ public final class CuracaoExceptionExceptionHandler
         try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
             final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
             tp.process(buildDataMap(tp), w);
-            renderEntity(response, new Utf8CompressedHtmlEntity(status, os));
+            renderEntity(response, new Utf8XHtmlEntity(HTML, status, os));
         }
     }
 

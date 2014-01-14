@@ -3,11 +3,11 @@ package com.kolich.blog.mappers;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.components.FreeMarkerCache;
+import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.MarkdownFile;
-import com.kolich.blog.entities.html.Utf8CompressedHtmlEntity;
+import com.kolich.blog.entities.html.Utf8XHtmlEntity;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import freemarker.template.Configuration;
@@ -24,6 +24,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
+import static com.kolich.blog.entities.html.Utf8XHtmlEntity.HtmlEntityType.HTML;
 import static org.apache.commons.io.FileUtils.readFileToString;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -64,7 +65,7 @@ public final class MarkdownDrivenContentResponseMapper
     private final Configuration fmConfig_;
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final FreeMarkerCache freemarker) {
+    public MarkdownDrivenContentResponseMapper(final FreeMarkerConfig freemarker) {
         fmConfig_= freemarker.getConfig();
     }
 
@@ -77,7 +78,7 @@ public final class MarkdownDrivenContentResponseMapper
             try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
                 final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
                 tp.process(markdownContentToDataMap(md, tp), w);
-                renderEntity(response, new Utf8CompressedHtmlEntity(os));
+                renderEntity(response, new Utf8XHtmlEntity(HTML, os));
             }
         } catch (Exception e) {
             logger__.warn("Oops, content rendering exception: " + md, e);

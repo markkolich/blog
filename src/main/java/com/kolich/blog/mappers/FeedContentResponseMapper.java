@@ -3,9 +3,9 @@ package com.kolich.blog.mappers;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.components.FreeMarkerCache;
+import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.FeedContent;
-import com.kolich.blog.entities.html.Utf8XmlEntity;
+import com.kolich.blog.entities.html.Utf8XHtmlEntity;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import freemarker.template.Configuration;
@@ -18,6 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
+
+import static com.kolich.blog.entities.html.Utf8XHtmlEntity.HtmlEntityType.XML;
 
 @ControllerReturnTypeMapper(FeedContent.class)
 public final class FeedContentResponseMapper
@@ -45,7 +47,7 @@ public final class FeedContentResponseMapper
     private final Configuration fmConfig_;
 
     @Injectable
-    public FeedContentResponseMapper(final FreeMarkerCache freemarker) {
+    public FeedContentResponseMapper(final FreeMarkerConfig freemarker) {
         fmConfig_ = freemarker.getConfig();
     }
 
@@ -57,7 +59,7 @@ public final class FeedContentResponseMapper
         try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
             final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
             tp.process(buildDataMap(content), w);
-            renderEntity(response, new Utf8XmlEntity(os));
+            renderEntity(response, new Utf8XHtmlEntity(XML, os));
         }
     }
 
