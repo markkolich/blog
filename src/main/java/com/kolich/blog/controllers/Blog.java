@@ -65,8 +65,7 @@ public final class Blog {
     // Static content
 
     @GET("/static/**")
-    public final File staticFile(@RequestUri(includeContext=false) final String uri)
-        throws IOException {
+    public final File staticFile(@RequestUri(includeContext=false) final String uri) {
         return staticResolver_.getStaticFileInContentRoot(uri);
     }
     @GET("/robots.txt")
@@ -85,7 +84,7 @@ public final class Blog {
         return entries_.getFeedEntries(entryLimit__);
     }
     @GET("/tweets.json")
-    public final Future<TwitterFeed> tweets() throws Exception {
+    public final Future<TwitterFeed> tweets() throws IOException {
         return twitterClient_.getTweets();
     }
 

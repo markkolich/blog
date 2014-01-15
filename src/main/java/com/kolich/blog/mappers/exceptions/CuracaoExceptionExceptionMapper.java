@@ -25,17 +25,20 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(CuracaoException.class)
-public final class CuracaoExceptionExceptionHandler
+public final class CuracaoExceptionExceptionMapper
     extends AbstractFreeMarkerAwareResponseMapper<CuracaoException> {
 
     private static final Logger logger__ =
-        getLogger(CuracaoExceptionExceptionHandler.class);
+        getLogger(CuracaoExceptionExceptionMapper.class);
+
+    private static final String ERROR_TEMPLATE_FREEMARKER_PATH =
+        "errors/%s.ftl";
 
     private static final int DEFAULT_ERROR_STATUS_CODE =
         SC_INTERNAL_SERVER_ERROR;
 
     @Injectable
-    public CuracaoExceptionExceptionHandler(final FreeMarkerConfig config) {
+    public CuracaoExceptionExceptionMapper(final FreeMarkerConfig config) {
         super(config);
     }
 
@@ -87,7 +90,8 @@ public final class CuracaoExceptionExceptionHandler
     }
 
     private final String getTemplateName(final int status) {
-        return String.format("errors/%s.ftl", Integer.toString(status));
+        return String.format(ERROR_TEMPLATE_FREEMARKER_PATH,
+            Integer.toString(status));
     }
 
     @Override
