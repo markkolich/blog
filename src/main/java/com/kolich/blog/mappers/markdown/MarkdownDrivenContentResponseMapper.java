@@ -1,10 +1,11 @@
-package com.kolich.blog.mappers;
+package com.kolich.blog.mappers.markdown;
 
 import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.html.Utf8XHtmlEntity;
+import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import freemarker.template.Template;

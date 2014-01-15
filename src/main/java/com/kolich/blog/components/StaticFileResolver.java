@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 @Component
 public final class StaticFileResolver {
 
+    private static final String STATIC_ROBOTS_TXT_URI = "static/robots.txt";
+
     private final GitRepository git_;
 
     @Injectable
@@ -26,13 +28,13 @@ public final class StaticFileResolver {
                 "resource file: " + file.getAbsolutePath());
         } else if(file.isDirectory()) {
             throw new DirectoryListingException("Will not list contents " +
-                "of 'directory': " + file.getAbsolutePath());
+                "of directory: " + file.getAbsolutePath());
         }
         return file;
     }
 
     public final File getRobotsTxt() {
-        return getStaticFileInContentRoot("static/robots.txt");
+        return getStaticFileInContentRoot(STATIC_ROBOTS_TXT_URI);
     }
 
 }

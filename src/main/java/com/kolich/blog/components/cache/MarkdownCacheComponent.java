@@ -43,7 +43,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
 
     public MarkdownCacheComponent(final GitRepository git) {
         git_ = checkNotNull(git, "Git repository object cannot be null.");
-        cache_ = Maps.newLinkedHashMap();
+        cache_ = Maps.newLinkedHashMap(); // Preserves order
     }
 
     @Override

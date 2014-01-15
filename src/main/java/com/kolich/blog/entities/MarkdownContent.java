@@ -1,6 +1,7 @@
 package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
+import com.kolich.blog.entities.AtomFeed.AtomFeedRFC3339DateFormat;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -26,24 +27,6 @@ public abstract class MarkdownContent {
         public static final DateFormat getNewInstance() {
             final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
             df.setTimeZone(getTimeZone("GMT-8"));
-            return df;
-        }
-
-        public static final String format(final Date d) {
-            return getNewInstance().format(d);
-        }
-
-    }
-
-    public static class AtomFeedRFC3339DateFormat {
-
-        private static final String RFC3339_DATE_FORMAT_STRING =
-            "yyyy-MM-dd'T'HH:mm:ss'Z'";
-
-        public static final DateFormat getNewInstance() {
-            final DateFormat df = new SimpleDateFormat(
-                RFC3339_DATE_FORMAT_STRING);
-            df.setTimeZone(getTimeZone("GMT-0"));
             return df;
         }
 
@@ -134,8 +117,8 @@ public abstract class MarkdownContent {
 
     @Override
     public final String toString() {
-        return String.format("%s(%s, %s, %s)", CLASS_SN, name_, title_,
-            content_);
+        return String.format("%s(name=\"%s\", title=\"%s\", file=\"%s\")",
+            CLASS_SN, name_, title_, content_);
     }
 
     public abstract String getTemplateName();

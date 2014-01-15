@@ -6,8 +6,8 @@ import com.kolich.blog.components.TwitterFeedHttpClient;
 import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
+import com.kolich.blog.entities.AtomFeed;
 import com.kolich.blog.entities.Entry;
-import com.kolich.blog.entities.FeedContent;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.Page;
 import com.kolich.blog.entities.gson.PagedContent;
@@ -27,8 +27,8 @@ public final class Blog {
 
     private static final int entryLimit__ = ApplicationConfig.getEntryLimit();
 
-    private static final String ABOUT = "about";
-    private static final String CONTACT = "contact";
+    private static final String PAGE_ABOUT = "about";
+    private static final String PAGE_CONTACT = "contact";
 
     private final EntryCache entries_;
     private final PageCache pages_;
@@ -47,20 +47,22 @@ public final class Blog {
         staticResolver_ = staticResolver;
     }
 
+    // Pages
+
     @GET("/")
     public final Index index() {
         return new Index(entries_.getEntries(entryLimit__));
     }
-
     @GET("/about")
     public final Page about() {
-        return pages_.getPage(ABOUT);
+        return pages_.getPage(PAGE_ABOUT);
     }
-
     @GET("/contact")
     public final Page contact() {
-        return pages_.getPage(CONTACT);
+        return pages_.getPage(PAGE_CONTACT);
     }
+
+    // Static content
 
     @GET("/static/**")
     public final File staticFile(@RequestUri(includeContext=false) final String uri)
@@ -72,19 +74,22 @@ public final class Blog {
         return staticResolver_.getRobotsTxt();
     }
 
+    // API driven content
+
     @GET("/blog.json")
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
         return entries_.getEntriesBefore(commit, entryLimit__);
     }
     @GET("/atom.xml")
-    public final FeedContent atomFeed() {
+    public final AtomFeed atomFeed() {
         return entries_.getFeedEntries(entryLimit__);
     }
-
     @GET("/tweets.json")
     public final Future<TwitterFeed> tweets() throws Exception {
         return twitterClient_.getTweets();
     }
+
+    // Blog posts/entries
 
     @GET("/{name}/**")
     public final Entry entry(@Path("name") final String name) {

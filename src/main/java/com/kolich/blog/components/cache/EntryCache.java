@@ -2,8 +2,8 @@ package com.kolich.blog.components.cache;
 
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
+import com.kolich.blog.entities.AtomFeed;
 import com.kolich.blog.entities.Entry;
-import com.kolich.blog.entities.FeedContent;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
@@ -57,8 +57,8 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
         return getAllBefore(commit, limit);
     }
 
-    public final FeedContent getFeedEntries(final int limit) {
-        return new FeedContent(getAll(limit));
+    public final AtomFeed getFeedEntries(final int limit) {
+        return new AtomFeed(getAll(limit));
     }
 
 }

@@ -6,6 +6,9 @@
 		self = parent.Twitter = parent.Twitter || {},
 
         console = parent['console'],
+        baseAppUrl = parent['baseAppUrl'],
+
+        tweetsApi = baseAppUrl + "tweets.json",
 
         tweetPanel = $('div.panel.twitter'),
         tweetBody = tweetPanel.find('div.panel-body'),
@@ -53,7 +56,7 @@
         }()),
 
 		init = function() {
-		    $.getJSON("tweets.json", function(data) {
+		    $.getJSON(tweetsApi, function(data) {
                 var tweets = data.tweets;
                 if(tweets && tweets.length > 0) {
                     var ul = $('<ul>').hide();

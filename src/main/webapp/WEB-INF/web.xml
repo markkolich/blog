@@ -7,21 +7,14 @@
 	<display-name>Blog</display-name>
 	<description>This is my blog. There are many like it, but this one is mine.</description>
 
-    <!--
-    <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/static/*</url-pattern>
-    </servlet-mapping>
-    -->
-
 	<servlet>
-		<servlet-name>BootstrapServlet</servlet-name>
-		<servlet-class>com.kolich.blog.BootstrapServlet</servlet-class>
+		<servlet-name>CuracaoDispatcherServlet</servlet-name>
+		<servlet-class>com.kolich.curacao.CuracaoDispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>BootstrapServlet</servlet-name>
+		<servlet-name>CuracaoDispatcherServlet</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 

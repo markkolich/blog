@@ -15,6 +15,8 @@ public final class FreeMarkerConfig {
     private static final String templatesDir__ =
         ApplicationConfig.getTemplatesDir();
 
+    private static final String UTF_8_CHARSET_NAME = Charsets.UTF_8.name();
+
     private final Configuration config_;
 
     @Injectable
@@ -22,7 +24,7 @@ public final class FreeMarkerConfig {
         final File templateRoot = git.getFileRelativeToContentRoot(templatesDir__);
         config_ = new Configuration();
         config_.setDirectoryForTemplateLoading(templateRoot);
-        config_.setDefaultEncoding(Charsets.UTF_8.name());
+        config_.setDefaultEncoding(UTF_8_CHARSET_NAME);
     }
 
     public final Configuration getConfig() {

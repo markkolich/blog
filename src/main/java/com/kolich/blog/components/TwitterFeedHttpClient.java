@@ -36,12 +36,8 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
         return asyncHttpClient_.prepareGet(twitterFeedUrl__)
             .execute(new AsyncCompletionHandler<TwitterFeed>() {
                 @Override
-                public TwitterFeed onCompleted(final Response response) throws Exception {
-                    return new TwitterFeed(response.getResponseBody(UTF_8.toString()));
-                }
-                @Override
-                public void onThrowable(final Throwable t) {
-                    // TODO
+                public TwitterFeed onCompleted(final Response r) throws Exception {
+                    return new TwitterFeed(r.getResponseBody(UTF_8.toString()));
                 }
             });
     }
