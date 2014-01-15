@@ -1,10 +1,9 @@
 package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
+import com.google.common.collect.*;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
@@ -20,9 +19,7 @@ import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -59,7 +56,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
 
     @Override
     public final void onPull() throws Exception {
-        final Map<String,T> newCache = Maps.newLinkedHashMap();
+        final List<T> entities = Lists.newLinkedList();
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
         // Rebuild the new cache using the "updated" content, if any.
@@ -88,13 +85,29 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                     if(markdown.exists()) {
                         final String entityName = removeExtension(
                             markdown.getName());
-                        final T entity = getEntity(entityName, title, hash,
-                            date, markdown);
-                        newCache.put(entityName, entity);
+                        entities.add(getEntity(entityName, title, hash,
+                            date, markdown));
                     }
                 }
             }
         }
+        // Sort the loaded entities in order based on commit date, oldest
+        // content/entities fall to the bottom.
+        Collections.sort(entities, new Comparator<T>() {
+            @Override
+            public final int compare(final T a, final T b) {
+                return b.getDate().compareTo(a.getDate());
+            }
+        });
+        // Convert the list of entities into a proper map that maps the
+        // entity name to its actual content.
+        final Map<String,T> newCache = Maps.uniqueIndex(entities,
+            new Function<T,String>() {
+                @Nullable @Override
+                public String apply(final @Nullable T input) {
+                    return input.getName();
+                }
+            });
         // In a thread safe manner, clear the existing cache and then add
         // all new entries into it.  This is essentially just a "swap".
         synchronized(cache_) {
