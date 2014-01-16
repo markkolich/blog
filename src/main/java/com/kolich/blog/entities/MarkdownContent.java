@@ -1,7 +1,6 @@
 package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.kolich.blog.entities.AtomFeed.AtomFeedRFC3339DateFormat;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -96,10 +95,8 @@ public abstract class MarkdownContent {
         return date_;
     }
     public final String getDateFormatted() {
-        return (date_ != null) ? BlogContentDateFormat.format(date_) : null;
-    }
-    public final String getAtomFeedDateFormatted() {
-        return (date_ != null) ? AtomFeedRFC3339DateFormat.format(date_) : null;
+        final Date date = getDate();
+        return (date != null) ? BlogContentDateFormat.format(date) : null;
     }
 
     public final MarkdownFile getMarkdownFile() {

@@ -5,7 +5,7 @@
     <link rel="alternate" type="text/html" href="${fullUri}"/>
     <link rel="self" type="application/atom+xml" href="${fullUri}atom.xml"/>
     <id>http://mark.koli.ch</id>
-    <updated>2013-08-19T22:43:22Z</updated>
+    <updated>${lastUpdated}</updated>
     <subtitle>${blogSubTitle}</subtitle>
 
     <#list entries as e>

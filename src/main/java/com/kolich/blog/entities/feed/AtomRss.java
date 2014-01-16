@@ -1,5 +1,6 @@
-package com.kolich.blog.entities;
+package com.kolich.blog.entities.feed;
 
+import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.gson.PagedContent;
 
 import java.text.DateFormat;
@@ -7,12 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.TimeZone.getTimeZone;
 
-public final class AtomFeed {
+public final class AtomRss extends AbstractFeedEntity {
 
-    public static class AtomFeedRFC3339DateFormat {
+    public static class AtomRssRFC3339DateFormat {
 
         private static final String RFC3339_DATE_FORMAT_STRING =
             "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -30,18 +30,18 @@ public final class AtomFeed {
 
     }
 
-    private final List<Entry> entries_;
-
-    public AtomFeed(final List<Entry> entries) {
-        entries_ = checkNotNull(entries, "Entries list cannot be null.");
+    public AtomRss(final List<Entry> entries) {
+        super(entries);
     }
 
-    public AtomFeed(final PagedContent<Entry> entries) {
+    public AtomRss(final PagedContent<Entry> entries) {
         this(entries.getContent());
     }
 
-    public final List<Entry> getEntries() {
-        return entries_;
+    @Override
+    public final String getDateFormatted(final Entry e) {
+        final Date date = e.getDate();
+        return (date != null) ? AtomRssRFC3339DateFormat.format(date) : null;
     }
 
 }

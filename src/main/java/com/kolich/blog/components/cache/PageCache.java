@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.Date;
 
 @Component
-public final class PageCache extends MarkdownCacheComponent<Page> {
+public final class PageCache extends AbstractMarkdownCache<Page> {
 
     private static final String pagesDir__ =
         ApplicationConfig.getPagesDir();

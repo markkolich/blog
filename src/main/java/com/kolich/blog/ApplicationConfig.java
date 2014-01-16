@@ -53,8 +53,13 @@ public final class ApplicationConfig {
         "content.entries";
     private static final String CONTENT_PAGES_PROPERTY =
         "content.pages";
-    private static final String CONTENT_ENTRY_LIMIT_PROPERTY =
-        "content.entry-limit";
+
+    private static final String CONTENT_LIMIT_HOMEPAGE_PROPERTY =
+        "content.limits.homepage";
+    private static final String CONTENT_LIMIT_LOAD_MORE_PROPERTY =
+        "content.limits.load-more";
+    private static final String CONTENT_LIMIT_ATOM_FEED_PROPERTY =
+        "content.limits.atom-feed";
 
     private static final String SERVICES_TWITTER_FEED_URL_PROPERTY =
         "services.twitter.feed-url";
@@ -233,9 +238,21 @@ public final class ApplicationConfig {
             CONTENT_PAGES_PROPERTY);
     }
 
-    public static final int getEntryLimit() {
+    // Content limit properties
+
+    public static final int getHomepageEntryLimit() {
         return getConfigInstance().getInt(
-            CONTENT_ENTRY_LIMIT_PROPERTY);
+            CONTENT_LIMIT_HOMEPAGE_PROPERTY);
+    }
+
+    public static final int getLoadMoreEntryLimit() {
+        return getConfigInstance().getInt(
+            CONTENT_LIMIT_LOAD_MORE_PROPERTY);
+    }
+
+    public static final int getAtomFeedEntryLimit() {
+        return getConfigInstance().getInt(
+            CONTENT_LIMIT_ATOM_FEED_PROPERTY);
     }
 
     // Service property helpers

@@ -6,10 +6,9 @@ import com.kolich.blog.components.TwitterFeedHttpClient;
 import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
-import com.kolich.blog.entities.AtomFeed;
-import com.kolich.blog.entities.Entry;
-import com.kolich.blog.entities.Index;
-import com.kolich.blog.entities.Page;
+import com.kolich.blog.entities.*;
+import com.kolich.blog.entities.feed.AtomRss;
+import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
@@ -25,7 +24,12 @@ import java.util.concurrent.Future;
 @Controller
 public final class Blog {
 
-    private static final int entryLimit__ = ApplicationConfig.getEntryLimit();
+    private static final int entryLimit__ =
+        ApplicationConfig.getHomepageEntryLimit();
+    private static final int entryLimitLoadMore__ =
+        ApplicationConfig.getLoadMoreEntryLimit();
+    private static final int entryLimitAtomFeed__ =
+        ApplicationConfig.getAtomFeedEntryLimit();
 
     private static final String PAGE_ABOUT = "about";
     private static final String PAGE_CONTACT = "contact";
@@ -77,11 +81,15 @@ public final class Blog {
 
     @GET("/blog.json")
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
-        return entries_.getEntriesBefore(commit, entryLimit__);
+        return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
     }
     @GET("/atom.xml")
-    public final AtomFeed atomFeed() {
-        return entries_.getFeedEntries(entryLimit__);
+    public final AtomRss atomFeed() {
+        return entries_.getAtomFeed(entryLimitAtomFeed__);
+    }
+    @GET("/sitemap.xml")
+    public final Sitemap sitemap() {
+        return entries_.getSitemap();
     }
     @GET("/tweets.json")
     public final Future<TwitterFeed> tweets() throws IOException {

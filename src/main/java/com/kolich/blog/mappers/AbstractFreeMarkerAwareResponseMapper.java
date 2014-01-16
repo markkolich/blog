@@ -35,6 +35,7 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T>
     protected static final String TEMPLATE_ATTR_DATE = "date";
     protected static final String TEMPLATE_ATTR_CONTENT = "content";
 
+    protected static final String TEMPLATE_ATTR_LAST_UPDATED = "lastUpdated";
     protected static final String TEMPLATE_ATTR_ENTRIES = "entries";
     protected static final String TEMPLATE_ATTR_ENTRIES_REMAINING = "remaining";
 

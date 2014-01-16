@@ -3,14 +3,16 @@ package com.kolich.blog.components.cache;
 import com.gitblit.models.PathModel;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.curacao.handlers.components.CuracaoComponent;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.slf4j.Logger;
@@ -24,13 +26,14 @@ import java.util.*;
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
+import static org.eclipse.jgit.diff.DiffEntry.ChangeType.ADD;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public abstract class MarkdownCacheComponent<T extends MarkdownContent>
+public abstract class AbstractMarkdownCache<T extends MarkdownContent>
     implements CuracaoComponent, GitRepository.PullListener {
 
     private static final Logger logger__ =
-        getLogger(MarkdownCacheComponent.class);
+        getLogger(AbstractMarkdownCache.class);
 
     private static final String contentRootDir__ =
         ApplicationConfig.getContentRootDir();
@@ -38,7 +41,7 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
     private final GitRepository git_;
     private final Map<String,T> cache_;
 
-    public MarkdownCacheComponent(final GitRepository git) {
+    public AbstractMarkdownCache(final GitRepository git) {
         git_ = checkNotNull(git, "Git repository object cannot be null.");
         cache_ = Maps.newLinkedHashMap(); // Preserves order
     }
@@ -56,27 +59,30 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
 
     @Override
     public final void onPull() throws Exception {
-        final List<T> entities = Lists.newLinkedList();
+        final List<T> entities = Lists.newLinkedList(); // Maintains order
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
-        // Rebuild the new cache using the "updated" content, if any.
+        // Rebuild the new cache using the "updated" content on disk, if any.
         final String pathToContent = FileSystems.getDefault().getPath(
             contentRootDir__, getCachedContentDirName()).toString();
         for(final RevCommit commit : git.log().call()) {
             final List<PathModel.PathChangeModel> files =
                 getFilesInCommit(repo, commit);
+            // For each of the files that "changed" (added, removed, modified)
+            // in the commit...
             for(final PathModel.PathChangeModel change : files) {
                 final String hash = commit.getName(), // Commit SHA-1 hash
-                    name = change.name, // Name of file that was "changed"
+                    name = change.name, // Path to file that was "changed"
                     title = commit.getShortMessage(); // Commit message
                 // Commit timestamp, in seconds. Note the conversion to
                 // milliseconds because JGit gives us the commit time in
                 // seconds... sigh.
                 final Date date = new Date(commit.getCommitTime() * 1000L);
                 // Change type.
-                final DiffEntry.ChangeType type = change.changeType;
-                if(name.startsWith(pathToContent) &&
-                   type.equals(DiffEntry.ChangeType.ADD)) {
+                final boolean isAdd = change.changeType.equals(ADD);
+                if(isAdd && name.startsWith(pathToContent)) {
+                    // The "work tree" is where files are checked out
+                    // for viewing and editing.
                     final File markdown = new File(repo.getWorkTree(), name);
                     // Only bother adding the markdown content to the map if
                     // the file exists on disk.  Git history may show that
@@ -91,16 +97,26 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                 }
             }
         }
-        // Sort the loaded entities in order based on commit date, oldest
-        // content/entities fall to the bottom.
+        // Sort the loaded entities in order based on commit date, not the
+        // natural ordering of the commits.  Oldest content/entities fall to
+        // the bottom regardless of when they were actually committed.  That
+        // is, using the Git environment variables GIT_AUTHOR_DATE and
+        // GIT_COMMITTER_DATE, you can commit to a repo at some arbitrary
+        // point in the past.
+        //  #/> GIT_AUTHOR_DATE='Tue Dec 7 09:32:10 1982 -0800' \
+        //      GIT_COMMITTER_DATE='Tue Dec 7 09:32:10 1982 -0800' \
+        //      git commit
+        // Sorting based on this commit date enforces that older content,
+        // recently committed to the repo, are ordered correctly.
         Collections.sort(entities, new Comparator<T>() {
             @Override
             public final int compare(final T a, final T b) {
                 return b.getDate().compareTo(a.getDate());
             }
         });
-        // Convert the list of entities into a proper map that maps the
-        // entity name to its actual content.
+        // Transform the list of entities into a proper map that maps the
+        // entity name to itself.  The key of the map is the "name" of the
+        // entity, and the value is the entity.
         final Map<String,T> newCache = Maps.uniqueIndex(entities,
             new Function<T,String>() {
                 @Nullable @Override
@@ -109,12 +125,13 @@ public abstract class MarkdownCacheComponent<T extends MarkdownContent>
                 }
             });
         // In a thread safe manner, clear the existing cache and then add
-        // all new entries into it.  This is essentially just a "swap".
+        // all new entries into it.  This is essentially just a synchronized
+        // "swap" in place.
         synchronized(cache_) {
             if(cache_.size() != newCache.size()) {
                 logger__.info("Replacing cache with refreshed content (old=" +
                     cache_.size() + " -> new=" + newCache.size() + "): " +
-                    newCache.toString());
+                    newCache);
             }
             cache_.clear();
             cache_.putAll(newCache);

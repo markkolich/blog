@@ -1,5 +1,8 @@
 package com.kolich.blog.entities;
 
+import com.kolich.blog.entities.feed.AtomRss;
+import com.kolich.blog.entities.feed.Sitemap;
+
 import java.io.File;
 import java.util.Date;
 
@@ -19,5 +22,16 @@ public final class Entry extends MarkdownContent {
     public final String getTemplateName() {
         return TEMPLATE_NAME;
     }
+
+    /*
+    public final String getAtomFeedDateFormatted() {
+        final Date date = getDate();
+        return (date != null) ? AtomRss.AtomRssRFC3339DateFormat.format(date) : null;
+    }
+    public final String getSitemapDateFormatted() {
+        final Date date = getDate();
+        return (date != null) ? Sitemap.SitemapDateFormat.format(date) : null;
+    }
+    */
 
 }

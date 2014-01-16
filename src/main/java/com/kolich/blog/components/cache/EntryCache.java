@@ -2,8 +2,9 @@ package com.kolich.blog.components.cache;
 
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
-import com.kolich.blog.entities.AtomFeed;
+import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Component;
@@ -14,7 +15,7 @@ import java.io.File;
 import java.util.Date;
 
 @Component
-public final class EntryCache extends MarkdownCacheComponent<Entry> {
+public final class EntryCache extends AbstractMarkdownCache<Entry> {
 
     private static final String entriesDir__ =
         ApplicationConfig.getEntriesDir();
@@ -57,8 +58,12 @@ public final class EntryCache extends MarkdownCacheComponent<Entry> {
         return getAllBefore(commit, limit);
     }
 
-    public final AtomFeed getFeedEntries(final int limit) {
-        return new AtomFeed(getAll(limit));
+    public final AtomRss getAtomFeed(final int limit) {
+        return new AtomRss(getAll(limit));
+    }
+
+    public final Sitemap getSitemap() {
+        return new Sitemap(getAll());
     }
 
 }
