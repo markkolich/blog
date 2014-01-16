@@ -60,7 +60,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 
-public class SessionExtractingWebArgumentResolver implements WebArgumentResolver {
+public final class SessionExtractingWebArgumentResolver implements WebArgumentResolver {
 
   @Override
   public Object resolveArgument(final MethodParameter mp,
@@ -101,11 +101,9 @@ Now that Spring can resolve MyObject automatically, we can use it as an argument
 
 ```java
 @RequestMapping(method={RequestMethod.GET, RequestMethod.HEAD})
-public ModelAndView betterMethod(final MyObject my) {
-  /* ... */
+public ModelAndView better(final MyObject o) {
+  // ...
 }
 ```
 
-Great!  No more ugly repetition, and less code.  That's a win-win, baby.
-
-Enjoy.
+No more ugly repetition, and less code.  Enjoy.
