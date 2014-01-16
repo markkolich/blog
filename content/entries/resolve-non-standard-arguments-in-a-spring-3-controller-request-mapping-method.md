@@ -1,9 +1,11 @@
-Spring 3 is great at automatically resolving standard arguments into a controller request method.  For example, a primitive Spring controller might look like this ...
+Spring 3 is great at automatically resolving standard arguments into a controller request method.
+
+For example, a primitive Spring controller might look like this ...
 
 ```java
 @Controller
 @RequestMapping(value="/somepath")
-public class MyController {
+public final class MyController {
 
   @RequestMapping(method={RequestMethod.GET, RequestMethod.HEAD})
   public ModelAndView someMethod(final HttpServletRequest request,
@@ -32,7 +34,7 @@ import java.util.UUID;
 public final class MyObject {
 
   // A unique and static identifier.
-  private UUID id_;
+  private final UUID id_;
 
   public MyObject() {
     id_ = UUID.randomUUID();

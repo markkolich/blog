@@ -3,7 +3,6 @@
 
     <url>
         <loc>${fullUri}</loc>
-        <changefreq>weekly</changefreq>
         <lastmod>${lastUpdated}</lastmod>
         <priority>1.0</priority>
     </url>
@@ -13,7 +12,6 @@
         <url>
             <loc>${fullUri}${e.name}</loc>
             <lastmod>${e.sitemapDateFormatted}</lastmod>
-            <changefreq>never</changefreq>
         </url>
 
     </#list>

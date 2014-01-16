@@ -23,13 +23,25 @@ public final class Entry extends MarkdownContent {
         return TEMPLATE_NAME;
     }
 
+    /**
+     * Returns the entry date formatted using the RFC3339 Atom/RSS
+     * timestamp format.
+     */
     public final String getAtomFeedDateFormatted() {
         final Date date = getDate();
-        return (date != null) ? AtomRss.AtomRssRFC3339DateFormat.format(date) : null;
+        return (date != null) ?
+            AtomRss.AtomRssRFC3339DateFormat.format(date) :
+            null;
     }
+
+    /**
+     * Returns the entry date formatted using the sitemap date format.
+     */
     public final String getSitemapDateFormatted() {
         final Date date = getDate();
-        return (date != null) ? Sitemap.SitemapDateFormat.format(date) : null;
+        return (date != null) ?
+            Sitemap.SitemapDateFormat.format(date) :
+            null;
     }
 
 }
