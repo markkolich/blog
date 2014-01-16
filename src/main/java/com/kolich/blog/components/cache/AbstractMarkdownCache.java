@@ -59,7 +59,7 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
 
     @Override
     public final void onPull() throws Exception {
-        final List<T> entities = Lists.newLinkedList(); // Maintains order
+        final List<T> entities = Lists.newLinkedList();
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
         // Rebuild the new cache using the "updated" content on disk, if any.
@@ -91,8 +91,12 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                     if(markdown.exists()) {
                         final String entityName = removeExtension(
                             markdown.getName());
-                        entities.add(getEntity(entityName, title, hash,
-                            date, markdown));
+                        final T entity = getEntity(entityName, title, hash,
+                            date, markdown);
+                        // Only add the entity if it's not already in the list.
+                        if(!entities.contains(entity)) {
+                            entities.add(entity);
+                        }
                     }
                 }
             }

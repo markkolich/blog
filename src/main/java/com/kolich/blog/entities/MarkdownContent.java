@@ -113,6 +113,21 @@ public abstract class MarkdownContent {
     }
 
     @Override
+    public final boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MarkdownContent that = (MarkdownContent) o;
+        if (name_ != null ? !name_.equals(that.name_) : that.name_ != null)
+            return false;
+        return true;
+    }
+
+    @Override
+    public final int hashCode() {
+        return (name_ != null) ? name_.hashCode() : 0;
+    }
+
+    @Override
     public final String toString() {
         return String.format("%s(name=\"%s\", title=\"%s\", file=\"%s\")",
             CLASS_SN, name_, title_, content_);
