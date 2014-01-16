@@ -38,10 +38,4 @@ public final class AtomRss extends AbstractFeedEntity {
         this(entries.getContent());
     }
 
-    @Override
-    public final String getDateFormatted(final Entry e) {
-        final Date date = e.getDate();
-        return (date != null) ? AtomRssRFC3339DateFormat.format(date) : null;
-    }
-
 }

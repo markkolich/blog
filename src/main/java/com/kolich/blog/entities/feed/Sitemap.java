@@ -38,10 +38,4 @@ public final class Sitemap extends AbstractFeedEntity {
         this(entries.getContent());
     }
 
-    @Override
-    public final String getDateFormatted(final Entry e) {
-        final Date date = e.getDate();
-        return (date != null) ? SitemapDateFormat.format(date) : null;
-    }
-
 }

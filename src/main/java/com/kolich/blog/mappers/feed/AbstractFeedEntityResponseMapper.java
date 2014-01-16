@@ -3,6 +3,7 @@ package com.kolich.blog.mappers.feed;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.feed.AbstractFeedEntity;
+import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import freemarker.template.Template;
 
@@ -20,8 +21,13 @@ public abstract class AbstractFeedEntityResponseMapper<T extends AbstractFeedEnt
         final Map<String,Object> map = super.getDataMap(tp);
         final Entry first;
         if((first = entity.getFirst()) != null) {
-            map.put(TEMPLATE_ATTR_LAST_UPDATED,
-                entity.getDateFormatted(first));
+            final String result;
+            if(entity instanceof AtomRss) {
+                result = first.getAtomFeedDateFormatted();
+            } else {
+                result = first.getSitemapDateFormatted();
+            }
+            map.put(TEMPLATE_ATTR_LAST_UPDATED, result);
         }
         map.put(TEMPLATE_ATTR_ENTRIES, entity.getEntries());
         return map;

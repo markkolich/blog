@@ -23,7 +23,6 @@ public final class Entry extends MarkdownContent {
         return TEMPLATE_NAME;
     }
 
-    /*
     public final String getAtomFeedDateFormatted() {
         final Date date = getDate();
         return (date != null) ? AtomRss.AtomRssRFC3339DateFormat.format(date) : null;
@@ -32,6 +31,5 @@ public final class Entry extends MarkdownContent {
         final Date date = getDate();
         return (date != null) ? Sitemap.SitemapDateFormat.format(date) : null;
     }
-    */
 
 }

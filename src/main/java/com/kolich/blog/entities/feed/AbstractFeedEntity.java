@@ -28,6 +28,4 @@ public abstract class AbstractFeedEntity {
         return Iterables.getFirst(entries_, null);
     }
 
-    public abstract String getDateFormatted(final Entry e);
-
 }
