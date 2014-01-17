@@ -16,7 +16,7 @@ if(userAgent.contains("iPhone")) {
 This wins the worst coding example of the year award.  Here's why this is terrible and you should never use this example:
 
 1. Not all requests contain a `User-Agent` header.  In fact, the `User-Agent` header is purely optional.  In the code above, if the request does not contain a `User-Agent` you'll see a nice `NullPointerException` thrown at userAgent.contains() given that the userAgent is null.
-2. Not every mobile device is an iPhone.  What about Blackberry, Andriod or Palm clients?  Blindly assuming that every mobile user is on an iPhone, or other similar device, is horrendously ignorant.
+2. Not every mobile device is an iPhone.  What about Blackberry, Android or Palm clients?  Blindly assuming that every mobile user is on an iPhone, or other similar device, is horrendously ignorant.
 3. Many great frameworks exist, like Spring 3 MVC, that allow you to separate your web-application business and display logic.  This in mind, combing both into a single JSP is a bad idea for a number of reasons.  In an ideal world, your mobile device detection would occur in an interceptor that triggers your MVC framework to render one view for mobile devices, and another view for all others.
 
 This is a fairly common requirement: users visiting your site in a standard web-browser see one view, and users on a mobile device (like a Palm) see a "mobile version" of the same view.  So, here's a way to implement better mobile device detection in your web-application using a Spring 3 [HandlerInterceptorAdapter](http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/web/portlet/handler/HandlerInterceptorAdapter.html).
@@ -38,7 +38,7 @@ First, you'll need to make the necessary adjustments to your Spring MVC configur
         <property name="mobileUserAgents">
           <list value-type="java.lang.String">
             <value>.*(webos|palm|treo).*</value>
-            <value>.*(andriod).*</value>
+            <value>.*(android).*</value>
             <value>.*(kindle|pocket|o2|vodaphone|wap|midp|psp).*</value>
             <value>.*(iphone|ipod).*</value>
             <value>.*(blackberry|opera mini).*</value>
