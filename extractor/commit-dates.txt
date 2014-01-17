@@ -1,0 +1,204 @@
+http://mark.koli.ch/2010/10/spring-3-mobile-device-detection-with-an-interceptor.html
+GIT_AUTHOR_DATE='Mon Oct 18 22:05:00 2010 -0700' GIT_COMMITTER_DATE='Mon Oct 18 22:05:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/09/understanding-the-http-vary-header-and-caching-proxies-squid-etc.html
+GIT_AUTHOR_DATE='Sat Sep 25 01:10:00 2010 -0700' GIT_COMMITTER_DATE='Sat Sep 25 01:10:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/09/recursively-deleting-large-amazon-s3-buckets.html
+GIT_AUTHOR_DATE='Fri Sep 17 09:54:00 2010 -0700' GIT_COMMITTER_DATE='Fri Sep 17 09:54:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/08/integrating-ant-and-googles-closure-compiler.html
+GIT_AUTHOR_DATE='Sat Aug 21 12:45:00 2010 -0700' GIT_COMMITTER_DATE='Sat Aug 21 12:45:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/07/spring-3-and-spring-security-setting-your-own-custom-j-spring-security-check-filter-processes-url.html
+GIT_AUTHOR_DATE='Sat Jul 24 20:20:00 2010 -0700' GIT_COMMITTER_DATE='Sat Jul 24 20:20:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/05/extended-thoughts-on-custom-tiny-url-engines.html
+GIT_AUTHOR_DATE='Mon May 31 17:35:00 2010 -0700' GIT_COMMITTER_DATE='Mon May 31 17:35:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/05/mysql-triggers-and-super-privileges-access-denied-you-need-the-super-privilege-for-this-operation.html
+GIT_AUTHOR_DATE='Thu May 27 13:20:00 2010 -0700' GIT_COMMITTER_DATE='Thu May 27 13:20:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/05/formatting-a-java-date-into-a-specific-timezone.html
+GIT_AUTHOR_DATE='Sat May 15 12:51:00 2010 -0700' GIT_COMMITTER_DATE='Sat May 15 12:51:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/05/http-digest-access-authentication-with-md5-and-httpclient-4.html
+GIT_AUTHOR_DATE='Tue May 04 14:30:00 2010 -0700' GIT_COMMITTER_DATE='Tue May 04 14:30:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/04/understanding-javas-countdownlatch.html
+GIT_AUTHOR_DATE='Fri Apr 09 12:20:00 2010 -0700' GIT_COMMITTER_DATE='Fri Apr 09 12:20:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/04/howto-ignore-files-and-directories-in-subversion-svn.html
+GIT_AUTHOR_DATE='Thu Apr 08 10:21:10 2010 -0700' GIT_COMMITTER_DATE='Thu Apr 08 10:21:10 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/03/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too.html
+GIT_AUTHOR_DATE='Fri Mar 26 18:50:00 2010 -0700' GIT_COMMITTER_DATE='Fri Mar 26 18:50:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/03/howto-setting-up-your-own-svn-server-using-apache-and-mod-dav-svn.html
+GIT_AUTHOR_DATE='Tue Mar 16 15:30:00 2010 -0700' GIT_COMMITTER_DATE='Tue Mar 16 15:30:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/03/howto-setting-up-your-own-local-dns-server.html
+GIT_AUTHOR_DATE='Mon Mar 15 22:10:00 2010 -0700' GIT_COMMITTER_DATE='Mon Mar 15 22:10:00 2010 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/01/clok-a-new-way-to-view-time.html
+GIT_AUTHOR_DATE='Wed Jan 20 17:45:00 2010 -0800' GIT_COMMITTER_DATE='Wed Jan 20 17:45:00 2010 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2010/01/java-jumptoline-jump-to-a-line-in-a-file.html
+GIT_AUTHOR_DATE='Mon Jan 18 12:13:00 2010 -0800' GIT_COMMITTER_DATE='Mon Jan 18 12:13:00 2010 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/12/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation.html
+GIT_AUTHOR_DATE='Fri Dec 18 09:35:00 2009 -0800' GIT_COMMITTER_DATE='Fri Dec 18 09:35:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/11/apache-tip-deny-trace-and-track-requests-with-mod-rewrite.html
+GIT_AUTHOR_DATE='Sat Nov 14 10:41:46 2009 -0800' GIT_COMMITTER_DATE='Sat Nov 14 10:41:46 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/11/rediscovering-http-410-gone.html
+GIT_AUTHOR_DATE='Tue Nov 10 21:47:00 2009 -0800' GIT_COMMITTER_DATE='Tue Nov 10 21:47:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/11/onyx-beta.html
+GIT_AUTHOR_DATE='Fri Nov 06 12:15:00 2009 -0800' GIT_COMMITTER_DATE='Fri Nov 06 12:15:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/10/controlling-when-and-where-java-writes-out-its-permgen-and-heap-to-disk.html
+GIT_AUTHOR_DATE='Fri Oct 30 11:10:00 2009 -0700' GIT_COMMITTER_DATE='Fri Oct 30 11:10:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/10/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx.html
+GIT_AUTHOR_DATE='Mon Oct 26 22:00:00 2009 -0700' GIT_COMMITTER_DATE='Mon Oct 26 22:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/10/reliably-checking-os-bitness-32-or-64-bit-on-windows-with-a-tiny-c-app.html
+GIT_AUTHOR_DATE='Wed Oct 21 16:04:00 2009 -0700' GIT_COMMITTER_DATE='Wed Oct 21 16:04:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/10/javas-osarch-system-property-is-the-bitness-of-the-jre-not-the-operating-system.html
+GIT_AUTHOR_DATE='Mon Oct 19 12:15:00 2009 -0700' GIT_COMMITTER_DATE='Mon Oct 19 12:15:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/10/onyx-my-custom-solution-to-the-digital-clutter-problem.html
+GIT_AUTHOR_DATE='Fri Oct 16 19:25:00 2009 -0700' GIT_COMMITTER_DATE='Fri Oct 16 19:25:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/09/remember-kids-an-http-content-length-is-the-number-of-bytes-not-the-number-of-characters.html
+GIT_AUTHOR_DATE='Wed Sep 30 11:45:00 2009 -0700' GIT_COMMITTER_DATE='Wed Sep 30 11:45:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/09/apache-setting-the-content-disposition-header-with-mod-rewrite.html
+GIT_AUTHOR_DATE='Thu Sep 24 09:34:00 2009 -0700' GIT_COMMITTER_DATE='Thu Sep 24 09:34:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/09/a-really-simple-web-server-using-restlet.html
+GIT_AUTHOR_DATE='Wed Sep 23 13:25:00 2009 -0700' GIT_COMMITTER_DATE='Wed Sep 23 13:25:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/09/howto-quickly-formatwipe-your-disks-with-dd.html
+GIT_AUTHOR_DATE='Thu Sep 10 15:55:00 2009 -0700' GIT_COMMITTER_DATE='Thu Sep 10 15:55:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/09/use-javascript-and-jquery-to-get-user-selected-text.html
+GIT_AUTHOR_DATE='Sat Sep 05 11:45:00 2009 -0700' GIT_COMMITTER_DATE='Sat Sep 05 11:45:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/08/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day.html
+GIT_AUTHOR_DATE='Sat Aug 22 01:00:00 2009 -0700' GIT_COMMITTER_DATE='Sat Aug 22 01:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/08/my-favorite-way-of-validating-form-inputs-in-php.html
+GIT_AUTHOR_DATE='Fri Aug 21 11:30:00 2009 -0700' GIT_COMMITTER_DATE='Fri Aug 21 11:30:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/08/my-first-tic-tac-toe-game.html
+GIT_AUTHOR_DATE='Wed Aug 19 08:20:00 2009 -0700' GIT_COMMITTER_DATE='Wed Aug 19 08:20:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/08/if-a-php-script-locks-a-mysql-table-then-dies-with-an-unexpected-error-is-the-table-left-in-a-locked.html
+GIT_AUTHOR_DATE='Sat Aug 01 11:05:29 2009 -0700' GIT_COMMITTER_DATE='Sat Aug 01 11:05:29 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/07/ipv4-doomsday-were-running-out-of-ipv4-addresses-ipv4-address-exhaustion.html
+GIT_AUTHOR_DATE='Wed Jul 29 11:20:00 2009 -0700' GIT_COMMITTER_DATE='Wed Jul 29 11:20:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/07/howto-include-binary-image-data-in-cascading-style-sheets-css.html
+GIT_AUTHOR_DATE='Tue Jul 14 18:10:00 2009 -0700' GIT_COMMITTER_DATE='Tue Jul 14 18:10:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/07/mysql-trigger-error-1442-hy000-cant-update-table-tbl-in-stored-functiontrigger-because-it-is-al.html
+GIT_AUTHOR_DATE='Sat Jul 11 11:00:00 2009 -0700' GIT_COMMITTER_DATE='Sat Jul 11 11:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/06/howto-apache-dont-log-yourself-dont-log-specific-ip-address.html
+GIT_AUTHOR_DATE='Sun Jun 07 11:30:00 2009 -0700' GIT_COMMITTER_DATE='Sun Jun 07 11:30:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/06/the-right-way-to-parse-filter-and-validate-get-and-post-inputs-from-a-form-in-php.html
+GIT_AUTHOR_DATE='Sat Jun 06 11:00:00 2009 -0700' GIT_COMMITTER_DATE='Sat Jun 06 11:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/05/howto-whole-disk-backups-with-dd-gzip-and-p7zip.html
+GIT_AUTHOR_DATE='Tue May 26 21:31:00 2009 -0700' GIT_COMMITTER_DATE='Tue May 26 21:31:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/05/a-little-office-fun-with-hp-laserjet-printers.html
+GIT_AUTHOR_DATE='Tue May 05 09:45:00 2009 -0700' GIT_COMMITTER_DATE='Tue May 05 09:45:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/04/a-few-quick-and-simple-tips-to-better-secure-your-mysql-server.html
+GIT_AUTHOR_DATE='Sat Apr 25 18:10:00 2009 -0700' GIT_COMMITTER_DATE='Sat Apr 25 18:10:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/04/phps-object-notation-accessing-complexly-named-fields-with-hyphens-in-an-object.html
+GIT_AUTHOR_DATE='Wed Apr 22 18:59:59 2009 -0700' GIT_COMMITTER_DATE='Wed Apr 22 18:59:59 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/04/10-awesome-htaccess-hacks-for-movable-type.html
+GIT_AUTHOR_DATE='Tue Apr 14 22:05:00 2009 -0700' GIT_COMMITTER_DATE='Tue Apr 14 22:05:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/04/howto-use-apache-mod-deflate-to-compress-web-content-obsessed-with-speed-of-kolichcommobi.html
+GIT_AUTHOR_DATE='Sat Apr 04 21:45:00 2009 -0700' GIT_COMMITTER_DATE='Sat Apr 04 21:45:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/how-much-does-it-really-cost-to-self-host-a-site.html
+GIT_AUTHOR_DATE='Thu Mar 26 00:15:00 2009 -0700' GIT_COMMITTER_DATE='Thu Mar 26 00:15:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host.html
+GIT_AUTHOR_DATE='Mon Mar 23 22:00:00 2009 -0700' GIT_COMMITTER_DATE='Mon Mar 23 22:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/howto-configure-apache-to-return-a-http-204-no-content-for-ajax.html
+GIT_AUTHOR_DATE='Sun Mar 22 11:52:32 2009 -0700' GIT_COMMITTER_DATE='Sun Mar 22 11:52:32 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/howto-generate-your-own-self-signed-ssl-certificates-for-https-apache.html
+GIT_AUTHOR_DATE='Sat Mar 21 23:01:56 2009 -0700' GIT_COMMITTER_DATE='Sat Mar 21 23:01:56 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/howto-sha1withrsa-digital-signing-in-java-openssl-pkcs8.html
+GIT_AUTHOR_DATE='Fri Mar 20 11:42:42 2009 -0700' GIT_COMMITTER_DATE='Fri Mar 20 11:42:42 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/howto-using-sha1withrsa-signing-in-php.html
+GIT_AUTHOR_DATE='Tue Mar 17 07:00:00 2009 -0700' GIT_COMMITTER_DATE='Tue Mar 17 07:00:00 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/03/max-size-of-a-mysql-unsigned-bigint20-relating-to-hibernate.html
+GIT_AUTHOR_DATE='Mon Mar 09 23:15:34 2009 -0700' GIT_COMMITTER_DATE='Mon Mar 09 23:15:34 2009 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/02/resolving-orgxmlsaxsaxparseexception-content-is-not-allowed-in-prolog.html
+GIT_AUTHOR_DATE='Mon Feb 02 07:00:00 2009 -0800' GIT_COMMITTER_DATE='Mon Feb 02 07:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/01/network-solutions-whois-firefox-and-ie-search-provider-addengine.html
+GIT_AUTHOR_DATE='Sat Jan 31 07:00:00 2009 -0800' GIT_COMMITTER_DATE='Sat Jan 31 07:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/01/understanding-javas-perm-gen-maxpermsize-heap-space-etc.html
+GIT_AUTHOR_DATE='Thu Jan 29 22:00:00 2009 -0800' GIT_COMMITTER_DATE='Thu Jan 29 22:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/01/make-your-own-javascript-window-managerengine-using-jquery-and-prototype.html
+GIT_AUTHOR_DATE='Wed Jan 28 18:00:00 2009 -0800' GIT_COMMITTER_DATE='Wed Jan 28 18:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/01/howto-convert-postscript-ps-files-to-jpg-images-jpg.html
+GIT_AUTHOR_DATE='Wed Jan 07 08:00:00 2009 -0800' GIT_COMMITTER_DATE='Wed Jan 07 08:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2009/01/dish-network-lnb-drift-detected-dvr-625.html
+GIT_AUTHOR_DATE='Tue Jan 06 08:00:00 2009 -0800' GIT_COMMITTER_DATE='Tue Jan 06 08:00:00 2009 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/11/howto-check-if-your-system-will-support-a-64-bit-os-linux.html
+GIT_AUTHOR_DATE='Mon Nov 17 17:12:10 2008 -0800' GIT_COMMITTER_DATE='Mon Nov 17 17:12:10 2008 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/11/howto-setup-and-configure-linux-software-raid-centosfedoraredhat.html
+GIT_AUTHOR_DATE='Sat Nov 15 11:03:16 2008 -0800' GIT_COMMITTER_DATE='Sat Nov 15 11:03:16 2008 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/11/sata-raid-cards-linuxwindows-what-you-should-know-about-fake-raid-cards.html
+GIT_AUTHOR_DATE='Fri Nov 14 16:50:04 2008 -0800' GIT_COMMITTER_DATE='Fri Nov 14 16:50:04 2008 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/11/howto-use-the-banner-bannerc-command-to-create-login-banners.html
+GIT_AUTHOR_DATE='Wed Nov 05 09:29:19 2008 -0800' GIT_COMMITTER_DATE='Wed Nov 05 09:29:19 2008 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/11/howto-make-your-linux-system-beep.html
+GIT_AUTHOR_DATE='Mon Nov 03 12:40:59 2008 -0800' GIT_COMMITTER_DATE='Mon Nov 03 12:40:59 2008 -0800' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/10/howto-generating-many-good-random-passwords-automatically.html
+GIT_AUTHOR_DATE='Thu Oct 30 10:24:48 2008 -0700' GIT_COMMITTER_DATE='Thu Oct 30 10:24:48 2008 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/10/mysql-duplicate-entry-error-when-handling-varchar-primary-keys.html
+GIT_AUTHOR_DATE='Wed Oct 29 18:25:54 2008 -0700' GIT_COMMITTER_DATE='Wed Oct 29 18:25:54 2008 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/10/howto-hide-apache-server-version-for-security-using-servertokens-and-serversignature.html
+GIT_AUTHOR_DATE='Tue Oct 28 22:11:14 2008 -0700' GIT_COMMITTER_DATE='Tue Oct 28 22:11:14 2008 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/10/howto-generating-good-random-passwords-with-devurandom.html
+GIT_AUTHOR_DATE='Sun Oct 26 20:03:27 2008 -0700' GIT_COMMITTER_DATE='Sun Oct 26 20:03:27 2008 -0700' git commit
+-----------------------------------------------------------------
+http://mark.koli.ch/2008/10/basics-of-scsi-firmware-applications-and-beyond.html
+GIT_AUTHOR_DATE='Sat Oct 25 13:37:58 2008 -0700' GIT_COMMITTER_DATE='Sat Oct 25 13:37:58 2008 -0700' git commit
+-----------------------------------------------------------------
