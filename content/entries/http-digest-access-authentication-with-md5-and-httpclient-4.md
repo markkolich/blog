@@ -1,7 +1,7 @@
-Dealing with HTTP's Digest authentication mechanism isn't too bad once you have the basic building blocks in place.  Luckily [HttpClient 4](http://hc.apache.org/httpcomponents-client/index.html) can automatically solve many types of authentication challenges for you, if used correctly.  Using HttpClient 4, I built an app that authenticates against a SOAP based web-service requiring WWW-Authenticate Digest authentication.  In a nutshell, the fundamental principal behind HTTP Digest authentication is simple:
+Dealing with HTTP's Digest authentication mechanism isn't too bad once you have the basic building blocks in place.  Luckily [HttpClient 4](http://hc.apache.org/httpcomponents-client/index.html) can automatically solve many types of authentication challenges for you, if used correctly.  Using HttpClient 4, I built an app that authenticates against a SOAP based web-service requiring `WWW-Authenticate` Digest authentication.  In a nutshell, the fundamental principal behind HTTP Digest authentication is simple:
 
 * The client asks for a page that requires authentication.
-* The server responds with an HTTP 401 response code, providing the authentication realm and a randomly-generated, single-use value called a "nonce".  The authentication "challenge" itself is encapsulated inside of the WWW-Authenticate HTTP response header.
+* The server responds with an HTTP 401 response code, providing the authentication realm and a randomly-generated, single-use value called a "nonce".  The authentication "challenge" itself is encapsulated inside of the `WWW-Authenticate` HTTP response header.
 * The client "solves" the authentication challenge and a solution is sent back to the web-server via the HTTP `Authorization` header on a subsequent request.  The solution usually contains some type of MD5 hashed mess of your username, password, and "nonce".
 * Assuming the solution is acceptable the server responds with a successful type response, usually an `HTTP 200 OK`.
 
@@ -14,8 +14,7 @@ final DigestScheme md5Auth = new DigestScheme();
 
 // This should return an HTTP 401 Unauthorized with
 // a challenge to solve.
-final HttpResponse authResponse =
-        doPost(url, postBody, contentType);
+final HttpResponse authResponse = doPost(url, postBody, contentType);
 
 // Validate that we got an HTTP 401 back
 if(authResponse.getStatusLine().getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
