@@ -91,9 +91,6 @@ GIT_AUTHOR_DATE='Sat Sep 05 11:45:00 2009 -0700' GIT_COMMITTER_DATE='Sat Sep 05 
 http://mark.koli.ch/2009/08/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day.html
 GIT_AUTHOR_DATE='Sat Aug 22 01:00:00 2009 -0700' GIT_COMMITTER_DATE='Sat Aug 22 01:00:00 2009 -0700' git commit
 -----------------------------------------------------------------
-http://mark.koli.ch/2009/08/my-favorite-way-of-validating-form-inputs-in-php.html
-GIT_AUTHOR_DATE='Fri Aug 21 11:30:00 2009 -0700' GIT_COMMITTER_DATE='Fri Aug 21 11:30:00 2009 -0700' git commit
------------------------------------------------------------------
 http://mark.koli.ch/2009/08/my-first-tic-tac-toe-game.html
 GIT_AUTHOR_DATE='Wed Aug 19 08:20:00 2009 -0700' GIT_COMMITTER_DATE='Wed Aug 19 08:20:00 2009 -0700' git commit
 -----------------------------------------------------------------
