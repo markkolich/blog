@@ -40,7 +40,7 @@
                                 var entry = entries[i];
                                 var entryDiv = $('<div>').addClass('entry').hide(),
                                     h2 = $('<h2>').addClass('title'),
-                                    link = $('<a>').attr('href',entry.name).html(entry.title),
+                                    link = $('<a>').attr('href',baseAppUrl+entry.name).html(entry.title),
                                     hash = $('<p>').addClass('hash').html(entry.commit),
                                     date = $('<p>').addClass('date').html(entry.date),
                                     content = $('<p>').html(entry.html),
