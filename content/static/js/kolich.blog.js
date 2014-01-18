@@ -5,6 +5,11 @@
 		// Namespace.
 		self = parent.Blog = parent.Blog || {},
 
+		console = parent['console'],
+        baseAppUrl = parent['baseAppUrl'],
+
+		blogJsonApi = baseAppUrl + "blog.json",
+
 		init = (function() {
 		    var
                 prettyprint = function() {
@@ -25,7 +30,7 @@
                     $('button.more').click(function(e) {
                         var moreDiv = $(this).parent();
                         var lastCommit = $('p.hash:last').html();
-                        $.getJSON("blog.json", {before: lastCommit}, function(json) {
+                        $.getJSON(blogJsonApi, {before: lastCommit}, function(json) {
                             var entries = json.content;
                             // Hide the "load more" button if no entries are left.
                             if(json.remaining <= 0) {
