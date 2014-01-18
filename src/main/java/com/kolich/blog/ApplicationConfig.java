@@ -147,7 +147,7 @@ public final class ApplicationConfig {
             config = (configFile != null) ?
                 // Load the external 'blog.conf' Typesafe configuration
                 // from an external file.
-                ConfigFactory.parseFile(configFile) :
+                ConfigFactory.parseFile(configFile).resolve() :
                 // No valid external config file found, return null.
                 null;
         } catch (Exception e) {
