@@ -10,6 +10,8 @@ SetEnvIfNoCase Request_URI build\/latest$ build-latest
 Header set Content-Disposition "attachment; filename=build-latest.jar" env=build-latest
 ```
 
-<img src="static/entries/apache-setting-the-content-disposition-header-with-mod-rewrite/httpfox-snapshot-cappuccino-kolich.jpg">
+Using this method, here's what the `Content-Disposition` header looks like according to HttpFox:
+
+<img src="static/entries/apache-setting-the-content-disposition-header-with-mod-rewrite/httpfox-snapshot-cappuccino-kolich.jpg" width="400">
 
 Cheers.
