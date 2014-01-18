@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 import static com.google.common.net.HttpHeaders.IF_NONE_MATCH;
-import static com.kolich.common.util.secure.KolichChecksum.getMD5Hash;
+import static com.kolich.common.util.secure.KolichChecksum.getSHA1Hash;
 
 @ControllerReturnTypeMapper(File.class)
-public final class ETagAwareStaticContentResponseMapper
+public final class ETagAwareFileResponseMapper
     extends AbstractDevModeSafeResponseMapper<File> {
 
     private static final String WEAK_ETAG_HEADER_FORMAT = "W/\"%s\"";
@@ -33,13 +33,13 @@ public final class ETagAwareStaticContentResponseMapper
         if(eTag.equals(ifNoneMatch) || "*".equals(ifNoneMatch)) {
             result = new NotModifiedResponseEntity();
         } else {
-            result = new StaticFileResponseEntity(entity, eTag, response);
+            result = new FileResponseEntity(entity, eTag, response);
         }
         renderEntity(response, result);
     }
 
     private static final String getETag(final File f) {
-        final String hash = getMD5Hash(
+        final String hash = getSHA1Hash(
             // The name of the file.
             f.getName() +
             // The size of the file on disk, in bytes.

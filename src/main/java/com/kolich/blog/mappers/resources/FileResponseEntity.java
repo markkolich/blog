@@ -19,7 +19,7 @@ import static org.apache.commons.io.FilenameUtils.getExtension;
 import static org.apache.commons.io.FilenameUtils.normalize;
 import static org.apache.commons.io.IOUtils.copyLarge;
 
-public final class StaticFileResponseEntity implements CuracaoEntity {
+public final class FileResponseEntity implements CuracaoEntity {
 
     private static final String DEFAULT_CONTENT_TYPE =
         MediaType.OCTET_STREAM.toString();
@@ -28,9 +28,9 @@ public final class StaticFileResponseEntity implements CuracaoEntity {
     private final String eTag_;
     private final HttpServletResponse response_;
 
-    public StaticFileResponseEntity(final File file,
-                                    final String eTag,
-                                    final HttpServletResponse response) {
+    public FileResponseEntity(final File file,
+                              final String eTag,
+                              final HttpServletResponse response) {
         file_ = file;
         eTag_ = eTag;
         response_ = response;
