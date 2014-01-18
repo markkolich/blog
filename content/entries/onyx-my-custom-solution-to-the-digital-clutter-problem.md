@@ -18,7 +18,7 @@ Onyx is available at http://onyx.koli.ch.
 
 I'm not a formal user-interface expert, but I built the Onyx UI to be what I think is clean, simple, and elegant.  I settled on a dark gray minimalist style color theme after experimenting with several color options.  The home screen, as shown below, displays a convenient list of recently added files, newest on top.  The "top five" users, determined by the number of files uploaded, are shown under the recently added files list. Note that only "public" files are shown in the recent files list &mdash; files and folders marked private by the user are not visible or accessible to the public.
 
-<img src="static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-homescreen-thumb-400x376.jpg" width="400">
+<img src="static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-homescreen.jpg" width="400">
 
 ### Adding a Directory and Uploading Files
 
