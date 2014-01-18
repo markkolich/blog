@@ -24,7 +24,7 @@ For the record, I found these bits at [McMaster-Carr online](http://www.mcmaster
 
 If you're curious, here's a close up shot of a standard Phillips head (left) and triangular bit tamper-proof screw (right):
 
-<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/phillips-and-triangle-tamper-proof-screw.jpg">
+<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/phillips-and-triangle-tamper-proof-screw.jpg" width="400">
 
 In the end, my solution to this problem involved an old flat-head screwdriver, a vice and metal file.  I snagged an old beat-up flat-head screwdriver, locked it into my vice, and filed the tip into a triangular point.  About 10-minutes later, with a little trial and error, I had myself a pretty sweet triangular screwdriver bit that could easily handle these ridiculous tamper-proof screws!
 
@@ -53,19 +53,19 @@ Once my replacement fuses arrived, I grabbed the closest soldering gun and got d
 
 I opted to use a few simple butt-connectors between the fuses, and the main line:
 
-<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-replacement-fuses-butt-connectors.jpg">
+<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-replacement-fuses-butt-connectors.jpg" width="400">
 
 With both fuses replaced, I verified each with a multimeter and carefully reassembled my KM7000.  I dusted it off, brought it back into my kitchen, plugged it in, and brewed up one heck of a great tasting pot of coffee.
 
-<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-fixed-victory-is-mine.jpg">
+<img src="static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-fixed-victory-is-mine.jpg" width="400">
 
 That's the smell of delicious do-it-yourself satisfaction.  Cheers!
 
 ### Additional Resources
 
-* [https://onyx.koli.ch/x3bn] &mdash; Complete set of photos from my repair procedure, including more pictures of those lame triangle bit tamper-proof screws.
-* [https://onyx.koli.ch/x3c2] &mdash; Fantastic blog post from Jimmy Su which helped me discover the problem with my KM7000.
-* [https://onyx.koli.ch/x14m] &mdash; My archived digital copy of the Krups KM7000 User-Manual.
-* [https://onyx.koli.ch/x3c3] &mdash; A PDF spec of the G4 fuse from Therm-O-Disc, the manufacturer of the thermal fuses used in the KM7000.
+* https://onyx.koli.ch/x3bn &mdash; Complete set of photos from my repair procedure, including more pictures of those lame triangle bit tamper-proof screws.
+* https://onyx.koli.ch/x3c2 &mdash; Fantastic blog post from Jimmy Su which helped me discover the problem with my KM7000.
+* https://onyx.koli.ch/x14m &mdash; My archived digital copy of the Krups KM7000 User-Manual.
+* https://onyx.koli.ch/x3c3 &mdash; A PDF spec of the G4 fuse from Therm-O-Disc, the manufacturer of the thermal fuses used in the KM7000.
 
 Very special thanks to [Jimmy Su](http://www.jimmysu.net/component/content/article/1-latest/971-oh-the-coffeemaker-is-broken-again) for all of his help and advice along the way.  Thanks, Jimmy!

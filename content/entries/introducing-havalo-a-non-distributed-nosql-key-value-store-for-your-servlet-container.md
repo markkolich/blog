@@ -34,3 +34,12 @@ There were several technical challenges I overcame while I built Havalo:
 
 * **Java Client Bindings** - The Havalo API is a RESTful service which deals exclusively in JSON.  To facilitate adoption of the API, literally to make it easier to consume the service, I wrote a robust set of Java bindings (a client) for the Havalo API.  You'll find the havalo-client project is an easy off-the-shelf solution which can be integrated into your own application.
 
+Phew!
+
+### Download It
+
+You can find instructions and additional technical details on how to download and configure Havalo for your own environment on my Havalo GitHub page at [https://github.com/markkolich/havalo](https://github.com/markkolich/havalo).
+
+Havalo is open source, so you are always welcome to browse the source and submit a pull request if you'd like to contribute.
+
+Enjoy!

@@ -14,11 +14,11 @@ So, using these wrappers, let's create a new worker:
 ```java
 public final class MyWorker extends BaseWorker {
 
-  private final int someField_;
+  private final int worker_;
 
   public MyWorker(int worker) {
     super();
-    someField_ = worker;
+    worker_ = worker;
     // ...
   }
 
@@ -29,7 +29,7 @@ public final class MyWorker extends BaseWorker {
 
   @Override
   public String getWorkerName() {
-    return String.format("%s #%s", getClass().getSimpleName(), someField_);
+    return String.format("%s #%s", getClass().getSimpleName(), worker_);
   }
 
 }

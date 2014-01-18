@@ -1,6 +1,6 @@
 You're probably familiar with UUID's &mdash; those ubiquitous [universally unique identifiers](http://en.wikipedia.org/wiki/Universally_unique_identifier) used in just about every modern web-application or web-service.  And, if you're a developer living on the JVM, you're probably close friends with [java.util.UUID](http://docs.oracle.com/javase/6/docs/api/java/util/UUID.html) whether you like it or not.
 
-Generally speaking, UUID's are a convenient way to represent some unique object or entity inside of an application.  After all, they're supposed to be "universally unique" and random enough such that an application can, in theory, generate "random" UUID's forever without any collisions.  In other words, UUID's are represented by a 128-bit number under-the-hood, so the total number of possible UUID's is immense -- 340,282,366,920,938,463,463,374,607,431,768,211,456 unique UUID's to be exact.
+Generally speaking, UUID's are a convenient way to represent some unique object or entity inside of an application.  After all, they're supposed to be "universally unique" and random enough such that an application can, in theory, generate "random" UUID's forever without any collisions.  In other words, UUID's are represented by a 128-bit number under-the-hood, so the total number of possible UUID's is immense &mdash; 340,282,366,920,938,463,463,374,607,431,768,211,456 unique UUID's to be exact.
 
 No application today could possibly have more than 340,282,366,920,938,463,463,374,607,431,768,211,456 users, or need to store more than 340,282,366,920,938,463,463,374,607,431,768,211,456 objects, right?
 
@@ -77,8 +77,8 @@ scala> r.findFirstIn("09bf989f-5b24-47bc-871e-1e824d4f4c60")
 res1: Option[String] = Some(09bf989f-5b24-47bc-871e-1e824d4f4c60)
 ```
 
-Yay!  Note that on the first call to findFirstIn, a None (no match) was returned.  On the second invocation with a UUID of the correct length, Some(uuid) was returned given the input String was syntactically correct and of a perfect length.
+Yay!  Note that on the first call to `findFirstIn`, a `None` (no match) was returned.  On the second invocation with a UUID of the correct length, `Some(uuid)` was returned given the input String was syntactically correct and of a perfect length.
 
-So, in the end, not a huge deal but it's good to keep in mind that when dealing with UUID's you cannot rely on java.util.UUID alone to parse and verify an incoming identifier.  In the end, you've got to use your own UUID verification regular expression.  Or, better yet, use the verification mechanisms provided by your web-service or web-application framework (if one exists) to verify the length of incoming UUID's.
+So, in the end, not a huge deal but it's good to keep in mind that when dealing with UUID's you cannot rely on `java.util.UUID` alone to parse and verify an incoming identifier.  In the end, you've got to use your own UUID verification regular expression.  Or, better yet, use the verification mechanisms provided by your web-service or web-application framework (if one exists) to verify the length of incoming UUID's.
 
 Enjoy.
