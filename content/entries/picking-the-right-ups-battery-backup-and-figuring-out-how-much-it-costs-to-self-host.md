@@ -1,5 +1,7 @@
 This past weekend, heavy wind knocked out the power to my home for over an hour or so.  Unfortunately, the Linux server that powers my blog failed to stay on during the outage.  Come to find out, the UPS (uninterruptible power supply, a.k.a., a battery backup) unit it was plugged into is pretty much dead; I suspect the battery is completely trashed.  Once the power returned, I rebooted my server and decided to test the UPS.  I booted up the box, and pulled the plug out from the wall.  The UPS kept my system online for all of about 4-seconds.  So much for being uninterruptible.
 
+<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-xw8000.jpg" width="500">
+
 ### Gathering the Data
 
 First, I needed to figure out how much current my server actually consumed.  The beast has a 450 W max power supply.  Chances are, at any given moment, I'm not using all 450 W.  And, as it turns out, I don't even come close to maxing out the PSU.  I asked around at work, and found a nice guy who was willing to let me borrow a reliable [ammeter](http://en.wikipedia.org/wiki/Ammeter) (a Fluke 36 Clamp Meter).  This specific ammeter uses [magnetic inductance](http://en.wikipedia.org/wiki/Magnetic_inductance) to determine the amount of current ([amperes](http://en.wikipedia.org/wiki/Ampere)) flowing through the circuit.
@@ -26,7 +28,7 @@ Based on my data, I know that my Linux server consumes about 2.0 A on average.  
 
 For my calculations, I'm going to assume the system uses roughly 2.0 A when idling.  Using some basic physics, let's calculate how many W (watts) this system consumes knowing that it's plugged into a standard ~120V outlet:
 
-<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-wattage.png" width="500">
+<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-wattage.png">
 
 So, my Linux box uses about 240 W of power on average.  Not bad &mdash; no where near the max of 450 W the power supply can dish out though.
 
