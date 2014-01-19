@@ -124,9 +124,6 @@ GIT_AUTHOR_DATE='Sat Apr 25 18:10:00 2009 -0700' GIT_COMMITTER_DATE='Sat Apr 25 
 http://mark.koli.ch/2009/04/phps-object-notation-accessing-complexly-named-fields-with-hyphens-in-an-object.html
 GIT_AUTHOR_DATE='Wed Apr 22 18:59:59 2009 -0700' GIT_COMMITTER_DATE='Wed Apr 22 18:59:59 2009 -0700' git commit
 -----------------------------------------------------------------
-http://mark.koli.ch/2009/04/10-awesome-htaccess-hacks-for-movable-type.html
-GIT_AUTHOR_DATE='Tue Apr 14 22:05:00 2009 -0700' GIT_COMMITTER_DATE='Tue Apr 14 22:05:00 2009 -0700' git commit
------------------------------------------------------------------
 http://mark.koli.ch/2009/04/howto-use-apache-mod-deflate-to-compress-web-content-obsessed-with-speed-of-kolichcommobi.html
 GIT_AUTHOR_DATE='Sat Apr 04 21:45:00 2009 -0700' GIT_COMMITTER_DATE='Sat Apr 04 21:45:00 2009 -0700' git commit
 -----------------------------------------------------------------
