@@ -4,7 +4,7 @@ For form validation, assuming you're running PHP 5.2.0 or greater, you really ca
 
 In most cases, I find that a nice combo of `filter_input_array` and `empty` works quite nicely for most of my form validation needs.
 
-### The <form>
+### The &lt;form&gt;
 
 Here's a reasonably complex `<form>` that should exercise `filter_input_array`.  In this form, I have a bunch of text inputs, some check boxes, and a hidden field.  One of the text inputs must be a valid email address, another must be a seven digit number (all digits, no non-digit characters), and the last one must be a number between 0 and 20.  The hidden field must be a valid URL (maybe useful for a script redirect or something like that).  The form will be submitted via a `POST`.
 
