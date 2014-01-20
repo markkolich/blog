@@ -133,7 +133,8 @@ object PackageJs extends AntHelpers {
         "kolich.js",
         "kolich.blog.js",
         "kolich.blog.twitter.js",
-        "kolich.blog.translate.js"))
+        "kolich.blog.translate.js",
+        "kolich.blog.provider.js"))
       println("Compiling JavaScript...")
       // Concat libs together
       concatenate(build / "blog.lib.js", libs)

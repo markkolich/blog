@@ -1,6 +1,9 @@
-(function($) {
+(function($, parent, window, document, undefined) {
 
-    var
+	var
+
+		// Namespace.
+		self = parent.Provider = parent.Provider || {},
 
         addEngine = function(xml, icon, provider, cat) {
             if((typeof window.sidebar=="object")&&(typeof window.sidebar.addSearchEngine=="function")){
@@ -17,15 +20,19 @@
                     return false;
                 }
             }
+        },
+
+		init = function() {
+            $("a[enginexml]").click(function(e) {
+                var xml = $(this).attr("engineXML"),
+                    icon = $(this).attr("icon"),
+                    provider = $(this).attr("provider"),
+                    cat = $(this).attr("cat");
+                addEngine(xml, icon, provider, cat);
+                e.preventDefault();
+            });
         };
 
-        $("a[engineXML]").click(function(e){
-            var xml = $(this).attr("engineXML"),
-                icon = $(this).attr("icon"),
-                provider = $(this).attr("provider"),
-                cat = $(this).attr("cat");
-            addEngine(xml, icon, provider, cat);
-            e.preventDefault();
-        });
+    init();
 
-}(jQuery));
+})(jQuery, Kolich.Blog || {}, this, this.document);
