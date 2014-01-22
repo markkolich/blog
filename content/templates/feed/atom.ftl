@@ -4,7 +4,7 @@
     <title>${blogTitle}</title>
     <link rel="alternate" type="text/html" href="${fullUri}"/>
     <link rel="self" type="application/atom+xml" href="${fullUri}atom.xml"/>
-    <id>http://mark.koli.ch</id>
+    <id>${fullUri}</id>
     <updated>${lastUpdated}</updated>
     <subtitle>${blogSubTitle}</subtitle>
 
@@ -13,7 +13,7 @@
         <entry>
 
             <title>${e.title}</title>
-            <id>${e.commit}</id>
+            <id>${fullUri}${e.name}</id>
 
             <published>${e.atomFeedDateFormatted}</published>
             <updated>${e.atomFeedDateFormatted}</updated>
