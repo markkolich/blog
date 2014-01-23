@@ -26,4 +26,4 @@
 
         <div class="row">
 
-            <div class="col-xs-9">
+            <div class="col-md-9 col-lg-9">

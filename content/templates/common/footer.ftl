@@ -3,7 +3,7 @@
     </div>
 
     <!-- right column -->
-    <div class="col-xs-3">
+    <div class="col-md-3 col-lg-3 hidden-sm hidden-xs">
 
         <div class="panel panel-default twitter">
             <div class="panel-heading">Twitter (<a href="https://twitter.com/markkolich">@markkolich</a>)</div>
