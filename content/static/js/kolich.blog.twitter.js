@@ -55,8 +55,8 @@
             };
         }()),
 
-		init = function() {
-		    $.getJSON(tweetsApi, function(data) {
+        load = function() {
+            $.getJSON(tweetsApi, function(data) {
                 var tweets = data.tweets;
                 if(tweets && tweets.length > 0) {
                     var ul = $('<ul>').hide();
@@ -72,9 +72,25 @@
                     tweetBody.append(ul);
                     ul.slideDown(500);
                 }
-		    });
+            });
+        },
+
+		init = function() {
+            // Remove the tweet panel from the DOM if it's present but isn't
+            // visible (hidden per our responsive design/CSS).
+            if(tweetPanel.is(':visible')) {
+                // Load tweets.
+                load();
+            } else {
+                // Remove panel from DOM.
+                tweetPanel.remove();
+            }
         };
 
+    // Validate that the Twitter panel exists in the DOM, and it is visible
+    // given our responsive CSS.  If the twitter panel is not visible (on
+    // smaller devices) then don't even bother making a call to load the
+    // Tweet feed since it can't be displayed anyways.
     (tweetPanel.length > 0) && init();
 
 })(jQuery, Kolich.Blog || {}, this, this.document);
