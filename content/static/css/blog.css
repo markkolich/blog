@@ -76,6 +76,7 @@ li.tweet.first {
 
 div.panel.twitter .panel-body li.small p {
   margin-bottom: 0;
+  overflow: hidden;
 }
 
 div.panel.twitter .panel-body li.small p.smaller {
