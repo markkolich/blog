@@ -240,7 +240,7 @@ object Blog extends Build {
   lazy val blog: Project = Project(
     aName,
     new File("."),
-    settings = Defaults.defaultSettings ++ Seq(resolvers := depResolvers) ++ Seq(
+    settings = Defaults.defaultSettings ++ Seq(
       version := aVer,
       organization := aOrg,
       scalaVersion := "2.10.3",
@@ -253,6 +253,7 @@ object Blog extends Build {
         "-bootclasspath", "jdk/jdk1.6.0_45_rt.jar:jdk/jdk1.6.0_45_jce.jar",
         "-source", "1.6", "-target", "1.6"*/
       ),
+      resolvers := depResolvers,
       shellPrompt := { (state: State) => { "%s:%s> ".format(aName, aVer) } },
       // True to export the packaged JAR instead of just the compiled .class files.
       exportJars := true,
