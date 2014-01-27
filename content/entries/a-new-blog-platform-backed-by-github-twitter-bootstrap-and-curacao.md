@@ -12,9 +12,9 @@ I love Git, and [GitHub](https://github.com/markkolich).
 
 So, it felt completely natural to use GitHub as the underlying datastore for all of my blog content, not just the source code behind it.  Here's the content creation workflow I desired:
 
-* Create new blog entry Markdown file in clone of GitHub hosted repository: `touch new-entry-with-some-name.md`
-* Write blog entry using Markdown in any editor I want: `vi new-entry-with-some-name.md`
-* Commit new blog entry to repository: `git commit -a -m "Title of this new post"`
+* Create new Markdown file in GitHub hosted repository: `touch new-entry-with-some-name.md`
+* Write blog entry using Markdown in any editor I choose: `vi new-entry-with-some-name.md`
+* Commit new blog entry to repository, where entry title is commit message: `git commit -a -m "Title of this new post"`
 * Push file to the remote, to publish new entry: `git push origin master`
 
 Then, once pushed, the JVM based web-app serving my blog to the world shall `git pull` and automagically update itself to show the new entry on the web.  In other words, I can just write, `commit`, `push`, and grab a Snickers.  Done.
