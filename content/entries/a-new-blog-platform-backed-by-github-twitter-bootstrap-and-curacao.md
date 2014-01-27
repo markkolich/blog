@@ -2,9 +2,9 @@ I finally dumped [Movable Type](http://movabletype.org) and decided to invest a 
 
 I started blogging in 2008, and at that time, the self-hosted blogging platform options were somewhat slim &mdash; choose Movable Type (built on `Perl` and `CGI`) or choose Wordpress (built on `PHP`, riddled with security issues).  Given its poor track record, I didn't trust Wordpress, so the choice was obvious: Movable Type.  However, as the web progressed, I quickly found myself using an outdated blogging tool *entirely due to my own laziness*; I started with Movable Type version-4.21 and never bothered to upgrade it over the course of 6-years.  Frankly, each time I mustered up the courage to upgrade my Movable Type install, I just gave up and poured myself a drink &mdash; it just wasn't something I wanted to tackle, full of gotch-ya's and landmines.  I had better things to do.
 
-The straw-that-broke-the-camels-back came last August in the form of this post, [Introducing Havalo, A Non-Distributed NoSQL Key-Value Store for your Servlet Container](introducing-havalo-a-non-distributed-nosql-key-value-store-for-your-servlet-container).  I recall using Movable Type's buggy editor to hammer out that blog post, and kept asking myself, "Why am I doing this?  Can't I just write this blog post using [Markdown](http://daringfireball.net/projects/markdown/)?  And why the hell am I still using Perl/CGI?"  Basically, 2008 called, and wanted its blogging platform back.  And so, the crusade for something better began.
+The straw-that-broke-the-camel's-back came last August in the form of this post, [Introducing Havalo, A Non-Distributed NoSQL Key-Value Store for your Servlet Container](introducing-havalo-a-non-distributed-nosql-key-value-store-for-your-servlet-container).  I recall using Movable Type's buggy editor to hammer out that blog post, and kept asking myself, "Why am I doing this?  Can't I just write this blog post using [Markdown](http://daringfireball.net/projects/markdown/)?  And why the hell am I still using Perl/CGI?"  Basically, 2008 called, and wanted its blogging platform back.  And so, the crusade for something better began.
 
-Most folks would have immediately jumped to Blogger, or [insert name of popular hosted blogging service here].  Apparently I like *reinventing wheels*, and this was an opportunity to really dig into some technologies I've been interested in for a while but didn't have the need to formally explore.  It was finally time to build my own open source blogging platform, from scratch, using the technologies I love.
+Most folks would have immediately jumped to Blogger, or *[insert name of popular hosted blogging service here]*.  Apparently I like *reinventing wheels*, and this was an opportunity to really dig into some technologies I've been interested in for a while but didn't have the need to formally explore.  It was finally time to build my own open source blogging platform, from scratch, using the technologies I love.
 
 ### GitHub Integration & JGit
 
@@ -41,7 +41,7 @@ A paragraph.
 
 I pulled in [Pegdown](https://github.com/sirthias/pegdown), a pure-Java Markdown processor based on a parboiled PEG parser.  It integrated with my app beautifully &mdash; all content, pages and entries, could now be written in Markdown and I wasn't tied to some awful web-interface with a buggy editor.
 
-Page templating was still important, so I integrated [FreeMarker](http://freemarker.org) into the mix.  Pegdown consumes Markdown and spits out HTML, which is then piped into a FreeMarker template to produce near final HTML:
+Page templating was still important, so I integrated [FreeMarker](http://freemarker.org) into the mix for common page components.  Pegdown consumes Markdown and spits out HTML, which is then piped into a FreeMarker template to produce near final HTML:
 
 ```
 <#include "common/header.ftl">
@@ -62,11 +62,11 @@ Lastly, the [HTML Compressor](https://code.google.com/p/htmlcompressor/) was bro
 
 I love [Twitter Bootstrap](http://getbootstrap.com).
 
-One wheel I didn't reinvent was the "responsive" UI layer for my new blogging platform.  I wanted something simple, beautiful, and off-the-shelf.  So, I grabbed the latest version of Bootstrap, and chose its [Spacelab theme](http://bootswatch.com/spacelab/).  Given the flexible and extensible nature of Bootstrap, I can in theory, replace this theme with any other theme for a completely different look without any code rewrites.
+One wheel I didn't reinvent was the "responsive" UI layer for my new blogging platform.  I wanted something simple, beautiful, and off-the-shelf.  I snagged the latest version of Bootstrap, and chose its [Spacelab theme](http://bootswatch.com/spacelab/).  Given the flexible and extensible nature of Bootstrap, I can in theory, replace this theme with any other for a completely different look without any code rewrites.
 
-Oh, and I can't forget Bootstrap's responsive design &mdash; the act of gracefully degrading or seamlessly transitioning to a view suitable for any device using [CSS3 media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries).  For years I've been maintaining a "mobile" version of my blog at http://mobi.koli.ch.  Given Bootstrap's built in responsiveness, I was finally able to shut down this dedicated mobile portal for good.  When you view this blog on on a mobile device, like an iPhone or an iPad, you'll notice the view gracefully hides the right most column and displays just the page content.  When on a larger device, like a notebook, the right column is visible given more screen real estate.
+Let's not forget Bootstrap's responsive design &mdash; the act of gracefully degrading or seamlessly transitioning to a view suitable for any device using [CSS3 media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries).  For years I've been maintaining a "mobile" version of my blog at http://mobi.koli.ch.  Given Bootstrap's built in responsiveness, I was finally able to shut down this dedicated mobile portal for good.  When you view my new blog on on a mobile device, like an iPhone or an iPad, you'll notice the view gracefully hides the right most column and displays just the page content.  When on a larger device, like a notebook, the right column is visible with more screen real estate.
 
-In short, the mobile version of my blog is now "built in, for free" &mdash; whatever device you happen to be on, you'll see the most appropriate view that's optimized for your device.  And, more importantly, I no longer have to run or maintain a separate web-app just for mobile devices.
+In short, the mobile version of my blog is now "built in, for free" &mdash; whatever device you happen to be on, you'll see the most appropriate view that's optimized for your device.  And, more importantly, I no longer have to run and maintain a separate web-app just for mobile devices.
 
 ### Highly Optimized JavaScript with jQuery
 
@@ -74,7 +74,7 @@ I love [jQuery](http://jquery.com).
 
 Bootstrap's core is written around jQuery, so it was a natural fit.
 
-All [JavaScript was a simple extension of the closure pattern](https://github.com/markkolich/blog/tree/master/content/static/js), which made it easy for me to write robust and modular code.  At build time, all JavaScript is packed, highly optimized, and minified using [Google's Closure Compiler](https://developers.google.com/closure/compiler/).  Similarly, all CSS is packed and minified using the [YUI Compressor](http://yui.github.io/yuicompressor/).  Closure Compiler and YUI Compressor support is integrated directly into my `SBT` [Build.scala](https://github.com/markkolich/blog/blob/master/project/Build.scala) file, such that all JavaScript and CSS is packaged automatically anytime the `compile` task is run.
+All [JavaScript was a simple extension of the closure pattern](https://github.com/markkolich/blog/tree/master/content/static/js), which made it easy for me to write robust and modular code.  At build time, my JavaScript is packed, highly optimized, and minified using [Google's Closure Compiler](https://developers.google.com/closure/compiler/).  Similarly, all CSS is packed and minified using the [YUI Compressor](http://yui.github.io/yuicompressor/).  Closure Compiler and YUI Compressor support is integrated directly into my `SBT` [Build.scala](https://github.com/markkolich/blog/blob/master/project/Build.scala) file, such that all JavaScript and CSS is packaged anytime the `compile` task is launched.
 
 ### Async Servlet Web-Layer with Curacao
 
@@ -82,7 +82,7 @@ I love the JVM, and JVM based web-applications.
 
 When choosing a server side web-layer for this project, I mulled over several options:
 
-* [Spring Framework](http://spring.io) &mdash; Too "enterprisey", bloated, thread based, meh.
+* [Spring Framework](http://spring.io) &mdash; Too "enterprisey", too bloated, thread based, meh.
 * [Play Framework](http://www.playframework.com/) &mdash; Akka Actor based, asynchronous overkill, too "off-the-shelf", meh.
 * [Spray](http://spray.io) &mdash; Scala only, Akka Actor based, poorly documented, too "academic", meh.
 * [Raw Servlet 3.0](https://jcp.org/aboutJava/communityprocess/final/jsr315/) &mdash; Thread based, asynchronous, too "raw", meh.
@@ -94,9 +94,9 @@ Meet [Curacao](https://github.com/markkolich/curacao), a open source toolkit for
 
 https://github.com/markkolich/curacao
 
-Curacao borrows concepts from Play, Spray, and Spring &mdash; I merged what I felt was the best of these worlds into a single toolkit.  Note I say "toolkit" and **not** framework, because Curacao is not built to be an end-all-be-all framework.  I intentionally avoided things like ORM, JDBC, AOP, etc. &mdash; total STFU, GTFO, LOL.
+Curacao borrows concepts from Play, Spray, and Spring &mdash; I "merged" what I felt was the best of these worlds into a single toolkit.  Note I say "toolkit" and **not** framework, because Curacao is not built to be an end all-be all framework.  I intentionally avoided things like ORM, JDBC, AOP, etc.
 
-With Curacao I can write powerful and completely asynchronous thread based web-services on top of any Servlet 3.0 compatible container:
+With Curacao I can write powerful and completely asynchronous thread based web-services on top of any Servlet 3.0 compatible container.  Here's a sample `@Controller` implementation in Curacao:
 
 ```java
 @Controller
@@ -122,46 +122,51 @@ public final class Blog {
 }
 ```
 
-This blog is deployed on top of Tomcat, but Curacao works with [Jetty](http://www.eclipse.org/jetty/), [Resin](http://www.caucho.com/resin-web-server/), and [Undertow](http://undertow.io/).
+This blog is deployed on Tomcat, but Curacao works with [Jetty](http://www.eclipse.org/jetty/), [Resin](http://www.caucho.com/resin-web-server/), and [Undertow](http://undertow.io/) too.
 
 ### Caching with Apache's `mod_cache`
 
 No web-service would be complete without some reasonable level of caching.  For that, I turned to Apache's [mod_cache](http://httpd.apache.org/docs/current/mod/mod_cache.html).  I'm already running Tomcat behind Apache's [mod_proxy_ajp](http://httpd.apache.org/docs/current/mod/mod_proxy_ajp.html) so configuring [mod_cache](http://httpd.apache.org/docs/current/mod/mod_cache.html) in conjunction with [mod_expires](http://httpd.apache.org/docs/current/mod/mod_expires.html) was trivial.
 
-First, here's my `mod_expires` configuration that manages the `Expires` HTTP response header on most "static" resources:
+First, `mod_expires` is in charge of setting an appropriate `Expires` HTTP response header on each response.  This is important for `mod_cache` given it keys on the `Expires` header to identify what resources it can/should cache, and for how long.  Here's my `mod_expires` configuration within Apache:
 
 ```
 ExpiresActive On
 
+## Default expiry is 5-minutes.
 ExpiresDefault "access plus 5 minutes"
 
+## Static content, images, fonts, etc. cache for 1-hour.
 ExpiresByType image/jpeg "access plus 1 hour"
 ExpiresByType image/png "access plus 1 hour"
 ExpiresByType image/x-icon "access plus 1 hour"
 ExpiresByType application/font-woff "access plus 1 hour"
 ExpiresByType application/x-font-ttf "access plus 1 hour"
 
-## For Atom/RSS feed
+## For Atom/RSS feed, and XML sitemap.
 ExpiresByType text/xml "access plus 1 hour"
 
-## For robots.txt
+## For robots.txt caching.
 ExpiresByType text/plain "access plus 1 hour"
 ```
 
 The caching of images, fonts, and dynamic resources like `atom.xml` and `robots.txt` are slightly more aggressive given they rarely change and are requested more often by crawlers and bots.
 
-For actual cached content, I configured a large [RAM disk](http://en.wikipedia.org/wiki/RAM_drive) mounted at `/mem` to host any `mod_cache` managed content:
+To hold cached content, I configured a large [RAM disk](http://en.wikipedia.org/wiki/RAM_drive) mounted at `/mem` for `mod_cache`:
 
 ```
 CacheRoot /mem
 CacheEnable disk /
 
+## The default duration to cache a document when no expiry date is specified.
 CacheDefaultExpire 300
-CacheIgnoreNoLastMod On
-CacheIgnoreCacheControl On
+## The maximum time in seconds to cache a document.
 CacheMaxExpire 300
 
-## 100 MB
+CacheIgnoreNoLastMod On
+CacheIgnoreCacheControl On
+
+## The maximum size (in bytes) of a document to be placed in the cache.
 CacheMaxFileSize 104857600
 
 ## NOTE: CacheDirLevels * CacheDirLength must not be > 20
@@ -169,7 +174,7 @@ CacheDirLevels 10
 CacheDirLength 2
 ```
 
-A RAM disk is a filesystem mounted in volatile memory &mdash; access to files and resources cached in a RAM disk is significantly faster than hitting spinning platters.  The goal being that common requests for static resources and other content that rarely change will usually not hit application code.  Instead, they would be fresh in the cache and served up accordingly.
+A RAM disk is a filesystem mounted in volatile memory &mdash; access to files and resources cached in a RAM disk is almost always significantly faster than hitting a spinning disk platter.  The goal here being that common requests for static resources, and other content that rarely changes, will usually not hit application code.  Instead, they would be fresh in the cache.
 
 ### This blog, and all its content, is open source
 
@@ -177,7 +182,7 @@ Last but not least, all code and content (everything you're reading here) is ope
 
 https://github.com/markkolich/blog
 
-Of course, you can `clone` your own local copy of my blog and its content anytime you wish:
+Of course, you can `clone` your own local copy of my blog and all of its content anytime you wish:
 
 ```
 git clone https://github.com/markkolich/blog.git
