@@ -127,7 +127,10 @@ object PackageJs extends AntHelpers {
         "json2.js",
         "jquery-1.10.2.min.js",
         "jquery.localtime-0.8.0.js",
-        "bootstrap.min.js",
+        // I discovered I wasn't actually using any of Bootstrap's JS
+        // in the web-application, so there's no need to include it in
+        // the apps "released" JavaScript bundle.
+        //"bootstrap.min.js",
         "prettify.js"))
       val sources = getFileList(js, Seq(
         "kolich.js",
