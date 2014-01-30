@@ -2,23 +2,31 @@
 
 <#include "common/header.ftl">
 
-<#list entries as e>
-    <div class="entry">
+<!-- entry list column -->
+<div class="col-md-9 col-lg-9">
 
-        <h2 class="title"><a href="${context}${e.name}">${e.title}</a></h2>
-        <p class="hash">${e.commit}</p>
-        <p class="date">${e.dateFormatted}</p>
-        <p>${e.content}</p>
+    <#list entries as e>
+        <div class="entry">
 
-        <div class="fader"></div>
+            <h2 class="title"><a href="${context}${e.name}">${e.title}</a></h2>
+            <p class="hash">${e.commit}</p>
+            <p class="date">${e.dateFormatted}</p>
+            <p>${e.content}</p>
 
-    </div>
-</#list>
+            <div class="fader"></div>
 
-<#if remaining &gt; 0>
-    <div class="row">
-        <button type="button" class="btn btn-default btn-md btn-block more">Load More</button>
-    </div>
-</#if>
+        </div>
+    </#list>
+
+    <#if remaining &gt; 0>
+        <div class="row">
+            <button type="button" class="btn btn-default btn-md btn-block more">Load More</button>
+        </div>
+    </#if>
+
+</div>
+<!-- /entry list column -->
+
+<#include "common/right.ftl">
 
 <#include "common/footer.ftl">

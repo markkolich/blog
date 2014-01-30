@@ -2,8 +2,14 @@
 
 <#include "../common/header.ftl">
 
-<h2>500 Internal Server Error</h2>
+<!-- page column -->
+<div class="col-xs-12">
 
-<p>Sorry, an internal error occurred while processing your request.</p>
+    <h2>500 Internal Server Error</h2>
+
+    <p>Sorry, an internal error occurred while processing your request.</p>
+
+</div>
+<!-- /page column -->
 
 <#include "../common/footer.ftl">
