@@ -2,6 +2,8 @@ addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.5.0")
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.2")
 
+addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.2.2")
+
 // Add dependencies for JS and CSS "compilation".
 // Note that this adds the dependencies only for the build process (makes
 // these libraries available to the build classpath, namely in Build.scala).

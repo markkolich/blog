@@ -27,6 +27,8 @@
 import sbt._
 import sbt.Keys._
 
+import de.johoop.findbugs4sbt.FindBugs._
+
 import com.earldouglas.xsbtwebplugin._
 import PluginKeys._
 import WebPlugin._
@@ -303,6 +305,8 @@ object Blog extends Build {
       },
       libraryDependencies ++= deps,
       retrieveManaged := true) ++
+      // Findbugs settings
+      findbugsSettings ++
       // xsbt-web-plugin settings
       webSettings ++ Seq(
         // Overrides the default context path used for this project.  By
