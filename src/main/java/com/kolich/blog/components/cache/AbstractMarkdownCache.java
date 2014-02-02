@@ -47,7 +47,10 @@ import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -103,7 +106,7 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                 // Commit timestamp, in seconds. Note the conversion to
                 // milliseconds because JGit gives us the commit time in
                 // seconds... sigh.
-                final Date date = new Date(commit.getCommitTime() * 1000L);
+                final long timestamp = commit.getCommitTime() * 1000L;
                 // Change type.
                 final boolean isAdd = change.changeType.equals(ADD);
                 if(isAdd && name.startsWith(pathToContent)) {
@@ -118,7 +121,7 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                         final String entityName = removeExtension(
                             markdown.getName());
                         final T entity = getEntity(entityName, title, hash,
-                            date, markdown);
+                            timestamp, markdown);
                         // Only add the entity if it's not already in the list.
                         if(!entities.contains(entity)) {
                             entities.add(entity);
@@ -150,7 +153,8 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
         final Map<String,T> newCache = Maps.uniqueIndex(entities,
             new Function<T,String>() {
                 @Nullable @Override
-                public String apply(final @Nullable T input) {
+                public String apply(final T input) {
+                    checkNotNull(input, "Input cannot be null.");
                     return input.getName();
                 }
             });
@@ -215,7 +219,8 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
         final int index = Iterables.indexOf(entries,
             new Predicate<T>() {
             @Override
-            public boolean apply(@Nullable final T input) {
+            public boolean apply(final T input) {
+                checkNotNull(input, "Input cannot be null.");
                 return commit.equals(input.getCommit());
             }
         });
@@ -240,7 +245,7 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
     public abstract T getEntity(final String name,
                                 final String title,
                                 final String commit,
-                                final Date date,
+                                final Long timestamp,
                                 final File content);
 
     public abstract String getCachedContentDirName();

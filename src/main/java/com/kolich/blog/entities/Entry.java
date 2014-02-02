@@ -39,9 +39,9 @@ public final class Entry extends MarkdownContent {
     public Entry(final String name,
                  final String title,
                  final String commit,
-                 final Date date,
+                 final Long timestamp,
                  final File content) {
-        super(ContentType.ENTRY, name, title, commit, date, content);
+        super(ContentType.ENTRY, name, title, commit, timestamp, content);
     }
 
     @Override

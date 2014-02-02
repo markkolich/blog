@@ -28,8 +28,8 @@ package com.kolich.blog.components.cache;
 
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
-import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.exceptions.ContentNotFoundException;
@@ -38,7 +38,6 @@ import com.kolich.curacao.annotations.Injectable;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.Date;
 
 @Component
 public final class EntryCache extends AbstractMarkdownCache<Entry> {
@@ -55,9 +54,9 @@ public final class EntryCache extends AbstractMarkdownCache<Entry> {
     public final Entry getEntity(final String name,
                                  final String title,
                                  final String commit,
-                                 final Date date,
+                                 final Long timestamp,
                                  final File content) {
-        return new Entry(name, title, commit, date, content);
+        return new Entry(name, title, commit, timestamp, content);
     }
 
     @Override

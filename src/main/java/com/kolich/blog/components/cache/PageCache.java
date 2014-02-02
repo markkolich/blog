@@ -35,7 +35,6 @@ import com.kolich.curacao.annotations.Injectable;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.Date;
 
 @Component
 public final class PageCache extends AbstractMarkdownCache<Page> {
@@ -52,9 +51,9 @@ public final class PageCache extends AbstractMarkdownCache<Page> {
     public final Page getEntity(final String name,
                                 final String title,
                                 final String commit,
-                                final Date date,
+                                final Long timestamp,
                                 final File content) {
-        return new Page(name, title, commit, date, content);
+        return new Page(name, title, commit, timestamp, content);
     }
 
     @Override

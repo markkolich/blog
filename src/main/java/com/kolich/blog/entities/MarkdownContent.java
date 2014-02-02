@@ -28,11 +28,14 @@ package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.TimeZone.getTimeZone;
 
 public abstract class MarkdownContent {
@@ -79,47 +82,53 @@ public abstract class MarkdownContent {
     @SerializedName("html")
     private final MarkdownFile content_;
 
-    public MarkdownContent(final ContentType type,
-                           final String name,
-                           final String title,
-                           final String commit,
-                           final Date date,
-                           final File content) {
-        type_ = type;
+    public MarkdownContent(@Nonnull final ContentType type,
+                           @Nullable final String name,
+                           @Nullable final String title,
+                           @Nullable final String commit,
+                           @Nullable final Long timestamp,
+                           @Nullable final File content) {
+        type_ = checkNotNull(type, "Markdown content type cannot be null.");
         name_ = name;
         title_ = title;
         commit_ = commit;
-        date_ = date;
+        date_ = (timestamp != null) ? new Date(timestamp) : null;
         content_ = (content != null) ? new MarkdownFile(content) : null;
     }
 
-    public MarkdownContent(final ContentType type,
-                           final String name,
-                           final String title,
-                           final String commit,
-                           final Date date) {
-        this(type, name, title, commit, date, null);
+    public MarkdownContent(@Nonnull final ContentType type,
+                           @Nullable final String name,
+                           @Nullable final String title,
+                           @Nullable final String commit,
+                           @Nullable final Long timestamp) {
+        this(type, name, title, commit, timestamp, null);
     }
 
+    @Nonnull
     public final ContentType getType() {
         return type_;
     }
 
+    @Nullable
     public final String getName() {
         return name_;
     }
 
+    @Nullable
     public final String getTitle() {
         return title_;
     }
 
+    @Nullable
     public final String getCommit() {
         return commit_;
     }
 
+    @Nullable
     public final Date getDate() {
-        return date_;
+        return (date_ != null) ? new Date(date_.getTime()) : null;
     }
+    @Nullable
     public final String getDateFormatted() {
         final Date date = getDate();
         return (date != null) ? BlogContentDateFormat.format(date) : null;
