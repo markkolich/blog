@@ -26,8 +26,10 @@
 
 import sbt._
 import sbt.Keys._
+import Project.Initialize
 
 import de.johoop.findbugs4sbt.FindBugs._
+import de.johoop.findbugs4sbt.ReportType
 
 import com.earldouglas.xsbtwebplugin._
 import PluginKeys._
@@ -250,7 +252,7 @@ object Blog extends Build {
       organization := aOrg,
       scalaVersion := "2.10.3",
       javacOptions ++= Seq(
-        "-Xlint", "-Xlint:-path", "-g"/*,
+        "-Xlint:all,-path", "-g"/*,
         // Java "cross compiling" against Java 6. Note you need to provide the "rt"
         // and "jce" (Java crypto extension) JAR's and place them in a place where
         // 'javac' can pick them up as specified by the "-bootclasspath" compiler
@@ -306,7 +308,10 @@ object Blog extends Build {
       libraryDependencies ++= deps,
       retrieveManaged := true) ++
       // Findbugs settings
-      findbugsSettings ++
+      findbugsSettings ++ Seq(
+        findbugsReportType := Some(ReportType.Html),
+        findbugsReportPath := Some(baseDirectory(new File(_, "dist/findbugs.html")).value)
+      ) ++
       // xsbt-web-plugin settings
       webSettings ++ Seq(
         // Overrides the default context path used for this project.  By
