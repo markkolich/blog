@@ -29,7 +29,6 @@ package com.kolich.blog.mappers.resources;
 import com.google.common.base.Charsets;
 import com.google.common.net.MediaType;
 import com.google.common.primitives.Ints;
-import com.kolich.curacao.entities.CuracaoEntity;
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
@@ -38,28 +37,21 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import static com.google.common.net.HttpHeaders.ETAG;
 import static com.kolich.blog.ApplicationConfig.getContentTypeForExtension;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.FilenameUtils.getExtension;
 import static org.apache.commons.io.FilenameUtils.normalize;
 import static org.apache.commons.io.IOUtils.copyLarge;
 
-public final class FileResponseEntity implements CuracaoEntity {
+public final class FileResponseEntity extends UnmodifiableCacheableEntity {
 
     private static final String DEFAULT_CONTENT_TYPE =
         MediaType.OCTET_STREAM.toString();
 
-    private final File file_;
-    private final String eTag_;
-    private final HttpServletResponse response_;
-
-    public FileResponseEntity(final File file,
-                              final String eTag,
-                              final HttpServletResponse response) {
-        file_ = file;
-        eTag_ = eTag;
-        response_ = response;
+    public FileResponseEntity(final HttpServletResponse response,
+                              final File file,
+                              final String eTag) {
+        super(response, file, eTag);
     }
 
     @Override
@@ -87,9 +79,7 @@ public final class FileResponseEntity implements CuracaoEntity {
     }
 
     @Override
-    public final void write(final OutputStream os) throws Exception {
-        // Set the HTTP ETag defining some reasonable "weak" ETag for browsers.
-        response_.setHeader(ETAG, eTag_);
+    public final void writeAfterHeaders(final OutputStream os) throws Exception {
         // Sigh.  Yep, here we are "safely" casting a Long to an Integer.
         // This ~should~ be fine, in theory, given that this response
         // mapper is likely not going to serve up content larger than
@@ -97,7 +87,7 @@ public final class FileResponseEntity implements CuracaoEntity {
         // will not work.  By that time, we'll probably be using Servlet
         // 3.1 which has a proper setContentLength(Long) method.
         response_.setContentLength(Ints.checkedCast(file_.length()));
-        try (InputStream is = new FileInputStream(file_)) {
+        try(final InputStream is = new FileInputStream(file_)) {
             copyLarge(is, os);
         }
     }

@@ -26,13 +26,20 @@
 
 package com.kolich.blog.mappers.resources;
 
-import com.kolich.curacao.entities.CuracaoEntity;
-
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.OutputStream;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public final class NotModifiedResponseEntity implements CuracaoEntity {
+public final class NotModifiedResponseEntity
+    extends UnmodifiableCacheableEntity {
+
+    public NotModifiedResponseEntity(final HttpServletResponse response,
+                                     final File file,
+                                     final String eTag) {
+        super(response, file, eTag);
+    }
 
     @Override
     public final int getStatus() {
@@ -45,7 +52,7 @@ public final class NotModifiedResponseEntity implements CuracaoEntity {
     }
 
     @Override
-    public void write(final OutputStream os) throws Exception {
+    public final void writeAfterHeaders(final OutputStream os) throws Exception {
         // Nothing, intentional.
     }
 
