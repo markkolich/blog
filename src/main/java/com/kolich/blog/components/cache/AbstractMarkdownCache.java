@@ -106,7 +106,7 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                 // Commit timestamp, in seconds. Note the conversion to
                 // milliseconds because JGit gives us the commit time in
                 // seconds... sigh.
-                final long timestamp = commit.getCommitTime() * 1000L;
+                final Long timestamp = commit.getCommitTime() * 1000L;
                 // Change type.
                 final boolean isAdd = change.changeType.equals(ADD);
                 if(isAdd && name.startsWith(pathToContent)) {

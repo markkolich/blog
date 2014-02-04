@@ -39,6 +39,8 @@ import com.kolich.curacao.annotations.Injectable;
 import javax.annotation.Nullable;
 import java.io.File;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+
 @Component
 public final class EntryCache extends AbstractMarkdownCache<Entry> {
 
@@ -56,7 +58,7 @@ public final class EntryCache extends AbstractMarkdownCache<Entry> {
                                  final String commit,
                                  final Long timestamp,
                                  final File content) {
-        return new Entry(name, title, commit, timestamp, content);
+        return new Entry(name, escapeHtml4(title), commit, timestamp, content);
     }
 
     @Override
