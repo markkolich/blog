@@ -4,7 +4,7 @@ This is my blog.  There are many like it, but this one is mine.
 
 The content and code herein is documented with reasonable depth in this blog post:
 
-[http://mark.koli.ch/a-new-blog-platform-backed-by-github-twitter-bootstrap-and-curacao](A New Blogging Platform: GitHub, Twitter Bootstrap, Curacao)
+http://mark.koli.ch/a-new-blog-platform-backed-by-github-twitter-bootstrap-and-curacao
 
 ## Bootstrap
 
