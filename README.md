@@ -52,7 +52,7 @@ To create an Intellij IDEA project for this codebase, run `gen-idea` in SBT.
 
     blog:1.0-SNAPSHOT> gen-idea
 
-Import the resulting project into your nearest IntelliJ IDEA instance.
+Open the resulting project using your favorite IntelliJ IDEA instance.
 
 ## Licensing
 
