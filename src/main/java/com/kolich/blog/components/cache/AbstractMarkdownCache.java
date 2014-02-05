@@ -28,9 +28,7 @@ package com.kolich.blog.components.cache;
 
 import com.gitblit.models.PathModel;
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
@@ -47,10 +45,7 @@ import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -68,11 +63,31 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
         ApplicationConfig.getContentRootDir();
 
     private final GitRepository git_;
+
+    /**
+     * An internal map that maps the name of each entity to its content.
+     */
     private final Map<String,T> cache_;
+
+    /**
+     * An internal map that maps each SHA-1 commit hash to a list of
+     * content/entries that was written before that commit.  For example if
+     * A, B, C, D are a list of commits in order, then list [A, B, C, D] will
+     * be translated and cached here as:
+     *   A -> [B, C, D]
+     *   B -> [C, D]
+     *   C -> [D]
+     *   D -> []
+     *
+     * This is so the lookup of "the set of entities that came before a
+     * given entity" can be done in constant time O(1).
+     */
+    private final Map<String,List<T>> shadowCache_;
 
     public AbstractMarkdownCache(final GitRepository git) {
         git_ = checkNotNull(git, "Git repository object cannot be null.");
         cache_ = Maps.newLinkedHashMap(); // Preserves order
+        shadowCache_ = Maps.newLinkedHashMap(); // Preserves order
     }
 
     @Override
@@ -158,44 +173,63 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                     return input.getName();
                 }
             });
+        // Construct a map which maps each ordered commit hash to the
+        // list of content that comes after it.  Note, a SortedSetMultimap
+        // could have been used here, but that implementation depends on the
+        // natural ordering of the keys and values in the map.  In this case,
+        // the ordering isn't the "natural" ordering but is rather dictated by
+        // time (e.g., given an entity X, give me all of the stuff older than
+        // it in constant time).
+        final Map<String,List<T>> newShadowCache = Maps.newLinkedHashMap();
+        final Set<Map.Entry<String,T>> sortedEntities = newCache.entrySet();
+        for(final Map.Entry<String,T> entity : sortedEntities) {
+            boolean includeNext = false;
+            final List<T> after = Lists.newLinkedList();
+            for(final Map.Entry<String,T> inner : sortedEntities) {
+                if(entity.getKey().equals(inner.getKey())) {
+                    includeNext = true;
+                } else if(includeNext) {
+                    after.add(inner.getValue());
+                }
+            }
+            newShadowCache.put(entity.getValue().getCommit(), after);
+        }
         // In a thread safe manner, clear the existing cache and then add
         // all new entries into it.  This is essentially just a synchronized
         // "swap" in place.
-        synchronized(cache_) {
+        synchronized(this) {
             if(cache_.size() != newCache.size()) {
                 logger__.info("Replacing cache with refreshed content (old=" +
                     cache_.size() + " -> new=" + newCache.size() + "): " +
                     newCache);
+                // Update the entry cache.
+                cache_.clear();
+                cache_.putAll(newCache);
+                // Update the shadow cache.
+                shadowCache_.clear();
+                shadowCache_.putAll(newShadowCache);
             }
-            cache_.clear();
-            cache_.putAll(newCache);
         }
     }
 
     protected final T get(final String key) {
-        synchronized(cache_) {
+        synchronized(this) {
             return cache_.get(key);
         }
     }
 
-    protected final int getCount() {
-        synchronized(cache_) {
-            return cache_.size();
-        }
-    }
-
     protected final ImmutableList<T> getAll() {
-        synchronized(cache_) {
+        synchronized(this) {
             return ImmutableList.copyOf(cache_.values());
         }
     }
 
     protected final PagedContent<T> getAll(@Nullable final Integer limit) {
-        final ImmutableList<T> list = getAll();
+        final List<T> list = getAll();
         final PagedContent<T> result;
         if(limit != null && limit > 0 && limit <= list.size()) {
-            final ImmutableList<T> sublist = list.subList(0, limit);
-            result = new PagedContent<>(sublist, list.size()-sublist.size());
+            final List<T> sublist = list.subList(0, limit);
+            result = new PagedContent<>(sublist, list.size() - sublist.size());
         } else {
             result = new PagedContent<>(list, 0);
         }
@@ -204,42 +238,22 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
 
     /**
      * Returns all cached content that was committed to the repo before
-     * (older, prior to) the given commit.
+     * (older, prior to) the given commit, not including the commit itself.
      */
     protected final PagedContent<T> getAllBefore(@Nullable final String commit,
                                                  @Nullable final Integer limit) {
-        // Get an immutable list of all "values" in the current cache map.
-        final ImmutableList<T> entries = getAll();
-        // If the provided commit hash is null, then we return entries up to
-        // a set limit with a remaining zero, indicating none are remaining.
-        if(commit == null) {
-            return getAll(limit);
-        }
-        // Find the index of the content corresponding to the provided commit.
-        final int index = Iterables.indexOf(entries,
-            new Predicate<T>() {
-            @Override
-            public boolean apply(final T input) {
-                checkNotNull(input, "Input cannot be null.");
-                return commit.equals(input.getCommit());
-            }
-        });
-        if(index < 0) {
-            // An entry with the provided commit wasn't found in the set.  This
-            // must mean the hash is unknown, so return all entries in addition
-            // to the size of the list (indicating all remaining).
-            return new PagedContent<>(ImmutableList.<T>of(), entries.size());
+        final List<T> before = ImmutableList.copyOf(shadowCache_.get(commit));
+        final PagedContent<T> result;
+        if(before == null) {
+            result = new PagedContent<>(ImmutableList.<T>of(), cache_.size());
         } else {
-            final int offset = index + 1;
-            final Integer endIndex =
-                (limit != null && limit > 0 && offset+limit <= entries.size()) ?
-                    offset+limit : entries.size();
-            return new PagedContent<>(
-                // Sub list, enforcing limit.
-                entries.subList(offset, endIndex),
-                // The number of entries that remain.
-                entries.size() - endIndex);
+            final int endIndex =
+                (limit != null && limit > 0 && limit <= before.size()) ?
+                    limit : before.size();
+            final List<T> sublist = before.subList(0, endIndex);
+            result = new PagedContent<>(sublist, before.size() - sublist.size());
         }
+        return result;
     }
 
     public abstract T getEntity(final String name,

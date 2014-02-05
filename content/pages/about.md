@@ -1,6 +1,6 @@
 ## About Mark
 
-A native of Silicon Valley, Mark is a Software Engineer at [Apple](http://www.apple.com).
+A native of Silicon Valley, Mark is a Software Engineer at [Apple](http://www.apple.com) in California.
 
 A web technologies expert, Mark's current focus is on building web-services using an eclectic mix of Java, Scala, PHP (LAMP), HTML5, CSS, and of course, JavaScript.
 
@@ -8,4 +8,4 @@ When not at Apple, Mark is a part-time software consultant developing and mainta
 
 Mark holds a B.S. in Computer Science from [Loyola Marymount University](http://www.lmu.edu) in Los Angeles.
 
-**The opinions expressed on this site are mine, and under no circumstances represent those of my current employer, or any organization I've had the pleasure of working with.**
+**The opinions expressed on this site are mine, and under no circumstances represent those of my current employer.**
