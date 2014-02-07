@@ -1,15 +1,24 @@
 <#ftl attributes={"title":"500 Internal Server Error"}>
 
+<#include "../common/html-header.ftl">
 <#include "../common/header.ftl">
 
-<!-- page column -->
-<div class="col-xs-12">
+<!-- content row -->
+<div class="row">
 
-    <h2>500 Internal Server Error</h2>
+    <!-- page column -->
+    <div class="col-xs-12">
 
-    <p>Sorry, an internal error occurred while processing your request.</p>
+        <h2>500 Internal Server Error</h2>
+
+        <p>Sorry, an internal error occurred while processing your request.</p>
+
+        <p><a href="#">Home</a></p>
+
+    </div>
+    <!-- /page column -->
 
 </div>
-<!-- /page column -->
+<!-- /content row -->
 
-<#include "../common/footer.ftl">
+<#include "../common/html-footer.ftl">

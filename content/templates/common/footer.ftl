@@ -1,7 +1,4 @@
 
-    </div>
-    <!-- /content row -->
-
     <footer>
 
         <div class="row">
@@ -26,8 +23,3 @@
 
     <!-- /container -->
     </div>
-
-    <script src="${context}static/release/blog.js"></script>
-
-</body>
-</html>

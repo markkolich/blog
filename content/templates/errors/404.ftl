@@ -1,15 +1,24 @@
 <#ftl attributes={"title":"404 Not Found"}>
 
+<#include "../common/html-header.ftl">
 <#include "../common/header.ftl">
 
-<!-- page column -->
-<div class="col-xs-12">
+<!-- content row -->
+<div class="row">
 
-    <h2>404 Not Found</h2>
+    <!-- page column -->
+    <div class="col-xs-12">
 
-    <p>Sorry, the resource you requested could not be found.</p>
+        <h2>404 Not Found</h2>
+
+        <p>Sorry, the page or resource you requested could not be found.</p>
+
+        <p><a href="${context}">Home</a></p>
+
+    </div>
+    <!-- /page column -->
 
 </div>
-<!-- /page column -->
+<!-- /content row -->
 
-<#include "../common/footer.ftl">
+<#include "../common/html-footer.ftl">

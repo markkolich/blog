@@ -1,11 +1,19 @@
+<#include "common/html-header.ftl">
 <#include "common/header.ftl">
 
-<!-- page column -->
-<div class="col-xs-12">
+<!-- content row -->
+<div class="row">
 
-${content}
+    <!-- page column -->
+    <div class="col-xs-12">
+
+    ${content}
+
+    </div>
+    <!-- /page column -->
 
 </div>
-<!-- /page column -->
+<!-- /content row -->
 
 <#include "common/footer.ftl">
+<#include "common/html-footer.ftl">
