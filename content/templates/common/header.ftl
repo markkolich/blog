@@ -1,6 +1,10 @@
 
 <body>
 
+    <!--[if lte IE 8]>
+    <div class="ie-warning">This web-site does not support your browser. Stuff may not work &mdash; good luck.</div>
+    <![endif]-->
+
     <!-- container -->
     <div class="container">
 

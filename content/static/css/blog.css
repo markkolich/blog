@@ -144,3 +144,12 @@ p.arabic { background-position: 0px -392px; float: left; }
 p.denmark { background-position: 0px -414px; float: left; }
 p.germany { background-position: 0px -425px; float: left; }
 p.greece { background-position: 0px -436px; float: left; }
+
+/* For users of IE8 and older. */
+div.ie-warning {
+  width: 100%;
+  background-color: #FF5A36; /* portland orange */
+  font: bold 20px arial,sans-serif;
+  color: black;
+  padding: 10px;
+}
