@@ -2,8 +2,6 @@ I prefer [Network Solutions' WHOIS service](http://www.networksolutions.com/whoi
 
 **<a href="javascript:void(0)" enginexml="http://mark.koli.ch/network-solutions-whois/network-solutions-whois.xml" icon="http://mark.koli.ch/network-solutions-whois/netsol-whois-search-icon.png" provider="networksolutions.com" cat="Web">Click here to add my Network Solutions WHOIS search provider to your browser.</a>**
 
-<script src="static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/search-provider.js"></script>
-
 <img src="static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/network-solutions-whois-search-provider.png">
 
 In fact, building your own search plugin/provider for IE and other browsers is relatively simple.  All you need is a small XML file that defines a few details about the provider, and a little JavaScript to trigger the install process.  My Network Solutions WHOIS [search plugin XML can be found here](static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/network-solutions-whois.xml).  If you need to Base64 encode an `image/x-icon` for the provider XML, I suggest using [this converter](http://www.greywyvern.com/code/php/binary2base64).
