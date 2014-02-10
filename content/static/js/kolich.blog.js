@@ -10,6 +10,8 @@
 
 		blogJsonApi = baseAppUrl + "blog.json",
 
+        moreButton = $('button.more'),
+
 		init = (function() {
 		    var
                 prettyprint = function() {
@@ -27,27 +29,16 @@
                     });
                 },
                 more = function() {
-                    var rejiggerScroll = function(moreButton, entryDiv) {
-                        var winHeight = $(window).height(),
-                            newTop = 0;
-                        if(moreButton.is(':visible')) {
-                            var btnHeight = moreButton.height() * 4,
-                                btnOffset = moreButton.offset().top;
-                            newTop = (btnOffset+btnHeight) - winHeight;
-                        } else {
-                            var newDivHeight = entryDiv.height(),
-                                newDivOffset = entryDiv.offset().top;
-                            newTop = (newDivOffset+newDivHeight) - winHeight;
-                        }
-                        $('html, body').animate({scrollTop:newTop}, 'fast');
-                    };
-                    $('button.more').click(function(e) {
-                        var moreDiv = $(this).parent();
+                    moreButton.click(function(e) {
+                        var moreBtnDiv = $(this).parent();
                         var lastCommit = $('p.hash:last').html();
                         $.getJSON(blogJsonApi, {before: lastCommit}, function(json) {
                             var entries = json.content, count = entries.length;
                             // Hide the "load more" button if no entries are left.
-                            (json.remaining <= 0) && moreDiv.slideUp('fast');
+                            // The user is at the end of the entry list.
+                            if(json.remaining <= 0) {
+                                moreBtnDiv.slideUp('fast');
+                            }
                             for(i in entries) {
                                 var entry = entries[i];
                                 var entryDiv = $('<div>').addClass('entry').hide(),
@@ -59,13 +50,25 @@
                                     fader = $('<div>').addClass('fader');
                                 entryDiv.append(h2.append(link)).append(hash).append(date).append(content);
                                 entryDiv.append(fader);
-                                moreDiv.before(entryDiv);
-                                entryDiv.slideDown('fast', function(e) {
+                                moreBtnDiv.before(entryDiv);
+                                entryDiv.slideDown('fast', function() {
                                     // Only adjust the scroll position if we're in the callback for
                                     // the "last" fetched entry in the list.  This is so we don't
                                     // execute the same callback multiple times, just once at the end.
-                                    var moreButton = $('button.more');
-                                    (--count <= 0) && rejiggerScroll(moreButton, entryDiv);
+                                    if(--count <= 0) {
+                                        var winHeight = $(window).height(),
+                                            newTop = 0;
+                                        if(moreButton.is(':visible')) {
+                                            var btnHeight = moreButton.height() * 4,
+                                                btnOffset = moreButton.offset().top;
+                                            newTop = (btnOffset+btnHeight) - winHeight;
+                                        } else {
+                                            var newDivHeight = entryDiv.height(),
+                                                newDivOffset = entryDiv.offset().top;
+                                            newTop = (newDivOffset+newDivHeight) - winHeight;
+                                        }
+                                        $('html, body').animate({scrollTop:newTop}, 'fast');
+                                    }
                                 });
                             } /* for */
                             prettyprint();
@@ -76,7 +79,7 @@
             return function() {
                 prettyprint();
                 reveal();
-                ($('button.more').length > 0) && more();
+                (moreButton.length > 0) && more();
             };
         }());
 
