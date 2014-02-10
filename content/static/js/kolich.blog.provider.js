@@ -5,6 +5,9 @@
 		// Namespace.
 		self = parent.Provider = parent.Provider || {},
 
+        baseAppUrl = parent['baseAppUrl'],
+        engines = $("a[enginexml]"),
+
         addEngine = function(xml, icon, provider, cat) {
             if((typeof window.sidebar=="object")&&(typeof window.sidebar.addSearchEngine=="function")){
                 window.sidebar.addSearchEngine(xml,icon,provider,cat);
@@ -23,9 +26,9 @@
         },
 
 		init = function() {
-            $("a[enginexml]").click(function(e) {
-                var xml = $(this).attr("engineXML"),
-                    icon = $(this).attr("icon"),
+            engines.click(function(e) {
+                var xml = baseAppUrl + $(this).attr("enginexml"),
+                    icon = baseAppUrl + $(this).attr("icon"),
                     provider = $(this).attr("provider"),
                     cat = $(this).attr("cat");
                 addEngine(xml, icon, provider, cat);
@@ -33,6 +36,6 @@
             });
         };
 
-    init();
+    (engines.length > 0) && init();
 
 })(jQuery, Kolich.Blog || {}, this, this.document);

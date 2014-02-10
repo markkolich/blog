@@ -1,6 +1,6 @@
 I prefer [Network Solutions' WHOIS service](http://www.networksolutions.com/whois-search/koli.ch) over others because it appears to be one of the more complete and accurate WHOIS services available.  Because I use this WHOIS search service a lot, I decided to put together a quick search plugin/provider for Chrome, Firefox and Internet Explorer.
 
-**<a href="javascript:void(0)" enginexml="http://mark.koli.ch/network-solutions-whois/network-solutions-whois.xml" icon="http://mark.koli.ch/network-solutions-whois/netsol-whois-search-icon.png" provider="networksolutions.com" cat="Web">Click here to add my Network Solutions WHOIS search provider to your browser.</a>**
+**<a href="javascript:void(0)" enginexml="static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/network-solutions-whois.xml" icon="static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/netsol-whois-search-icon.png" provider="networksolutions.com" cat="Web">Click here to add my Network Solutions WHOIS search provider to your browser.</a>**
 
 <img src="static/entries/network-solutions-whois-firefox-and-ie-search-provider-addengine/network-solutions-whois-search-provider.png">
 
