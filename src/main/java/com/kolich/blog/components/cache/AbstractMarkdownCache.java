@@ -242,16 +242,18 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
      */
     protected final PagedContent<T> getAllBefore(@Nullable final String commit,
                                                  @Nullable final Integer limit) {
-        final List<T> before = ImmutableList.copyOf(shadowCache_.get(commit));
         final PagedContent<T> result;
-        if(before == null) {
-            result = new PagedContent<>(ImmutableList.<T>of(), cache_.size());
-        } else {
-            final int endIndex =
-                (limit != null && limit > 0 && limit <= before.size()) ?
-                    limit : before.size();
-            final List<T> sublist = before.subList(0, endIndex);
-            result = new PagedContent<>(sublist, before.size() - sublist.size());
+        synchronized(this) {
+            final List<T> before = ImmutableList.copyOf(shadowCache_.get(commit));
+            if(before == null) {
+                result = new PagedContent<>(ImmutableList.<T>of(), cache_.size());
+            } else {
+                final int endIndex =
+                    (limit != null && limit > 0 && limit <= before.size()) ?
+                        limit : before.size();
+                final List<T> sublist = before.subList(0, endIndex);
+                result = new PagedContent<>(sublist, before.size() - sublist.size());
+            }
         }
         return result;
     }
