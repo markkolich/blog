@@ -108,7 +108,7 @@ Note the `runas` `lpVerb` in the [SHELLEXECUTEINFO struct](http://msdn.microsoft
 
 ### An Example
 
-I whipped up a quick yet complete UAC example in Visual C++.  You can download the entire [VC++ project here](static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/uac-example.zip).  Or, download just the [pre-compiled release binary](static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/uac-example-bin.zip) if you want to experiment.  Or, perhaps you'd prefer just the CPP source code.  This VC++ example code was built using Visual C++ 2008 Express Edition.
+I whipped up a quick yet complete UAC example in Visual C++.  You can download the entire [VC++ project here](https://github.com/markkolich/blog/blob/master/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/uac-example.zip?raw=true).  Or, download just the [pre-compiled release binary](https://github.com/markkolich/blog/blob/master/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/uac-example-bin.zip?raw=true) if you want to experiment.  Or, perhaps you'd prefer just the CPP source code.  This VC++ example code was built using Visual C++ 2008 Express Edition.
 
 The UAC demo, aptly named `uac-example`, should be run from a command prompt with a single argument:
 
