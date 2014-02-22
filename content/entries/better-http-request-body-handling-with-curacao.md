@@ -105,7 +105,7 @@ Next, define a controller:
 
 ```java
 @Controller
-public final class WidgetController {
+public final class SwitchController {
 
   @POST("/switch/toggle")
   public final int toggle() {
@@ -149,7 +149,7 @@ public final String set(@RequestBody(maxSizeInBytes=3L) final String op) {
 }
 ```
 
-Here, instead of buffering up to the globally configured maximum of `1MB`, just for this one request mapping Curacao will only accept a `Content-Length` that is 3-bytes or less.  Even if the client attempts to send a `512KB` request body, Curacao will immediately reject it.  In the event that a client omits a `Content-Length` request header, Curacao will fallback gracefully and only read at most 3-bytes, then stop.
+Here, instead of buffering up to the globally configured maximum of `1MB`, just for this one request mapping Curacao will only accept a `Content-Length` that is 3-bytes or less. In the event that a client omits a `Content-Length` request header, Curacao will fallback gracefully and only read at most 3-bytes, then stop.
 
 Pretty neat, eh?
 
