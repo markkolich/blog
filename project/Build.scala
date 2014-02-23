@@ -26,7 +26,6 @@
 
 import sbt._
 import sbt.Keys._
-import Project.Initialize
 
 import de.johoop.findbugs4sbt.FindBugs._
 import de.johoop.findbugs4sbt.ReportType
