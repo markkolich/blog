@@ -4,4 +4,4 @@ Disallow: /
 User-agent: ia_archiver
 Disallow: /
 
-Sitemap: http://mark.koli.ch/sitemap.xml
+Sitemap: ${fullUri}sitemap.xml

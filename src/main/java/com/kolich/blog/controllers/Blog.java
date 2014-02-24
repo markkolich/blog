@@ -32,8 +32,12 @@ import com.kolich.blog.components.TwitterFeedHttpClient;
 import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
-import com.kolich.blog.entities.*;
+import com.kolich.blog.entities.Entry;
+import com.kolich.blog.entities.Index;
+import com.kolich.blog.entities.Page;
 import com.kolich.blog.entities.feed.AtomRss;
+import com.kolich.blog.entities.txt.HumansTxt;
+import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.curacao.annotations.Controller;
@@ -98,17 +102,9 @@ public final class Blog {
     public final File staticFile(@RequestUri(includeContext=false) final String uri) {
         return staticResolver_.getStaticFileInContentRoot(uri);
     }
-    @GET("/robots.txt")
-    public final File robots() {
-        return staticResolver_.getRobotsTxt();
-    }
 
-    // API driven content
+    // Templatized content
 
-    @GET("/blog.json")
-    public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
-        return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
-    }
     @GET("/atom.xml")
     public final AtomRss atomFeed() {
         return entries_.getAtomFeed(entryLimitAtomFeed__);
@@ -116,6 +112,21 @@ public final class Blog {
     @GET("/sitemap.xml")
     public final Sitemap sitemap() {
         return entries_.getSitemap();
+    }
+    @GET("/robots.txt")
+     public final RobotsTxt robots() {
+        return new RobotsTxt();
+    }
+    @GET("/humans.txt")
+    public final HumansTxt humans() {
+        return new HumansTxt();
+    }
+
+    // APIs
+
+    @GET("/blog.json")
+    public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
+        return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
     }
     @GET("/tweets.json")
     public final Future<TwitterFeed> tweets() throws IOException {

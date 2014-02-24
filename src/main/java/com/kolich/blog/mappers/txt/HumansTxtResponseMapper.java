@@ -24,37 +24,27 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.kolich.blog.components;
+package com.kolich.blog.mappers.txt;
 
-import com.kolich.blog.exceptions.ContentNotFoundException;
-import com.kolich.blog.exceptions.DirectoryListingException;
-import com.kolich.curacao.annotations.Component;
+import com.kolich.blog.components.FreeMarkerConfig;
+import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.curacao.annotations.Injectable;
+import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 
-import java.io.File;
-import java.nio.file.Paths;
+@ControllerReturnTypeMapper(HumansTxt.class)
+public final class HumansTxtResponseMapper
+    extends AbstractTxtResponseMapper<HumansTxt> {
 
-@Component
-public final class StaticFileResolver {
-
-    private final GitRepository git_;
+    private static final String HUMANS_TXT_TEMPLATE_NAME = "feed/humans.ftl";
 
     @Injectable
-    public StaticFileResolver(final GitRepository git) {
-        git_ = git;
+    public HumansTxtResponseMapper(final FreeMarkerConfig config) {
+        super(config);
     }
 
-    public final File getStaticFileInContentRoot(final String uri) {
-        final File file = new File(git_.getContentRoot(),
-            Paths.get(uri).toString());
-        if(!file.exists()) {
-            throw new ContentNotFoundException("Could not find static " +
-                "resource file: " + file.getAbsolutePath());
-        } else if(file.isDirectory()) {
-            throw new DirectoryListingException("Will not list contents " +
-                "of directory: " + file.getAbsolutePath());
-        }
-        return file;
+    @Override
+    public final String getTemplateName() {
+        return HUMANS_TXT_TEMPLATE_NAME;
     }
 
 }
