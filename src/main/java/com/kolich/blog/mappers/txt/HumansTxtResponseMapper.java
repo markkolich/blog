@@ -35,7 +35,7 @@ import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 public final class HumansTxtResponseMapper
     extends AbstractTxtResponseMapper<HumansTxt> {
 
-    private static final String HUMANS_TXT_TEMPLATE_NAME = "feed/humans.ftl";
+    private static final String HUMANS_TXT_TEMPLATE_NAME = "txt/humans.ftl";
 
     @Injectable
     public HumansTxtResponseMapper(final FreeMarkerConfig config) {

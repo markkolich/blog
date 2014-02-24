@@ -35,7 +35,7 @@ import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 public final class RobotsTxtResponseMapper
     extends AbstractTxtResponseMapper<RobotsTxt> {
 
-    private static final String ROBOTS_TXT_TEMPLATE_NAME = "feed/robots.ftl";
+    private static final String ROBOTS_TXT_TEMPLATE_NAME = "txt/robots.ftl";
 
     @Injectable
     public RobotsTxtResponseMapper(final FreeMarkerConfig config) {
