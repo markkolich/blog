@@ -121,7 +121,7 @@ public final class GitRepository implements CuracaoComponent {
         // initial delay to fetch/pull in new content immediately.
         executor_.scheduleAtFixedRate(
             new GitPuller(), // new puller
-            0L,  // initial delay, start ~now~
+            0L, // initial delay, start ~now~
             gitUpdateInterval__, // repeat every
             TimeUnit.MILLISECONDS); // units
     }
