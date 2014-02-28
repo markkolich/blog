@@ -14,7 +14,7 @@ I wanted these features, so I implemented [Bolt](https://github.com/markkolich/k
 
 ### LockableEntity
 
-Using [Bolt](https://github.com/markkolich/kolich-bolt), any entity or object you want to protect should implement its [LockableEntity](https://github.com/markkolich/kolich-bolt/blob/master/src/main/java/com/kolich/bolt/LockableEntity.java) interface.
+Using [Bolt](https://github.com/markkolich/kolich-bolt), any entity or object you want to protect should implement the [LockableEntity](https://github.com/markkolich/kolich-bolt/blob/master/src/main/java/com/kolich/bolt/LockableEntity.java) interface.
 
 ```java
 import com.kolich.bolt.LockableEntity;
@@ -36,7 +36,7 @@ public final class Foobar implements LockableEntity {
 }
 ```
 
-Now, lets create an instance of this example entity which we will use to protect a critical section of code within a **transaction**.
+Now, let's create an instance of this example entity which we will use to protect a critical section of code within a **transaction**.
 
 ```java
 public static final Foobar foo = new Foobar();
