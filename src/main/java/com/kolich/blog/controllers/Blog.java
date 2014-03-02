@@ -36,10 +36,11 @@ import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.Page;
 import com.kolich.blog.entities.feed.AtomRss;
-import com.kolich.blog.entities.txt.HumansTxt;
-import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
+import com.kolich.blog.entities.txt.HumansTxt;
+import com.kolich.blog.entities.txt.RobotsTxt;
+import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.methods.GET;
@@ -136,7 +137,25 @@ public final class Blog {
     // Blog posts/entries
 
     @GET("/{name}/**")
-    public final Entry entry(@Path("name") final String name) {
+    public final Entry entry(@Path("name") final String name,
+                             @RequestUri(includeContext=false) final String uri) {
+        // This is somewhat of a hack fix to reject requests for entries
+        // with extra "junk" on the end of the URI.  For example, this request
+        // succeeds, but shouldn't:
+        // GET:/howto-setting-up-your-own-local-dns-server/RK=0/RS=CCrz8_YjIovuMb5b2hbLGY_8AOo-
+        // Note the "/RK=0/RS=CCrz8_YjIovuMb5b2hbLGY_8AOo-" which should trigger
+        // the application to return a 404 Not Found instead of serving up a
+        // 200 OK with actual entry content for post "howto-setting-up-your-own-local-dns-server".
+        // This is due to the Ant style path matcher which is the only supported
+        // path matching mechanism in the Curacao stack today.  If Curacao supported
+        // regexp path matching, this could be a non-issue with the regex.  Filed
+        // an issue to track missing regexp support in Curacao:
+        // https://github.com/markkolich/curacao/issues/1
+        if(!uri.endsWith(name)) {
+            throw new ContentNotFoundException("Request URI contained extra " +
+                "junk, not just entry name (name=" + name + ", uri=" +
+                uri + ")");
+        }
         return entries_.getEntry(name);
     }
 

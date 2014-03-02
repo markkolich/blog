@@ -244,10 +244,11 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
                                                  @Nullable final Integer limit) {
         final PagedContent<T> result;
         synchronized(this) {
-            final List<T> before = ImmutableList.copyOf(shadowCache_.get(commit));
-            if(before == null) {
+            final List<T> shadow = shadowCache_.get(commit);
+            if(shadow == null) {
                 result = new PagedContent<>(ImmutableList.<T>of(), cache_.size());
             } else {
+                final List<T> before = ImmutableList.copyOf(shadow);
                 final int endIndex =
                     (limit != null && limit > 0 && limit <= before.size()) ?
                         limit : before.size();

@@ -188,4 +188,6 @@ Of course, you can `clone` your own local copy of my blog and all of its content
 git clone https://github.com/markkolich/blog.git
 ```
 
+Pull requests welcome!
+
 Enjoy.
