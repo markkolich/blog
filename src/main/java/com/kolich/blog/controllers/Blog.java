@@ -84,79 +84,61 @@ public final class Blog {
 
     // Pages
 
-    @GET("/")
+    @GET("^\\/$")
     public final Index index() {
         return new Index(entries_.getEntries(entryLimit__));
     }
-    @GET("/about")
+    @GET("^\\/about$")
     public final Page about() {
         return pages_.getPage(PAGE_ABOUT);
     }
-    @GET("/contact")
+    @GET("^\\/contact$")
     public final Page contact() {
         return pages_.getPage(PAGE_CONTACT);
     }
 
-    // Static content
+    // Blog posts/entries
 
-    @GET("/static/**")
-    public final File staticFile(@RequestUri(includeContext=false) final String uri) {
-        return staticResolver_.getStaticFileInContentRoot(uri);
+    @GET("^\\/(?<name>[a-zA-Z_0-9\\-]+)$")
+    public final Entry entry(@Path("name") final String name) {
+        return entries_.getEntry(name);
+    }
+
+    // Static resources
+
+    @GET("^(?<resource>\\/static\\/[a-zA-Z_0-9\\-\\.\\/]+)$")
+    public final File staticFile(@Path("resource") final String resource) {
+        return staticResolver_.getStaticFileInContentRoot(resource);
     }
 
     // Templatized content
 
-    @GET("/atom.xml")
+    @GET("^\\/atom\\.xml$")
     public final AtomRss atomFeed() {
         return entries_.getAtomFeed(entryLimitAtomFeed__);
     }
-    @GET("/sitemap.xml")
+    @GET("^\\/sitemap\\.xml$")
     public final Sitemap sitemap() {
         return entries_.getSitemap();
     }
-    @GET("/robots.txt")
+    @GET("^\\/robots\\.txt$")
      public final RobotsTxt robots() {
         return new RobotsTxt();
     }
-    @GET("/humans.txt")
+    @GET("^\\/humans\\.txt$")
     public final HumansTxt humans() {
         return new HumansTxt();
     }
 
     // APIs
 
-    @GET("/blog.json")
+    @GET("^\\/blog\\.json$")
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
         return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
     }
-    @GET("/tweets.json")
+    @GET("^\\/tweets\\.json$")
     public final Future<TwitterFeed> tweets() throws IOException {
         return twitterClient_.getTweets();
-    }
-
-    // Blog posts/entries
-
-    @GET("/{name}/**")
-    public final Entry entry(@Path("name") final String name,
-                             @RequestUri(includeContext=false) final String uri) {
-        // This is somewhat of a hack fix to reject requests for entries
-        // with extra "junk" on the end of the URI.  For example, this request
-        // succeeds, but shouldn't:
-        // GET:/howto-setting-up-your-own-local-dns-server/RK=0/RS=CCrz8_YjIovuMb5b2hbLGY_8AOo-
-        // Note the "/RK=0/RS=CCrz8_YjIovuMb5b2hbLGY_8AOo-" which should trigger
-        // the application to return a 404 Not Found instead of serving up a
-        // 200 OK with actual entry content for post "howto-setting-up-your-own-local-dns-server".
-        // This is due to the Ant style path matcher which is the only supported
-        // path matching mechanism in the Curacao stack today.  If Curacao supported
-        // regexp path matching, this could be a non-issue with the regex.  Filed
-        // an issue to track missing regexp support in Curacao:
-        // https://github.com/markkolich/curacao/issues/1
-        if(!uri.endsWith(name)) {
-            throw new ContentNotFoundException("Request URI contained extra " +
-                "junk, not just entry name (name=" + name + ", uri=" +
-                uri + ")");
-        }
-        return entries_.getEntry(name);
     }
 
 }
