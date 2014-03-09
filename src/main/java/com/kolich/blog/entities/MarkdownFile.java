@@ -55,7 +55,11 @@ public final class MarkdownFile {
     }
 
     public final String getHtmlFromMarkdown() throws IOException {
-        final PegDownProcessor p = new PegDownProcessor(Extensions.ALL);
+        final PegDownProcessor p = new PegDownProcessor(Extensions.ALL,
+            // https://github.com/markkolich/blog/issues/1
+            // Set max parsing time to "infinity" such that the parsing
+            // of lengthy markdown files will not timeout.
+            Long.MAX_VALUE);
         return p.markdownToHtml(readFileToString(file_, Charsets.UTF_8));
     }
 

@@ -27,6 +27,7 @@
 package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
+import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,8 +38,11 @@ import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.TimeZone.getTimeZone;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class MarkdownContent {
+
+    private static final Logger logger__ = getLogger(MarkdownContent.class);
 
     private static final String CLASS_SN =
         MarkdownContent.class.getSimpleName();
@@ -142,6 +146,8 @@ public abstract class MarkdownContent {
         try {
             result = (content_ != null) ? content_.getHtmlFromMarkdown() : null;
         } catch (Exception e) {
+            logger__.warn("Failed to generate HTML from Markdown content: " +
+                toString(), e);
             result = null;
         }
         return result;
