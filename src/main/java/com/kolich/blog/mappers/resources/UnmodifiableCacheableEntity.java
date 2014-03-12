@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.OutputStream;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.net.HttpHeaders.ETAG;
 import static com.google.common.net.HttpHeaders.LAST_MODIFIED;
 
@@ -52,9 +53,9 @@ public abstract class UnmodifiableCacheableEntity implements CuracaoEntity {
     public UnmodifiableCacheableEntity(final HttpServletResponse response,
                                        final File file,
                                        final String eTag) {
-        response_ = response;
-        file_ = file;
-        eTag_ = eTag;
+        response_ = checkNotNull(response, "Response cannot be null.");
+        file_ = checkNotNull(file, "File cannot be null.");
+        eTag_ = checkNotNull(eTag, "ETag cannot be null.");
     }
 
     @Override
