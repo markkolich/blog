@@ -6,6 +6,14 @@ The content and code herein is documented with reasonable depth in this blog pos
 
 http://mark.koli.ch/a-new-blog-platform-backed-by-github-twitter-bootstrap-and-curacao
 
+This blogging platform is built around:
+
+* Java 7
+* GitHub and [JGit](http://www.eclipse.org/jgit/)
+* [Curacao](https://github.com/markkolich/curacao)
+* [Markdown](http://daringfireball.net/projects/markdown/) with [Pegdown](https://github.com/sirthias/pegdown)
+* [Twitter Bootstrap](http://getbootstrap.com/)
+
 ## Bootstrap
 
 This project is built and managed using <a href="http://www.scala-sbt.org">SBT</a>.
