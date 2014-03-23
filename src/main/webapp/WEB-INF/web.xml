@@ -7,6 +7,10 @@
 	<display-name>Blog</display-name>
 	<description>This is my blog. There are many like it, but this one is mine.</description>
 
+    <listener>
+        <listener-class>com.kolich.curacao.CuracaoContextListener</listener-class>
+    </listener>
+
 	<servlet>
 		<servlet-name>CuracaoDispatcherServlet</servlet-name>
 		<servlet-class>com.kolich.curacao.CuracaoDispatcherServlet</servlet-class>

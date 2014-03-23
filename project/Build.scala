@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 Mark S. Kolich
+ * Copyright (c) 2014 Mark S. Kolich
  * http://mark.koli.ch
  *
  * Permission is hereby granted, free of charge, to any person
@@ -42,8 +42,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.0-M11" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0-M11" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.0-RC2" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0-RC2" % "compile"
 
   // Jetty 9 stable, version 9.1.1.v20140108 (as of 2/7/14)
   private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.1.v20140108" % "container"
@@ -51,8 +51,6 @@ object Dependencies {
   private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.1.1.v20140108" % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
-
-  private val typesafeConfig = "com.typesafe" % "config" % "1.0.2" % "compile"
 
   private val logback = "ch.qos.logback" % "logback-core" % "1.0.13" % "compile"
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
@@ -70,7 +68,6 @@ object Dependencies {
   val deps = Seq(kolichCommon,
     curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
-    typesafeConfig,
     logback, logbackClassic, slf4j,
     jGit, gitblit,
     pegdown,

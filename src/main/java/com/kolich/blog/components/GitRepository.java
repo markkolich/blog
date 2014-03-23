@@ -116,7 +116,7 @@ public final class GitRepository implements CuracaoComponent {
     }
 
     @Override
-    public final void initialize(final ServletContext context) throws Exception {
+    public final void initialize() throws Exception {
         // Schedule a new updater at a "fixed" interval that has no
         // initial delay to fetch/pull in new content immediately.
         executor_.scheduleAtFixedRate(
@@ -127,7 +127,7 @@ public final class GitRepository implements CuracaoComponent {
     }
 
     @Override
-    public final void destroy(final ServletContext context) throws Exception {
+    public final void destroy() throws Exception {
         // Close our handle to the repository on shutdown.
         repo_.close();
         // Ask the single thread updater pool to "shutdown".

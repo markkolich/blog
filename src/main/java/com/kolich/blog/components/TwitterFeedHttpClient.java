@@ -34,7 +34,6 @@ import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
 
-import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -69,7 +68,7 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
     }
 
     @Override
-    public final void destroy(final ServletContext context) throws Exception {
+    public final void destroy() throws Exception {
         asyncHttpClient_.close();
     }
 

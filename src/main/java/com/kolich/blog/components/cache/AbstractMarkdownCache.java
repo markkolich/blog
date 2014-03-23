@@ -42,7 +42,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.*;
@@ -91,13 +90,12 @@ public abstract class AbstractMarkdownCache<T extends MarkdownContent>
     }
 
     @Override
-    public final void initialize(final ServletContext context)
-        throws Exception {
+    public final void initialize() throws Exception {
         git_.registerListener(this);
     }
 
     @Override
-    public final void destroy(final ServletContext context) throws Exception {
+    public final void destroy() throws Exception {
         git_.unRegisterListener(this);
     }
 

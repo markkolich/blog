@@ -6,9 +6,10 @@
 		self = parent.Blog = parent.Blog || {},
 
 		console = parent['console'],
-        baseAppUrl = parent['baseAppUrl'],
+		baseAppUrl = parent['baseAppUrl'],
+        baseApiUrl = parent['baseApiUrl'],
 
-		blogJsonApi = baseAppUrl + "blog.json",
+		blogJsonApi = baseApiUrl + "blog.json",
 
         moreButton = $('button.more'),
 
@@ -85,6 +86,7 @@
 
     self['path'] = parent['path'];
     self['baseAppUrl'] = parent['baseAppUrl'];
+    self['baseApiUrl'] = parent['baseApiUrl'];
 
     self['debug'] = parent['debug'];
     self['console'] = parent['console'];

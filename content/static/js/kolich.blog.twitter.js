@@ -6,9 +6,9 @@
 		self = parent.Twitter = parent.Twitter || {},
 
         console = parent['console'],
-        baseAppUrl = parent['baseAppUrl'],
+        baseApiUrl = parent['baseApiUrl'],
 
-        tweetsApi = baseAppUrl + "tweets.json",
+        tweetsApi = baseApiUrl + "tweets.json",
 
         tweetPanel = $('div.panel.twitter'),
         tweetBody = tweetPanel.find('div.panel-body'),
@@ -27,6 +27,7 @@
             };
         }()),
 
+        /*
         // Logic borrowed from http://williamsportwebdeveloper.com/cgi/wp/?p=503
         // Refactored for my own needs.
         toISO8601String = (function() {
@@ -54,6 +55,7 @@
                     + 'Z';
             };
         }()),
+        */
 
         load = function() {
             $.getJSON(tweetsApi, function(data) {

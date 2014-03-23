@@ -34,7 +34,7 @@ import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
-import com.kolich.blog.entities.Page;
+import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
@@ -42,7 +42,7 @@ import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.methods.GET;
+import com.kolich.curacao.annotations.methods.RequestMapping;
 import com.kolich.curacao.annotations.parameters.Path;
 import com.kolich.curacao.annotations.parameters.Query;
 
@@ -61,7 +61,6 @@ public final class Blog {
         ApplicationConfig.getAtomFeedEntryLimit();
 
     private static final String PAGE_ABOUT = "about";
-    private static final String PAGE_CONTACT = "contact";
 
     private final EntryCache entries_;
     private final PageCache pages_;
@@ -80,61 +79,62 @@ public final class Blog {
         staticResolver_ = staticResolver;
     }
 
-    // Pages
+    // Homepage (index)
 
-    @GET("^\\/$")
+    @RequestMapping("^\\/$")
     public final Index index() {
         return new Index(entries_.getEntries(entryLimit__));
-    }
-    @GET("^\\/about$")
-    public final Page about() {
-        return pages_.getPage(PAGE_ABOUT);
-    }
-    @GET("^\\/contact$")
-    public final Page contact() {
-        return pages_.getPage(PAGE_CONTACT);
     }
 
     // Blog posts/entries
 
-    @GET("^\\/(?<name>[a-zA-Z_0-9\\-]+)$")
-    public final Entry entry(@Path("name") final String name) {
-        return entries_.getEntry(name);
+    @RequestMapping("^\\/(?<name>[a-zA-Z_0-9\\-]+)$")
+    public final MarkdownContent entry(@Path("name") final String name) {
+        // A bit of a hack for the "about page", but it makes sense.  If this
+        // wasn't here, then the about page would live under a URI that looks
+        // something like "/pages/about" which doesn't look good.  In other
+        // words, it'd have to prefixed with "/pages" and I just didn't like
+        // that.
+        if(PAGE_ABOUT.equals(name)) {
+            return pages_.getPage(PAGE_ABOUT);
+        } else {
+            return entries_.getEntry(name);
+        }
     }
 
     // Static resources
 
-    @GET("^(?<resource>\\/static\\/[a-zA-Z_0-9\\-\\.\\/]+)$")
+    @RequestMapping("^(?<resource>\\/static\\/[a-zA-Z_0-9\\-\\.\\/]+)$")
     public final File staticFile(@Path("resource") final String resource) {
         return staticResolver_.getStaticFileInContentRoot(resource);
     }
 
     // Templatized content
 
-    @GET("^\\/atom\\.xml$")
+    @RequestMapping("^\\/atom\\.xml$")
     public final AtomRss atomFeed() {
         return entries_.getAtomFeed(entryLimitAtomFeed__);
     }
-    @GET("^\\/sitemap\\.xml$")
+    @RequestMapping("^\\/sitemap\\.xml$")
     public final Sitemap sitemap() {
         return entries_.getSitemap();
     }
-    @GET("^\\/robots\\.txt$")
+    @RequestMapping("^\\/robots\\.txt$")
      public final RobotsTxt robots() {
         return new RobotsTxt();
     }
-    @GET("^\\/humans\\.txt$")
+    @RequestMapping("^\\/humans\\.txt$")
     public final HumansTxt humans() {
         return new HumansTxt();
     }
 
     // APIs
 
-    @GET("^\\/blog\\.json$")
+    @RequestMapping("^\\/api\\/blog\\.json$")
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
         return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
     }
-    @GET("^\\/tweets\\.json$")
+    @RequestMapping("^\\/api\\/tweets\\.json$")
     public final Future<TwitterFeed> tweets() throws IOException {
         return twitterClient_.getTweets();
     }

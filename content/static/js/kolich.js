@@ -24,6 +24,7 @@ var Kolich = (function($, parent, document, undefined) {
 
         // Dynamically build the base app URL.
         baseAppUrl = protocol + '//' + hostname + ((port!=='') ? ':' + port : '') + path,
+        baseApiUrl = baseAppUrl + "api/",
 
         // Do we have access to window.console as provided by Firebug?
         // If not, leave things undefined in which case
@@ -47,6 +48,7 @@ var Kolich = (function($, parent, document, undefined) {
 
     self['path'] = path;
     self['baseAppUrl'] = baseAppUrl;
+    self['baseApiUrl'] = baseApiUrl;
 
     self['debug'] = debug;
     self['console'] = console;

@@ -1,6 +1,6 @@
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.5.0")
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.7.0")
 
-addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.2")
+addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
 
 addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.2.2")
 
