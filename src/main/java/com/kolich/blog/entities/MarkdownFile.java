@@ -35,6 +35,7 @@ import com.kolich.blog.exceptions.ContentRenderException;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -46,7 +47,7 @@ public final class MarkdownFile {
 
     private final transient File file_;
 
-    public MarkdownFile(final File file) {
+    public MarkdownFile(@Nonnull final File file) {
         file_ = checkNotNull(file, "Markdown file cannot be null.");
     }
 

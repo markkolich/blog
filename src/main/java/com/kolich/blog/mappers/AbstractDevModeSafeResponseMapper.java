@@ -41,7 +41,7 @@ public abstract class AbstractDevModeSafeResponseMapper<T>
     private static final boolean isDevMode__ = ApplicationConfig.isDevMode();
 
     private static final String CACHE_CONTROL_NO_CACHE =
-        "no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
+        "private, no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
 
     @Override
     public final void render(final AsyncContext context,

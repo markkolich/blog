@@ -34,7 +34,7 @@ import com.kolich.blog.components.cache.EntryCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
-import com.kolich.blog.entities.MarkdownContent;
+import com.kolich.blog.entities.Page;
 import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
@@ -79,27 +79,22 @@ public final class Blog {
         staticResolver_ = staticResolver;
     }
 
-    // Homepage (index)
+    // Pages
 
     @RequestMapping("^\\/$")
     public final Index index() {
         return new Index(entries_.getEntries(entryLimit__));
     }
+    @RequestMapping("^\\/about$")
+    public final Page about() {
+        return pages_.getPage(PAGE_ABOUT);
+    }
 
     // Blog posts/entries
 
-    @RequestMapping("^\\/(?<name>[a-zA-Z_0-9\\-]+)$")
-    public final MarkdownContent entry(@Path("name") final String name) {
-        // A bit of a hack for the "about page", but it makes sense.  If this
-        // wasn't here, then the about page would live under a URI that looks
-        // something like "/pages/about" which doesn't look good.  In other
-        // words, it'd have to prefixed with "/pages" and I just didn't like
-        // that.
-        if(PAGE_ABOUT.equals(name)) {
-            return pages_.getPage(PAGE_ABOUT);
-        } else {
-            return entries_.getEntry(name);
-        }
+    @RequestMapping("^\\/((?!about$)(?<name>[a-zA-Z_0-9\\-]+))$")
+    public final Entry entry(@Path("name") final String name) {
+        return entries_.getEntry(name);
     }
 
     // Static resources

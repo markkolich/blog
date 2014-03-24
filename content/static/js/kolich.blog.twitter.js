@@ -14,16 +14,26 @@
         tweetBody = tweetPanel.find('div.panel-body'),
 
         linkify = (function() {
-            var links = function(tweet) {
-                var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-                return tweet.replace(exp,"<a href='$1' target='_blank'>$1</a>");
-            },
-            users = function(tweet) {
-                var exp = /\B\@([\w\-]+)/gim;
-                return tweet.replace(exp, "<a href='https://twitter.com/$1' target='_blank'>@$1</a>");
-            };
+            var
+                links = function(tweet) {
+                    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+                    return tweet.replace(exp,"<a href='$1' target='_blank'>$1</a>");
+                },
+                users = function(tweet) {
+                    var exp = /\B@([\w\-]+)/gim;
+                    return tweet.replace(exp, "<a href='https://twitter.com/$1' target='_blank'>@$1</a>");
+                },
+                backtickCode = function(tweet) {
+                    var exp = /`(.*?)`/gim;
+                    return tweet.replace(exp, "<code>$1</code>");
+                };
             return function(tweet) {
-                return users(links(tweet));
+                // Apply each of the transforms, in order.
+                return [tweet]
+                    .map(links)
+                    .map(users)
+                    .map(backtickCode)
+                    .join('');
             };
         }()),
 
