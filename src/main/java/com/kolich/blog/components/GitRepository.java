@@ -190,6 +190,18 @@ public final class GitRepository implements CuracaoComponent {
 
     private class GitPuller implements Runnable {
 
+        /**
+         * The number of times a Git pull has to fail before it shows up
+         * in the logs.  Often there are intermittent failures with GitHub
+         * where the network is down or the GitHub infrastructure is having
+         * problems; in those cases, we don't want to bother logging the
+         * failure on every pull because it will very likely succeed if we
+         * try again a few moments later.
+         */
+        private static final int COMPLAINT_THRESHOLD = 12; // 12 = 60 mins / 5
+
+        private int failures_ = 0;
+
         @Override
         public final void run() {
             try {
@@ -209,9 +221,14 @@ public final class GitRepository implements CuracaoComponent {
                         logger__.warn("Failure notifying pull listener.", e);
                     }
                 }
+                failures_ = 0; // Reset counter, pull completed successfully.
             } catch (Exception e) {
-                logger__.warn("Failed to Git 'pull', raw Git operation " +
-                    "did not complete successfully.", e);
+                // Only log the failure if we've failed enough times to
+                // warrant some log spew.
+                if(++failures_ >= COMPLAINT_THRESHOLD) {
+                    logger__.warn("Failed to Git 'pull', raw Git operation " +
+                        "did not complete successfully.", e);
+                }
             }
         }
 
