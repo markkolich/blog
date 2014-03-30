@@ -15,6 +15,8 @@
             <title>${e.title}</title>
             <id>${fullUri}${e.name}</id>
 
+            <link rel="alternate" type="text/html" href="${fullUri}${e.name}" />
+
             <published>${e.atomFeedDateFormatted}</published>
             <updated>${e.atomFeedDateFormatted}</updated>
 
