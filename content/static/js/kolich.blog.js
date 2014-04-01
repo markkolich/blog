@@ -31,6 +31,9 @@
                 },
                 more = function() {
                     moreButton.click(function(e) {
+                        // Immediately disable the "Load More" button on click; it will
+                        // be re-enabled later once the AJAX request completes.
+                        moreButton.attr('disabled', 'disabled');
                         var moreBtnDiv = $(this).parent();
                         var lastCommit = $('p.hash:last').html();
                         $.getJSON(blogJsonApi, {before: lastCommit}, function(json) {
@@ -42,7 +45,7 @@
                             }
                             for(i in entries) {
                                 var entry = entries[i];
-                                var entryDiv = $('<div>').addClass('entry').hide(),
+                                var entryDiv = $('<div>').addClass('entry').attr('id',entry.commit).hide(),
                                     h2 = $('<h2>').addClass('title'),
                                     link = $('<a>').attr('href',baseAppUrl+entry.name).html(entry.title),
                                     hash = $('<p>').addClass('hash').html(entry.commit),
@@ -69,6 +72,8 @@
                                             newTop = (newDivOffset+newDivHeight) - winHeight;
                                         }
                                         $('html, body').animate({scrollTop:newTop}, 'fast');
+                                        // Re-enable the "Load More" button.
+                                        moreButton.removeAttr('disabled');
                                     }
                                 });
                             } /* for */

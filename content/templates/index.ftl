@@ -10,7 +10,7 @@
     <div class="col-md-9 col-lg-9">
 
         <#list entries as e>
-            <div class="entry">
+            <div class="entry" id="${e.commit}">
 
                 <h2 class="title"><a href="${context}${e.name}">${e.title}</a></h2>
                 <p class="hash">${e.commit}</p>
