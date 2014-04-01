@@ -11,7 +11,7 @@
         <p class="hash"><a href="https://github.com/markkolich/blog/commit/${commit}">${commit}</a></p>
         <p class="date">${date}</p>
 
-        <article>${content}</article>
+        <article id="${commit}">${content}</article>
 
     </div>
     <!-- /article column -->

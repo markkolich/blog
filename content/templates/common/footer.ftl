@@ -14,7 +14,7 @@
                 </ul>
 
                 <p>Designed and built by <a href="${context}">Mark S. Kolich</a>.</p>
-                <p>All content licensed under the <a href="https://github.com/markkolich/blog">MIT License</a>.</p>
+                <p>All content licensed under the <a href="https://github.com/markkolich/blog/blob/master/LICENSE">MIT License</a>.</p>
                 <p>UI built with <a href="http://getbootstrap.com">Bootstrap</a>. Web-layer by <a href="http://github.com/markkolich/curacao">Curacao</a>.</p>
 
             </div>
