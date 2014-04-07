@@ -45,16 +45,16 @@ object Dependencies {
   private val curacao = "com.kolich.curacao" % "curacao" % "2.0" % "compile"
   private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.0" % "compile"
 
-  // Jetty 9 stable, version 9.1.1.v20140108 (as of 2/7/14)
-  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.1.v20140108" % "container"
-  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.1.1.v20140108" % "container"
-  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.1.1.v20140108" % "container"
+  // Jetty 9 stable, version 9.1.4.v20140401 (as of 4/6/14)
+  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.4.v20140401" % "container"
+  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.1.4.v20140401" % "container"
+  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.1.4.v20140401" % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
-  private val logback = "ch.qos.logback" % "logback-core" % "1.0.13" % "compile"
-  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile" // An Slf4j impl
-  private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.5" % "compile"
+  private val logback = "ch.qos.logback" % "logback-core" % "1.1.2" % "compile"
+  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.2" % "compile" // An Slf4j impl
+  private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
 
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
@@ -317,8 +317,8 @@ object Blog extends Build {
           d => Seq("/blog" -> d)
         },
         warPostProcess in Compile <<= (target) map {
-          (target) => { () => {
-            val webinf = target / "webapp" / "WEB-INF"
+          (target) => { (t) => {
+            val webinf = t / "webapp" / "WEB-INF"
             IO.delete(webinf / "work") // recursive
             IO.delete(webinf / "classes") // recursive
           }}
