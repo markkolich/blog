@@ -57,7 +57,7 @@ object Dependencies {
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
 
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
-  private val gitblit = "com.gitblit" % "gitblit" % "1.3.2" % "compile" intransitive()
+  private val gitblit = "com.gitblit" % "gitblit" % "1.5.0" % "compile" intransitive()
 
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
   private val freemarker = "org.freemarker" % "freemarker" % "2.3.20" % "compile"
