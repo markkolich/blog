@@ -26,34 +26,30 @@
 
 package com.kolich.blog.mappers.resources;
 
+import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
+import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.handlers.responses.mappers.types.resources.AbstractETagAwareFileResponseMapper;
+
+import javax.annotation.Nonnull;
+import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.OutputStream;
 
-import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
+@ControllerReturnTypeMapper(File.class)
+public final class ETagAndDevModeAwareFileResponseMapper
+    extends AbstractDevModeSafeResponseMapper<File> {
 
-public final class NotModifiedResponseEntity
-    extends UnmodifiableCacheableEntity {
+    private final AbstractETagAwareFileResponseMapper eTagAwareMapperShim_;
 
-    public NotModifiedResponseEntity(final HttpServletResponse response,
-                                     final File file,
-                                     final String eTag) {
-        super(response, file, eTag);
+    public ETagAndDevModeAwareFileResponseMapper() {
+        eTagAwareMapperShim_ = new AbstractETagAwareFileResponseMapper(){};
     }
 
     @Override
-    public final int getStatus() {
-        return SC_NOT_MODIFIED;
-    }
-
-    @Override
-    public final String getContentType() {
-        return null;
-    }
-
-    @Override
-    public final void writeAfterHeaders(final OutputStream os) throws Exception {
-        // Nothing, intentional.
+    public final void renderSafe(final AsyncContext context,
+                                 final HttpServletResponse response,
+                                 final @Nonnull File content) throws Exception {
+        eTagAwareMapperShim_.render(context, response, content);
     }
 
 }
