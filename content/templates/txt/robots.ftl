@@ -10,4 +10,7 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
+User-agent: Baiduspider
+Disallow: /
+
 Sitemap: ${fullUri}sitemap.xml
