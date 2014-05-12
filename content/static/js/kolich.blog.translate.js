@@ -9,7 +9,7 @@
 
 		init = function() {
             $("p.translateflag").click(function(e) {
-                var tl = $(this).attr("tl");
+                var tl = $(this).attr("data-tl");
                 var href = encodeURIComponent(window.location.href);
                 window.top.location.href = translateUrl.replace("%u",href).replace("%tl",tl);
             });
