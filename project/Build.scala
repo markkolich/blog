@@ -42,13 +42,13 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.5.3" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.5.3" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.6.2" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.6.2" % "compile"
 
-  // Jetty 9 stable, version 9.1.4.v20140401 (as of 4/6/14)
-  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.4.v20140401" % "container"
-  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.1.4.v20140401" % "container"
-  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.1.4.v20140401" % "container"
+  // Jetty 9 stable, version 9.1.5.v20140505 (as of 5/23/14)
+  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container"
+  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container"
+  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.1.5.v20140505" % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
@@ -65,14 +65,16 @@ object Dependencies {
 
   private val asyncHttpClient = "com.ning" % "async-http-client" % "1.7.22" % "compile"
 
-  val deps = Seq(kolichCommon,
+  val deps = Seq(
+    kolichCommon,
     curacao, curacaoGson,
     jettyWebApp, jettyPlus, jettyJsp, servlet,
     logback, logbackClassic, slf4j,
     jGit, gitblit,
     pegdown,
     freemarker, htmlCompressor,
-    asyncHttpClient)
+    asyncHttpClient
+  )
 
 }
 

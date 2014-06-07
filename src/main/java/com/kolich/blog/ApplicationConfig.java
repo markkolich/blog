@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.typesafe.config.ConfigFactory.load;
 import static java.lang.System.getProperty;
@@ -238,8 +239,9 @@ public final class ApplicationConfig {
     }
 
     public static final Long getGitPullUpdateInterval() {
-        return getConfigInstance().getMilliseconds(
-            GIT_PULL_UPDATE_INTERVAL_PROPERTY);
+        return getConfigInstance().getDuration(
+            GIT_PULL_UPDATE_INTERVAL_PROPERTY,
+            TimeUnit.MILLISECONDS);
     }
 
     // Content property helpers
@@ -286,21 +288,6 @@ public final class ApplicationConfig {
     public static final String getTwitterFeedUrl() {
         return getConfigInstance().getString(
             SERVICES_TWITTER_FEED_URL_PROPERTY);
-    }
-
-    // Content type helpers
-
-    public static final String getContentTypeForExtension(final String ext,
-                                                          final String defaultValue) {
-        String contentType = null;
-        try {
-            contentType = getConfigInstance()
-                .getConfig(CONTENT_TYPES_CONFIG)
-                .getString(ext);
-        } catch (Exception e) {
-            contentType = defaultValue;
-        }
-        return contentType;
     }
 
 }
