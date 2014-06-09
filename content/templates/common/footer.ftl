@@ -6,7 +6,7 @@
 
                 <ul class="list-unstyled">
                     <!--<li class="pull-right first"><a href="#top">Back to top</a></li>-->
-                    <li class="pull-right"><a href="${context}about">About</a></li>
+                    <li class="pull-right first"><a href="${context}about">About</a></li>
                     <li class="pull-right"><a href="${fullUri}atom.xml">RSS</a></li>
                     <li><a href="https://twitter.com/markkolich">Twitter</a></li>
                     <li><a href="https://github.com/markkolich">GitHub</a></li>
