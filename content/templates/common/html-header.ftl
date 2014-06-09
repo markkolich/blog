@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>${blogTitle}: ${title}</title>
+    <title>${blogTitle} - ${title}</title>
     <meta name="googlebot" content="noarchive" />
     <meta name="robots" content="noarchive" />
     <link href="${context}static/release/blog.css" rel="stylesheet" />
