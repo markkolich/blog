@@ -56,7 +56,7 @@ object Dependencies {
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.2" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
 
-  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.1.0.201310021548-r" % "compile"
+  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.3.2.201404171909-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.5.0" % "compile" intransitive()
 
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
