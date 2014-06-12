@@ -1,6 +1,6 @@
 /* SITE */
 
-Site name:  ${blogTitle}: ${blogSubTitle}
+Site name:  ${blogTitle} - ${blogSubTitle}
 Site URL:   ${fullUri}
 Contact:    https://twitter.com/markkolich
 Twitter:    @markkolich
