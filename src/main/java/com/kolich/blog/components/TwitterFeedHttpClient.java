@@ -51,6 +51,8 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
     private static final String twitterFeedUrl__ =
         ApplicationConfig.getTwitterFeedUrl();
 
+    private static final String UTF_8_STRING = UTF_8.toString();
+
     private final AsyncHttpClient asyncHttpClient_;
 
     public TwitterFeedHttpClient() {
@@ -62,7 +64,7 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
             .execute(new AsyncCompletionHandler<TwitterFeed>() {
                 @Override
                 public TwitterFeed onCompleted(final Response r) throws Exception {
-                    return new TwitterFeed(r.getResponseBody(UTF_8.toString()));
+                    return new TwitterFeed(r.getResponseBody(UTF_8_STRING));
                 }
             });
     }

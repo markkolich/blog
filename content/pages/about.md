@@ -1,11 +1,15 @@
 ## About Mark
 
-A native of Silicon Valley, Mark is a Software Engineer at [Apple](http://www.apple.com) in California.
+Hey, I'm Mark.
 
-A web technologies expert, Mark's current focus is on building web-services using an eclectic mix of Java, Scala, Clojure, PHP (LAMP), HTML5, CSS, and of course, JavaScript.
+Born and raised in Silicon Valley, I'm currently a full-stack Software Engineer at [Apple](http://www.apple.com) in California.
 
-When not at Apple, Mark is a part-time software consultant developing and maintaining web applications for non-profits and small businesses. He is an avid Open-Source software user and contributor.  Mark uses OSX and Linux, enjoys biking to work, and loves building wonderful, elegant software. He enjoys integrating his passion for minimalist design into software engineering projects, when possible.
+Although I can't formally discuss what I do at Apple, I can say that I build robust and scalable user facing "stuff" and the web-services that back them.  A self-proclaimed expert in a number of technical disciplines, my programming languages of choice include Java, Scala, Clojure, PHP, and of course, JavaScript.
 
-Mark holds a B.S. in Computer Science from [Loyola Marymount University](http://www.lmu.edu) in Los Angeles.
+When not at Apple, I'm a part-time software engineering consultant that builds and maintains web applications and services for non-profits. I'm an avid Open-Source software user and contributor, as evident by my [GitHub commit history](https://github.com/markkolich).  I use Mac OSX and Linux exclusively, enjoy biking to work, and loves building wonderful, simple, elegant software.
 
-**The opinions expressed on this site are mine, and under no circumstances represent those of my employer.**
+I usually fill-up on bread, and only drink Ginger Ale on airplanes.
+  
+As far as learnin' goes, I hold a B.S. in Computer Science from [Loyola Marymount University](http://www.lmu.edu) in Los Angeles.
+
+And lastly, **any opinions expressed on this site are mine, and under no circumstances represent those of my employer.**
