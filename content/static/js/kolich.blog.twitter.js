@@ -26,6 +26,10 @@
                 backtickCode = function(tweet) {
                     var exp = /`(.*?)`/gim;
                     return tweet.replace(exp, "<code>$1</code>");
+                },
+                newLine = function(tweet) {
+                    var exp = /[\n\r]/gim;
+                    return tweet.replace(exp, "<br/>");
                 };
             return function(tweet) {
                 // Apply each of the transforms, in order.
@@ -33,6 +37,7 @@
                     .map(links)
                     .map(users)
                     .map(backtickCode)
+                    .map(newLine)
                     .join('');
             };
         }()),
