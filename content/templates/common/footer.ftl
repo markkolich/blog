@@ -6,11 +6,11 @@
 
                 <ul class="list-unstyled">
                     <!--<li class="pull-right first"><a href="#top">Back to top</a></li>-->
-                    <li class="pull-right first"><a href="${context}about">About</a></li>
-                    <li class="pull-right"><a href="${fullUri}atom.xml">RSS</a></li>
-                    <li><a href="https://twitter.com/markkolich">Twitter</a></li>
-                    <li><a href="https://github.com/markkolich">GitHub</a></li>
-                    <li><a href="http://www.linkedin.com/in/markkolich">LinkedIn</a></li>
+                    <li><span class="fa fa-smile-o">&nbsp;</span><a href="${context}about">About</a></li>
+                    <li><span class="fa fa-rss-square">&nbsp;</span><a href="${fullUri}atom.xml">RSS</a></li>
+                    <li><span class="fa fa-twitter">&nbsp;</span><a href="https://twitter.com/markkolich">Twitter</a></li>
+                    <li><span class="fa fa-github-square">&nbsp;</span><a href="https://github.com/markkolich">GitHub</a></li>
+                    <li><span class="fa fa-linkedin-square">&nbsp;</span><a href="http://www.linkedin.com/in/markkolich">LinkedIn</a></li>
                 </ul>
 
                 <p>Designed and built by <a href="${context}">Mark S. Kolich</a>.</p>

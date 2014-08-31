@@ -196,6 +196,7 @@ object PackageCss extends AntHelpers {
       val libs = getFileList(css / "lib", Seq(
         //"bootstrap.min.css",
         //"bootstrap-theme.min.css",
+        "font-awesome.min.css",
         "spacelab.css",
         "prettify.css",
         "prettify-desert.css"))
