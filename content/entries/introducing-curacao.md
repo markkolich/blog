@@ -49,7 +49,7 @@ Let's bootstrap a Curacao application in 3-steps.
 
 <ol>
   <li>
-<p>First, configure your project to pull in the necessary dependencies.</p>
+<p>First, configure your project to pull in the necessary dependencies.  As of this writing, the latest stable version is 2.6.2, however you should check the <a href="https://github.com/markkolich/curacao/releases">Curacao Releases page</a> for the latest version.</p>
 <p>If using Maven:</p>
 <p><pre class="prettyprint">
 <code class="xml">&lt;repository&gt;
@@ -153,14 +153,14 @@ public final class UserController {
     return "Load user: " + userId;
   }
   
-  @RequestMapping(value="^\\/users$", method=POST)
+  @RequestMapping(value="^\\/users$", methods=POST)
   public String createUser(@RequestBody final String body) {
     // Lazily convert 'body' to a user object
     // Insert user into data store
     return "Successfully created user.";
   }
   
-  @RequestMapping(value="^\\/users\\/(?<userId>[a-zA-Z_0-9\-]+)$", method=PUT)
+  @RequestMapping(value="^\\/users\\/(?<userId>[a-zA-Z_0-9\-]+)$", methods=PUT)
   public void updateUser(@Path("userId") final String userId,
                          final HttpServletResponse response,
                          final AsyncContext context) {
@@ -173,7 +173,7 @@ public final class UserController {
     }    
   }
   
-  @RequestMapping(value="^\\/users\\/(?<userId>[a-zA-Z_0-9\-]+)$", method=DELETE)
+  @RequestMapping(value="^\\/users\\/(?<userId>[a-zA-Z_0-9\-]+)$", methods=DELETE)
   public void updateUser(@Path("userId") final String userId,
                          final HttpServletResponse response,
                          final AsyncContext context) {
