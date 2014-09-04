@@ -174,7 +174,7 @@ public final class UserController {
   }
   
   @RequestMapping(value="^\\/users\\/(?<userId>[a-zA-Z_0-9\-]+)$", methods=DELETE)
-  public void updateUser(@Path("userId") final String userId,
+  public void deleteUser(@Path("userId") final String userId,
                          final HttpServletResponse response,
                          final AsyncContext context) {
     try {
@@ -393,7 +393,7 @@ public final class RequestBodyDemoController {
    * Buffer the entire request body into an NIO ByteBuffer.
    */
   @RequestMapping(value="^\\/put\\/buffer", methods=PUT)
-  public String post(@RequestBody final ByteBuffer body) {
+  public String postBuffer(@RequestBody final ByteBuffer body) {
     return "Byte buffer capacity: " + body.capacity();
   }
   
@@ -417,7 +417,7 @@ public final class MyObjectMapper extends InputStreamReaderRequestMapper<MyObjec
   }
 
   @Override
-  public final MyObject resolveWithReader(final InputStreamReader reader) throws Exception {
+  public MyObject resolveWithReader(final InputStreamReader reader) throws Exception {
     // Use provided 'InputStreamReader' and unmarshall string to a MyObject instance
     return myObject;
   }
@@ -469,9 +469,9 @@ public final class MyObjectResponseHandler extends RenderingResponseTypeMapper<M
   }
 		
   @Override
-  public final void render(final AsyncContext context,
-                           final HttpServletResponse response,
-                           @Nonnull final MyObject obj) throws Exception {
+  public void render(final AsyncContext context,
+                     final HttpServletResponse response,
+                     @Nonnull final MyObject obj) throws Exception {
     response.setStatus(200);
     response.setContentType("application/json; charset=UTF-8");
     try(final Writer w = response.getWriter()) {
@@ -493,9 +493,9 @@ public final class AuthenticationExceptionResponseHandler
   extends RenderingResponseTypeMapper<AuthenticationException> {
 		
   @Override
-  public final void render(final AsyncContext context,
-                           final HttpServletResponse response,
-                           @Nonnull final AuthenticationException ex) throws Exception {
+  public void render(final AsyncContext context,
+                     final HttpServletResponse response,
+                     @Nonnull final AuthenticationException ex) throws Exception {
     // Redirect the user to the login page.
     response.sendRedirect("/login");
   }
@@ -514,7 +514,7 @@ public final class ResponseHandlerDemoController {
    * to invoke the MyObjectResponseHandler above to render it as JSON.
    */
   @RequestMapping("^\\/myobject")
-  public MyObject getAnObject() {
+  public MyObject getMyObject() {
     return new MyObject();
   }
 
