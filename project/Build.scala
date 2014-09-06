@@ -45,10 +45,10 @@ object Dependencies {
   private val curacao = "com.kolich.curacao" % "curacao" % "2.6.2" % "compile"
   private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.6.2" % "compile"
 
-  // Jetty 9 stable, version 9.2.1.v20140609 (as of 7/19/14)
-  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.2.1.v20140609" % "container"
-  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.2.1.v20140609" % "container"
-  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.2.1.v20140609" % "container"
+  // Jetty 9 stable, version 9.2.2.v20140723 (as of 9/6/14)
+  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.2.2.v20140723" % "container"
+  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.2.2.v20140723" % "container"
+  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.2.2.v20140723" % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
@@ -247,7 +247,7 @@ object Blog extends Build {
   lazy val blog: Project = Project(
     aName,
     new File("."),
-    settings = Defaults.defaultSettings ++ Seq(
+    settings = Defaults.coreDefaultSettings ++ Seq(
       version := aVer,
       organization := aOrg,
       scalaVersion := "2.10.3",
