@@ -5,6 +5,8 @@
 		// Namespace.
 		self = parent.Twitter = parent.Twitter || {},
 
+        username = "markkolich",
+
         console = parent['console'],
         baseApiUrl = parent['baseApiUrl'],
 
@@ -41,6 +43,10 @@
                     .join('');
             };
         }()),
+
+        linkifyTimestamp = function(id) {
+            return "https://twitter.com/" + username + "/status/" + id;
+        },
 
         /*
         // Logic borrowed from http://williamsportwebdeveloper.com/cgi/wp/?p=503
@@ -81,9 +87,12 @@
                         var tweet = tweets[i],
                             li = $('<li>').addClass('tweet small'),
                             text = $('<p>').append(linkify(tweet.text)),
+                            smaller = $('<p>').addClass('smaller'),
+                            url = linkifyTimestamp(tweet.id_str),
                             //timestamp = $('<p>').append($.localtime.toLocalTime(tweet.created_at,'h:mm:ss a')).addClass('smaller');
-                            timestamp = $('<p>').append($.timeago(tweet.created_at)).addClass('smaller');
-                        li.append(text).append(timestamp);
+                            timestamp = $('<a>').attr("href", url).append($.timeago(tweet.created_at));
+                        smaller.append(timestamp);
+                        li.append(text).append(smaller);
                         ul.append(li);
                     }
                     ul.find('li.tweet').first().addClass('first');
