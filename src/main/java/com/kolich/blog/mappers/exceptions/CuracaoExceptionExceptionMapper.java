@@ -28,7 +28,7 @@ package com.kolich.blog.mappers.exceptions;
 
 import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
-import com.kolich.blog.entities.html.Utf8XHtmlEntity;
+import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
@@ -38,15 +38,13 @@ import freemarker.template.Template;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import javax.servlet.AsyncContext;
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import static com.kolich.blog.entities.html.Utf8XHtmlEntity.HtmlEntityType.HTML;
+import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -69,9 +67,8 @@ public final class CuracaoExceptionExceptionMapper
     }
 
     @Override
-    public final void renderSafe(final AsyncContext context,
-                                 final HttpServletResponse response,
-                                 @Nonnull final CuracaoException exception) throws Exception {
+    public final Utf8TextEntity renderTemplate(
+        @Nonnull final CuracaoException exception) throws Exception {
         int status = DEFAULT_ERROR_STATUS_CODE; // initialized to default
         // If the incoming exception to handle is an instance of a type that
         // contains a status code (e.g., with entity or with status) then we
@@ -104,9 +101,9 @@ public final class CuracaoExceptionExceptionMapper
         }
         // Write the response.
         try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
+            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
             tp.process(getDataMap(tp), w);
-            renderEntity(response, new Utf8XHtmlEntity(HTML, status, os));
+            return new Utf8TextEntity(HTML, status, os);
         }
     }
 

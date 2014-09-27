@@ -35,65 +35,93 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 
-import static com.google.common.net.MediaType.HTML_UTF_8;
-import static com.google.common.net.MediaType.XML_UTF_8;
+import static com.google.common.net.MediaType.*;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.apache.commons.io.IOUtils.copyLarge;
 
-public final class Utf8XHtmlEntity extends AppendableCuracaoEntity {
+public final class Utf8TextEntity extends AppendableCuracaoEntity {
 
     private static final String HTML_UTF_8_STRING = HTML_UTF_8.toString();
     private static final String XML_UTF_8_STRING = XML_UTF_8.toString();
+    private static final String TEXT_UTF_8_STRING = PLAIN_TEXT_UTF_8.toString();
 
-    public static enum HtmlEntityType {
-        HTML(HTML_UTF_8_STRING), XML(XML_UTF_8_STRING);
+    public static enum TextEntityType {
+
+        /**
+         * HTML page.
+         */
+        HTML(HTML_UTF_8_STRING, true),
+
+        /**
+         * XML document, RSS feed, Sitemap.
+         */
+        XML(XML_UTF_8_STRING, true),
+
+        /**
+         * Plain text document, robots.txt or humans.txt.
+         */
+        TXT(TEXT_UTF_8_STRING, false);
+
         private final String contentType_;
-        private HtmlEntityType(final String contentType) {
+        private final boolean compressable_;
+        private TextEntityType(final String contentType,
+                               final boolean compressable) {
             contentType_ = contentType;
+            compressable_ = compressable;
         }
+
         public final String getType() {
             return contentType_;
         }
+
+        public final boolean isCompressable() {
+            return compressable_;
+        }
+
     }
 
-    private final HtmlEntityType type_;
+    private final TextEntityType type_;
     private final int status_;
     private final String body_;
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final int status,
-                           final String body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final int status,
+                          final String body) {
         super();
         type_ = type;
         status_ = status;
-        body_ = compressHtml(body);
+        body_ = (type.isCompressable()) ? compressHtml(body) : body;
     }
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final int status,
-                           final byte[] body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final int status,
+                          final byte[] body) {
         this(type, status, StringUtils.newStringUtf8(body));
     }
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final int status,
-                           final ByteArrayOutputStream body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final int status,
+                          final ByteArrayOutputStream body) {
         this(type, status, body.toByteArray());
     }
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final String body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final String body) {
         this(type, SC_OK, body);
     }
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final byte[] body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final byte[] body) {
         this(type, SC_OK, body);
     }
 
-    public Utf8XHtmlEntity(final HtmlEntityType type,
-                           final ByteArrayOutputStream body) {
+    public Utf8TextEntity(final TextEntityType type,
+                          final ByteArrayOutputStream body) {
         this(type, SC_OK, body);
+    }
+
+    public final String getBody() {
+        return body_;
     }
 
     @Override

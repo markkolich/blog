@@ -26,48 +26,35 @@
 
 package com.kolich.blog.mappers.txt;
 
+import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
+import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
-import com.kolich.curacao.entities.AppendableCuracaoEntity;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
-import javax.servlet.AsyncContext;
-import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import static com.google.common.net.MediaType.PLAIN_TEXT_UTF_8;
-import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.TXT;
 
 public abstract class AbstractTxtResponseMapper<T>
     extends AbstractFreeMarkerAwareResponseMapper<T> {
-
-    private static final String PLAIN_TEXT_CONTENT_TYPE_STRING =
-        PLAIN_TEXT_UTF_8.toString();
 
     public AbstractTxtResponseMapper(final FreeMarkerConfig config) {
         super(config);
     }
 
     @Override
-    public final void renderSafe(final AsyncContext context,
-                                 final HttpServletResponse response,
-                                 final @Nonnull T entity) throws Exception {
+    public final Utf8TextEntity renderTemplate(@Nonnull final T entity)
+        throws Exception {
         final Template tp = config_.getTemplate(getTemplateName());
-        renderEntity(response, new AppendableCuracaoEntity() {
-            @Override
-            public final void toWriter(final Writer writer) throws Exception {
-                tp.process(getDataMap(tp), writer);
-            }
-            @Override
-            public final int getStatus() {
-                return SC_OK;
-            }
-            @Override
-            public final String getContentType() {
-                return PLAIN_TEXT_CONTENT_TYPE_STRING;
-            }
-        });
+        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
+            tp.process(getDataMap(tp), w);
+            return new Utf8TextEntity(TXT, os);
+        }
     }
 
     public abstract String getTemplateName();

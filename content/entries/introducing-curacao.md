@@ -1,4 +1,4 @@
-Tired of [Spring](http://spring.io), [raw Servlets](https://jcp.org/aboutJava/communityprocess/final/jsr315/), and other [REST toolkits](http://spray.io) I cautiously approached the thought of building my own JVM web-layer from scratch.  In retrospect, I probably didn't need to spend time on yet another toolkit to help shield engineers from the boilerplate and complexity of web-applications on the JVM.  However, I found most existing libraries (and frameworks) to be overly bloated, complex and just generally awful.
+Tired of [Spring](http://spring.io), [Jersey](https://jersey.java.net), [raw Servlets](https://jcp.org/aboutJava/communityprocess/final/jsr315/), and other [REST toolkits](http://spray.io) I cautiously approached the thought of building my own JVM web-layer from scratch.  In retrospect, I probably didn't need to spend time on yet another toolkit to help shield engineers from the boilerplate and complexity of web-applications on the JVM.  However, I found most existing libraries (and frameworks) to be overly bloated, complex and just generally awful.
 
 I wanted something "better" &mdash; of course, better purely by my own personal definition.
 
@@ -49,7 +49,7 @@ Let's bootstrap a Curacao application in 3-steps.
 
 <ol>
   <li>
-<p>First, configure your project to pull in the necessary dependencies.  As of this writing, the latest stable version is 2.6.2, however you should check the <a href="https://github.com/markkolich/curacao/releases">Curacao Releases page</a> for the latest version.</p>
+<p>First, configure your project to pull in the necessary dependencies.  As of this writing, the latest stable version is 2.6.3, however you should check the <a href="https://github.com/markkolich/curacao/releases">Curacao Releases page</a> for the latest version.</p>
 <p>If using Maven:</p>
 <p><pre class="prettyprint">
 <code class="xml">&lt;repository&gt;
@@ -62,14 +62,14 @@ Let's bootstrap a Curacao application in 3-steps.
 &lt;dependency&gt;
   &lt;groupId&gt;com.kolich.curacao&lt;/groupId&gt;
   &lt;artifactId&gt;curacao&lt;/artifactId&gt;
-  &lt;version&gt;2.6.2&lt;/version&gt;
+  &lt;version&gt;2.6.3&lt;/version&gt;
   &lt;scope&gt;compile&lt;/scope&gt;
 &lt;/dependency&gt;</code>
 </pre></p>
 <p>If using SBT:</p>
 <p><pre class="prettyprint">
 <code class="scala">resolvers += "Kolich repo" at "http://markkolich.github.io/repo"
-val curacao = "com.kolich.curacao" % "curacao" % "2.6.2" % "compile"</code>
+val curacao = "com.kolich.curacao" % "curacao" % "2.6.3" % "compile"</code>
 </pre></p>
 </li>
 

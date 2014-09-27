@@ -30,7 +30,7 @@ import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
-import com.kolich.blog.entities.html.Utf8XHtmlEntity;
+import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
@@ -38,14 +38,12 @@ import freemarker.template.Template;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import javax.servlet.AsyncContext;
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import static com.kolich.blog.entities.html.Utf8XHtmlEntity.HtmlEntityType.HTML;
+import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(MarkdownContent.class)
@@ -61,18 +59,13 @@ public final class MarkdownDrivenContentResponseMapper
     }
 
     @Override
-    public final void renderSafe(final AsyncContext context,
-                                 final HttpServletResponse response,
-                                 @Nonnull final MarkdownContent md) throws Exception {
-        try {
-            final Template tp = config_.getTemplate(md.getTemplateName());
-            try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-                final Writer w = new OutputStreamWriter(os, Charsets.UTF_8);) {
-                tp.process(getDataMap(tp, md), w);
-                renderEntity(response, new Utf8XHtmlEntity(HTML, os));
-            }
-        } catch (Exception e) {
-            logger__.warn("Oops, content rendering exception: " + md, e);
+    public final Utf8TextEntity renderTemplate(
+        @Nonnull final MarkdownContent md) throws Exception {
+        final Template tp = config_.getTemplate(md.getTemplateName());
+        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
+            tp.process(getDataMap(tp, md), w);
+            return new Utf8TextEntity(HTML, os);
         }
     }
 

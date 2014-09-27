@@ -48,10 +48,10 @@ public abstract class MarkdownContent {
         MarkdownContent.class.getSimpleName();
 
     public static enum ContentType {
-        INDEX, ENTRY, PAGE;
+        INDEX, ENTRY, PAGE
     }
 
-    public static class BlogContentDateFormat {
+    public static final class BlogContentDateFormat {
 
         private static final String GIT_DATE_FORMAT_STRING =
             "EEE dd MMM yyyy HH:mm:ss Z";

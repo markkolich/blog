@@ -1,4 +1,4 @@
-(function($, parent, window, document, undefined) {
+(function($, parent, window, document) {
 
 	var
 
@@ -43,7 +43,7 @@
                             if(json.remaining <= 0) {
                                 moreBtnDiv.slideUp('fast');
                             }
-                            for(i in entries) {
+                            for(var i in entries) {
                                 var entry = entries[i];
                                 var entryDiv = $('<div>').addClass('entry').attr('id',entry.commit).hide(),
                                     h2 = $('<h2>').addClass('title'),
