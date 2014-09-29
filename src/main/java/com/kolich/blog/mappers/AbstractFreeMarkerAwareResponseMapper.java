@@ -26,39 +26,25 @@
 
 package com.kolich.blog.mappers;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.html.Utf8TextEntity;
-import com.kolich.curacao.entities.CuracaoEntity;
-import com.kolich.curacao.entities.empty.StatusCodeOnlyCuracaoEntity;
+import com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.annotation.Nonnull;
-import javax.servlet.AsyncContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Map;
 
-import static com.google.common.net.HttpHeaders.ETAG;
-import static com.google.common.net.HttpHeaders.IF_NONE_MATCH;
-import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 public abstract class AbstractFreeMarkerAwareResponseMapper<T>
-    extends AbstractDevModeSafeResponseMapper<T> {
-
-    /**
-     * We're using the "strong ETag" header format because the ETag we
-     * inject into the response headers is a byte-for-byte SHA-1 hash
-     * of the rendered template body.
-     */
-    private static final String STRONG_ETAG_HEADER_FORMAT = "\"%s\"";
-
-    private static final CuracaoEntity NOT_MODIFIED_ENTITY =
-        new StatusCodeOnlyCuracaoEntity(SC_NOT_MODIFIED);
+    extends AbstractETagAwareResponseMapper<T> {
 
     protected static final String appContextPath__ =
         ApplicationConfig.getContextPath();
@@ -88,7 +74,7 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T>
     protected static final String TEMPLATE_ATTR_ENTRIES = "entries";
     protected static final String TEMPLATE_ATTR_ENTRIES_REMAINING = "remaining";
 
-    protected final Configuration config_;
+    private final Configuration config_;
 
     public AbstractFreeMarkerAwareResponseMapper(final FreeMarkerConfig config) {
         config_ = config.getConfig();
@@ -104,38 +90,34 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T>
         return map;
     }
 
-    @Override
-    public final void renderSafe(final AsyncContext context,
-                                 final HttpServletResponse response,
-                                 @Nonnull final T entity) throws Exception {
-        final Utf8TextEntity rendered = renderTemplate(entity);
-        // Only attach an ETag response header to the response if the
-        // rendered entity indicates success.  No eTag is sent back for
-        // error pages, like a "404 Not Found".
-        if(rendered.getStatus() < SC_BAD_REQUEST) {
-            final String ifNoneMatch = getIfNoneMatchFromRequest(context);
-            final String sha1 = DigestUtils.sha1Hex(rendered.getBody());
-            final String eTag = String.format(STRONG_ETAG_HEADER_FORMAT, sha1);
-            response.setHeader(ETAG, eTag); // Strong ETag!
-            // If the If-None-Match header matches the computed SHA-1 hash of
-            // the rendered content, then we send back "304 Not Modified"
-            // without a body.  If not, then send back the rendered content.
-            if (eTag.equals(ifNoneMatch) || "*".equals(ifNoneMatch)) {
-                // Return a 304, done.
-                renderEntity(response, NOT_MODIFIED_ENTITY);
-                return;
-            }
-        }
-        renderEntity(response, rendered);
+    protected final Template getTemplate(final String templateName)
+        throws IOException {
+        return config_.getTemplate(templateName);
     }
 
-    public abstract Utf8TextEntity renderTemplate(@Nonnull final T entity)
-        throws Exception;
+    /**
+     * Given a template, a data map for the template, and the resulting
+     * content/media type, renders the template and returns a new text
+     * entity representing the typed response body.
+     */
+    protected static final Utf8TextEntity buildEntity(final Template tp,
+                                                      final Map<String, Object> dataMap,
+                                                      final TextEntityType type,
+                                                      final int status) throws Exception {
+        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
+            tp.process(dataMap, w);
+            return new Utf8TextEntity(type, status, os);
+        }
+    }
 
-    private static String getIfNoneMatchFromRequest(final AsyncContext context) {
-        final HttpServletRequest request = (HttpServletRequest)context
-            .getRequest();
-        return request.getHeader(IF_NONE_MATCH);
+    /**
+     * Same as the above static method, but defaults to a "200 OK" response.
+     */
+    protected static final Utf8TextEntity buildEntity(final Template tp,
+                                                      final Map<String, Object> dataMap,
+                                                      final TextEntityType type) throws Exception {
+        return buildEntity(tp, dataMap, type, SC_OK);
     }
 
 }

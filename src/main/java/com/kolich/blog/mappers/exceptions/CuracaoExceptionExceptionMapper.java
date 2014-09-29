@@ -26,7 +26,6 @@
 
 package com.kolich.blog.mappers.exceptions;
 
-import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
@@ -38,10 +37,7 @@ import freemarker.template.Template;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Map;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
@@ -67,16 +63,16 @@ public final class CuracaoExceptionExceptionMapper
     }
 
     @Override
-    public final Utf8TextEntity renderTemplate(
-        @Nonnull final CuracaoException exception) throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final CuracaoException e)
+        throws Exception {
         int status = DEFAULT_ERROR_STATUS_CODE; // initialized to default
         // If the incoming exception to handle is an instance of a type that
         // contains a status code (e.g., with entity or with status) then we
         // extract the status code from the entity backed exception and use
         // that with the error response.
-        if(exception instanceof CuracaoException.WithEntity) {
+        if(e instanceof CuracaoException.WithEntity) {
             final CuracaoEntity entity;
-            if((entity = ((CuracaoException.WithEntity)exception).getEntity())
+            if((entity = ((CuracaoException.WithEntity)e).getEntity())
                 != null) {
                 status = entity.getStatus();
             }
@@ -87,29 +83,24 @@ public final class CuracaoExceptionExceptionMapper
         Template tp = null;
         try {
             tp = getErrorTemplateForStatus(status);
-        } catch (Exception e) {
+        } catch (Exception f) {
             // Loading the error template for the actual status code failed,
             // so let's load the default error template which should, in theory,
             // always exist.
             logger__.warn("Failed to load FreeMarker error page " +
-                "template for HTTP status code: " + status, e);
+                "template for HTTP status code: " + status, f);
             // Use default!  This ~should~ not fail given that the 500 error
             // page template must exist... if it doesn't then something else
             // is wrong.
             tp = getErrorTemplateForStatus(SC_INTERNAL_SERVER_ERROR);
             status = SC_INTERNAL_SERVER_ERROR;
         }
-        // Write the response.
-        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
-            tp.process(getDataMap(tp), w);
-            return new Utf8TextEntity(HTML, status, os);
-        }
+        return buildEntity(tp, getDataMap(tp), HTML, status);
     }
 
     private final Template getErrorTemplateForStatus(final int status)
         throws IOException {
-        return config_.getTemplate(getTemplateName(status));
+        return getTemplate(getTemplateName(status));
     }
 
     private final String getTemplateName(final int status) {

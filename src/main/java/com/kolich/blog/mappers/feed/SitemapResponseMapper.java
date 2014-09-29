@@ -26,7 +26,6 @@
 
 package com.kolich.blog.mappers.feed;
 
-import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.html.Utf8TextEntity;
@@ -35,9 +34,6 @@ import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.XML;
 
@@ -53,14 +49,10 @@ public final class SitemapResponseMapper
     }
 
     @Override
-    public final Utf8TextEntity renderTemplate(
-        @Nonnull final Sitemap sitemap) throws Exception {
-        final Template tp = config_.getTemplate(SITEMAP_TEMPLATE_NAME);
-        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
-            tp.process(getDataMap(tp, sitemap), w);
-            return new Utf8TextEntity(XML, os);
-        }
+    public final Utf8TextEntity renderView(@Nonnull final Sitemap sm)
+        throws Exception {
+        final Template tp = getTemplate(SITEMAP_TEMPLATE_NAME);
+        return buildEntity(tp, getDataMap(tp, sm), XML);
     }
 
 }

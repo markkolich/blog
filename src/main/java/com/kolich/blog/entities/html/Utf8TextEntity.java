@@ -48,22 +48,33 @@ public final class Utf8TextEntity extends AppendableCuracaoEntity {
     public static enum TextEntityType {
 
         /**
-         * HTML page.
+         * HTML page; compressable.
          */
         HTML(HTML_UTF_8_STRING, true),
 
         /**
-         * XML document, RSS feed, Sitemap.
+         * XML document, RSS feed, Sitemap; compressable.
          */
         XML(XML_UTF_8_STRING, true),
 
         /**
-         * Plain text document, robots.txt or humans.txt.
+         * Plain text document, robots.txt or humans.txt; uncompressable.
          */
         TXT(TEXT_UTF_8_STRING, false);
 
+        /**
+         * The HTTP Content-Type of the text entity.
+         */
         private final String contentType_;
+
+        /**
+         * Whether or not the entity is compressable, meaning can it be
+         * fed through the HTML Compressor to remove unnecessary new lines
+         * and other white space characters.  HTML and XML are "compressable"
+         * but plain text is not.
+         */
         private final boolean compressable_;
+
         private TextEntityType(final String contentType,
                                final boolean compressable) {
             contentType_ = contentType;

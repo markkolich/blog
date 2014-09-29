@@ -35,6 +35,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.google.common.net.HttpHeaders.CACHE_CONTROL;
 
+/**
+ * When the application is running in "development mode", this mapper
+ * safely adds a "Cache-Control" header to each outgoing response to
+ * prevent caching in the browser.  In dev mode, nothing is cached,
+ * avoiding confusion and hassles around changes not showing up until
+ * browser caches are emptied (also good for intermediaries,
+ * like proxies that are often overly aggressive at caching things they
+ * shouldn't).
+ */
 public abstract class AbstractDevModeSafeResponseMapper<T>
     extends RenderingResponseTypeMapper<T> {
 

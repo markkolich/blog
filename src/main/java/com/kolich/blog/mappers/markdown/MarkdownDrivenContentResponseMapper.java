@@ -26,7 +26,6 @@
 
 package com.kolich.blog.mappers.markdown;
 
-import com.google.common.base.Charsets;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
@@ -35,23 +34,15 @@ import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
 import freemarker.template.Template;
-import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Map;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
-import static org.slf4j.LoggerFactory.getLogger;
 
 @ControllerReturnTypeMapper(MarkdownContent.class)
 public final class MarkdownDrivenContentResponseMapper
     extends AbstractFreeMarkerAwareResponseMapper<MarkdownContent> {
-
-    private static final Logger logger__ =
-        getLogger(MarkdownDrivenContentResponseMapper.class);
 
     @Injectable
     public MarkdownDrivenContentResponseMapper(final FreeMarkerConfig config) {
@@ -59,14 +50,10 @@ public final class MarkdownDrivenContentResponseMapper
     }
 
     @Override
-    public final Utf8TextEntity renderTemplate(
-        @Nonnull final MarkdownContent md) throws Exception {
-        final Template tp = config_.getTemplate(md.getTemplateName());
-        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
-            tp.process(getDataMap(tp, md), w);
-            return new Utf8TextEntity(HTML, os);
-        }
+    public final Utf8TextEntity renderView(@Nonnull final MarkdownContent md)
+        throws Exception {
+        final Template tp = getTemplate(md.getTemplateName());
+        return buildEntity(tp, getDataMap(tp, md), HTML);
     }
 
     protected Map<String,Object> getDataMap(final Template tp,
