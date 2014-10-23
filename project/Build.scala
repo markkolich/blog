@@ -45,10 +45,10 @@ object Dependencies {
   private val curacao = "com.kolich.curacao" % "curacao" % "2.6.3" % "compile"
   private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.6.3" % "compile"
 
-  // Jetty 9 stable, version 9.2.2.v20140723 (as of 9/6/14)
-  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.2.2.v20140723" % "container"
-  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.2.2.v20140723" % "container"
-  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.2.2.v20140723" % "container"
+  // Jetty 9 stable, version 9.2.3.v20140905 (as of 10/22/14)
+  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.2.3.v20140905" % "container"
+  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.2.3.v20140905" % "container"
+  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.2.3.v20140905" % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
@@ -56,14 +56,14 @@ object Dependencies {
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.2" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
 
-  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.3.2.201404171909-r" % "compile"
-  private val gitblit = "com.gitblit" % "gitblit" % "1.5.0" % "compile" intransitive()
+  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.5.0.201409260305-r" % "compile"
+  private val gitblit = "com.gitblit" % "gitblit" % "1.6.0" % "compile" intransitive()
 
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
-  private val freemarker = "org.freemarker" % "freemarker" % "2.3.20" % "compile"
+  private val freemarker = "org.freemarker" % "freemarker" % "2.3.21" % "compile"
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
-  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.7.22" % "compile"
+  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.8.14" % "compile"
 
   val deps = Seq(
     kolichCommon,
