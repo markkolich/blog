@@ -203,6 +203,6 @@ In addition to `@Header`, there are a number of "convenience" request header ann
 
 ### Part 2
 
-In the upcoming Part 2 of this series, I'll cover the routing of version specific requests with Curacao.  This includes building a service that routes based on a custom header, and of course, the path.
-  
-Till next time, cheers!
+Next in this series, [Writing Versioned Service APIs With Curacao: Part 2](writing-versioned-service-apis-with-curacao-part2) discusses routing strategies with Curacao.
+
+Enjoy!
