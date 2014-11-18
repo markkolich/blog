@@ -66,6 +66,10 @@ div.panel.twitter .panel-body ul {
   margin: 0;
 }
 
+div.panel.twitter .panel-body:last-child {
+  padding-top: 0;
+}
+
 li.tweet {
   margin-top: 10px;
 }

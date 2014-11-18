@@ -3,7 +3,10 @@
 
     <div class="panel panel-default twitter">
         <div class="panel-heading">Twitter (<a href="https://twitter.com/markkolich">@markkolich</a>)</div>
-        <div class="panel-body"></div>
+        <div class="panel-body tweets"></div>
+        <div class="panel-body">
+            <a class="twitter-follow-button" href="https://twitter.com/markkolich" data-show-count="false" data-lang="en">Follow @markkolich</a>
+        </div>
     </div>
 
     <div class="panel panel-default translate">

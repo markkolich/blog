@@ -13,7 +13,7 @@
         tweetsApi = baseApiUrl + "tweets.json",
 
         tweetPanel = $('div.panel.twitter'),
-        tweetBody = tweetPanel.find('div.panel-body'),
+        tweetBody = tweetPanel.find('div.panel-body.tweets'),
 
         linkify = (function() {
             var
@@ -108,6 +108,16 @@
             if(tweetPanel.is(':visible')) {
                 // Load tweets.
                 load();
+                // Only initialize+load the "Follow @markkolich" widget if the tweet
+                // panel is visible per our responsive design.
+                window.twttr = (function (d, s, id) {
+                    var t, js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = 'https://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                    return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+                }(document, 'script', 'twitter-wjs'));
             } else {
                 // Remove panel from DOM.
                 tweetPanel.remove();
