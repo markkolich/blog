@@ -66,16 +66,18 @@ div.panel.twitter .panel-body ul {
   margin: 0;
 }
 
-div.panel.twitter .panel-body:last-child {
-  padding-top: 0;
-}
-
 li.tweet {
   margin-top: 10px;
 }
 
 li.tweet.first {
   margin-top: 0;
+}
+
+/* For the follow twitter widget */
+div.panel.twitter iframe {
+  margin-top: 1px;
+  float: right;
 }
 
 div.panel.twitter .panel-body li.small p {
