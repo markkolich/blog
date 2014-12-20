@@ -42,13 +42,14 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.7" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.7" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.8.4" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.8.4" % "compile"
 
-  // Jetty 9 stable, version 9.2.3.v20140905 (as of 10/22/14)
-  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % "9.2.3.v20140905" % "container"
-  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % "9.2.3.v20140905" % "container"
-  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % "9.2.3.v20140905" % "container"
+  // Jetty 9 stable, version 9.2.6.v20141205 (as of 12/20/14)
+  private val jettyVersion = "9.2.6.v20141205"
+  private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
+  private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % jettyVersion % "container"
+  private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % jettyVersion % "container"
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
