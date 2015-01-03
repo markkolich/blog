@@ -5,12 +5,12 @@
 		// Namespace.
 		self = parent.Twitter = parent.Twitter || {},
 
-        username = "markkolich",
+        username = 'markkolich',
 
         console = parent['console'],
         baseApiUrl = parent['baseApiUrl'],
 
-        tweetsApi = baseApiUrl + "tweets.json",
+        tweetsApi = baseApiUrl + 'tweets.json',
 
         tweetPanel = $('div.panel.twitter'),
         tweetBody = tweetPanel.find('div.panel-body.tweets'),
@@ -27,11 +27,11 @@
                 },
                 backtickCode = function(tweet) {
                     var exp = /`(.*?)`/gim;
-                    return tweet.replace(exp, "<code>$1</code>");
+                    return tweet.replace(exp, '<code>$1</code>');
                 },
                 newLine = function(tweet) {
                     var exp = /[\n\r]/gim;
-                    return tweet.replace(exp, "<br/>");
+                    return tweet.replace(exp, '<br/>');
                 };
             return function(tweet) {
                 // Apply each of the transforms, in order.
@@ -90,7 +90,7 @@
                             smaller = $('<p>').addClass('smaller'),
                             url = linkifyTimestamp(tweet.id_str),
                             //timestamp = $('<p>').append($.localtime.toLocalTime(tweet.created_at,'h:mm:ss a')).addClass('smaller');
-                            timestamp = $('<a>').attr("href", url).append($.timeago(tweet.created_at));
+                            timestamp = $('<a>').attr('href', url).append($.timeago(tweet.created_at));
                         smaller.append(timestamp);
                         li.append(text).append(smaller);
                         ul.append(li);

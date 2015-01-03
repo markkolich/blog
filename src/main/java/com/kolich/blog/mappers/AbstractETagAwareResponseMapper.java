@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Mark S. Kolich
+ * Copyright (c) 2015 Mark S. Kolich
  * http://mark.koli.ch
  *
  * Permission is hereby granted, free of charge, to any person
