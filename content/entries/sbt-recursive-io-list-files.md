@@ -23,4 +23,24 @@ trait IOHelpers {
 
 Functional programming for-the-win!
 
+### Followup 2015
+
+I submitted my idea for a recursive `listFiles` function as an enhancement request to the folks that maintain SBT:
+
+https://github.com/sbt/sbt/issues/1789
+
+It was quickly closed as "won't fix" but they did point out that you can use `sbt.Path` (a.k.a., `Paths`) to achieve the same behavior without any hacks:
+
+```scala
+scala> import sbt._, Path._
+import sbt._
+import Path._
+
+scala> val base = new java.io.File(".")
+base: java.io.File = .
+
+scala> (base ** (-DirectoryFilter)).get
+res1: Seq[java.io.File] = ArrayBuffer(./.gitattributes,...
+```
+
 Cheers.
