@@ -39,7 +39,7 @@ do
 done
 ```
 
-If you'd rather not copy+paste, download the script [here](static/entries/quick-bash-script-backup-to-aws-s3/s3-backup.sh).
+If you'd rather not copy+paste, download the script [here](https://raw.githubusercontent.com/markkolich/blog/70464114a3dbcc5d85eb3fe0ba1d1f12bd24c97c/content/static/entries/quick-bash-script-backup-to-aws-s3/s3-backup.sh).
 
 A few notes:
 
