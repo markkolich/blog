@@ -32,7 +32,7 @@ import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.annotations.Mapper;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
@@ -40,7 +40,7 @@ import java.util.Map;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
 
-@ControllerReturnTypeMapper(MarkdownContent.class)
+@Mapper
 public final class MarkdownDrivenContentResponseMapper
     extends AbstractFreeMarkerAwareResponseMapper<MarkdownContent> {
 

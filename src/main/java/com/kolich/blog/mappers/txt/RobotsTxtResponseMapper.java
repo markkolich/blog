@@ -29,9 +29,9 @@ package com.kolich.blog.mappers.txt;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.annotations.Mapper;
 
-@ControllerReturnTypeMapper(RobotsTxt.class)
+@Mapper
 public final class RobotsTxtResponseMapper
     extends AbstractTxtResponseMapper<RobotsTxt> {
 

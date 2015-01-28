@@ -35,7 +35,7 @@ import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.entities.MarkdownContent;
 import com.kolich.blog.entities.gson.PagedContent;
-import com.kolich.curacao.handlers.components.CuracaoComponent;
+import com.kolich.curacao.components.CuracaoComponent;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;

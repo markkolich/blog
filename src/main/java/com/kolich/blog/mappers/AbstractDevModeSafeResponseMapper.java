@@ -27,7 +27,7 @@
 package com.kolich.blog.mappers;
 
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.curacao.handlers.responses.mappers.RenderingResponseTypeMapper;
+import com.kolich.curacao.mappers.response.ControllerReturnTypeMapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
@@ -45,7 +45,7 @@ import static com.google.common.net.HttpHeaders.CACHE_CONTROL;
  * shouldn't).
  */
 public abstract class AbstractDevModeSafeResponseMapper<T>
-    extends RenderingResponseTypeMapper<T> {
+    extends ControllerReturnTypeMapper<T> {
 
     private static final boolean isDevMode__ = ApplicationConfig.isDevMode();
 

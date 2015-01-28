@@ -30,14 +30,14 @@ import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.annotations.Mapper;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.XML;
 
-@ControllerReturnTypeMapper(Sitemap.class)
+@Mapper
 public final class SitemapResponseMapper
     extends AbstractFeedEntityResponseMapper<Sitemap> {
 

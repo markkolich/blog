@@ -31,7 +31,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.handlers.components.CuracaoComponent;
+import com.kolich.curacao.components.CuracaoComponent;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;

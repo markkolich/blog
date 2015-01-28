@@ -28,8 +28,8 @@ package com.kolich.blog.components;
 
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
+import com.kolich.curacao.components.ComponentDestroyable;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
-import com.kolich.curacao.handlers.components.ComponentDestroyable;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;

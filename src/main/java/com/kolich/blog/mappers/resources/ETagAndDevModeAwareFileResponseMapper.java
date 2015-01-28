@@ -27,22 +27,22 @@
 package com.kolich.blog.mappers.resources;
 
 import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
-import com.kolich.curacao.handlers.responses.mappers.types.resources.AbstractETagAwareFileResponseMapper;
+import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.mappers.response.types.resources.AbstractETagAwareFileReturnMapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
-@ControllerReturnTypeMapper(File.class)
+@Mapper
 public final class ETagAndDevModeAwareFileResponseMapper
     extends AbstractDevModeSafeResponseMapper<File> {
 
-    private final AbstractETagAwareFileResponseMapper eTagAwareMapperShim_;
+    private final AbstractETagAwareFileReturnMapper eTagAwareMapperShim_;
 
     public ETagAndDevModeAwareFileResponseMapper() {
-        eTagAwareMapperShim_ = new AbstractETagAwareFileResponseMapper(){};
+        eTagAwareMapperShim_ = new AbstractETagAwareFileReturnMapper(){};
     }
 
     @Override

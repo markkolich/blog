@@ -28,13 +28,13 @@ package com.kolich.blog.mappers.gson;
 
 import com.kolich.blog.entities.gson.GsonAppendableBlogEntity;
 import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.annotations.Mapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletResponse;
 
-@ControllerReturnTypeMapper(GsonAppendableBlogEntity.class)
+@Mapper
 public final class GsonAppendableBlogEntityResponseMapper
     extends AbstractDevModeSafeResponseMapper<GsonAppendableBlogEntity> {
 

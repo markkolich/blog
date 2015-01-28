@@ -30,7 +30,7 @@ import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.mappers.ControllerReturnTypeMapper;
+import com.kolich.curacao.annotations.Mapper;
 import com.kolich.curacao.entities.CuracaoEntity;
 import com.kolich.curacao.exceptions.CuracaoException;
 import freemarker.template.Template;
@@ -44,7 +44,7 @@ import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.HTML;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
-@ControllerReturnTypeMapper(CuracaoException.class)
+@Mapper
 public final class CuracaoExceptionExceptionMapper
     extends AbstractFreeMarkerAwareResponseMapper<CuracaoException> {
 

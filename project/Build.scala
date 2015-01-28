@@ -42,8 +42,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.8.6" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.8.6" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.9-M1" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.9-M1" % "compile"
 
   // Jetty 9 stable, version 9.2.6.v20141205 (as of 12/20/14)
   private val jettyVersion = "9.2.6.v20141205"
@@ -242,7 +242,7 @@ object Blog extends Build {
   import Resolvers._
 
   private val aName = "blog"
-  private val aVer = "1.2-SNAPSHOT"
+  private val aVer = "1.3-SNAPSHOT"
   private val aOrg = "com.kolich"
 
   lazy val blog: Project = Project(

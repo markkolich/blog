@@ -42,7 +42,7 @@ import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.methods.RequestMapping;
+import com.kolich.curacao.annotations.RequestMapping;
 import com.kolich.curacao.annotations.parameters.Path;
 import com.kolich.curacao.annotations.parameters.Query;
 
