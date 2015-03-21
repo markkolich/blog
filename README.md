@@ -52,7 +52,7 @@ To build a deployable WAR for your favorite Servlet container, run `war` in SBT.
     0 error(s), 0 warning(s)
     [info] Packaging ~/dev/github/blog/dist/blog-1.0-SNAPSHOT.war ...
     [info] Done packaging.
-    [success] Total time: 3 s, completed Feb 3, 2014 6:26:07 PM
+    [success] Total time: 3 s, completed Feb 3, 2015 6:26:07 PM
 
 Note the resulting WAR is placed into the **blog/dist** directory.  Deploy and enjoy.
 

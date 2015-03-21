@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Mark S. Kolich
+ * Copyright (c) 2015 Mark S. Kolich
  * http://mark.koli.ch
  *
  * Permission is hereby granted, free of charge, to any person
@@ -45,8 +45,8 @@ object Dependencies {
   private val curacao = "com.kolich.curacao" % "curacao" % "2.9-M2" % "compile"
   private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.9-M2" % "compile"
 
-  // Jetty 9 stable, version 9.2.9.v20150224 (as of 2/28/15)
-  private val jettyVersion = "9.2.9.v20150224"
+  // Jetty 9 stable, version 9.2.10.v20150310
+  private val jettyVersion = "9.2.10.v20150310"
   private val jettyWebApp = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   private val jettyPlus = "org.eclipse.jetty" % "jetty-plus" % jettyVersion % "container"
   private val jettyJsp = "org.eclipse.jetty" % "jetty-jsp" % jettyVersion % "container"
@@ -57,14 +57,14 @@ object Dependencies {
   private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.2" % "compile" // An Slf4j impl
   private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
 
-  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.5.0.201409260305-r" % "compile"
-  private val gitblit = "com.gitblit" % "gitblit" % "1.6.0" % "compile" intransitive()
+  private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.7.0.201502260915-r" % "compile"
+  private val gitblit = "com.gitblit" % "gitblit" % "1.6.2" % "compile" intransitive()
 
   private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
   private val freemarker = "org.freemarker" % "freemarker" % "2.3.21" % "compile"
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
-  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.8.14" % "compile"
+  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.15" % "compile"
 
   val deps = Seq(
     kolichCommon,
