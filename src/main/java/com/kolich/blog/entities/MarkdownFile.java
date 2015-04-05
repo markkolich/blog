@@ -45,6 +45,11 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 
 public final class MarkdownFile {
 
+    private static final int pegDownExtensions__ =
+        // Enable all extensions, but mask off Anchorlinks which we
+        // don't want (makes a few pages look wacky).
+        Extensions.ALL ^ Extensions.ANCHORLINKS;
+
     private final transient File file_;
 
     public MarkdownFile(@Nonnull final File file) {
@@ -56,7 +61,7 @@ public final class MarkdownFile {
     }
 
     public final String getHtmlFromMarkdown() throws IOException {
-        final PegDownProcessor p = new PegDownProcessor(Extensions.ALL,
+        final PegDownProcessor p = new PegDownProcessor(pegDownExtensions__,
             // https://github.com/markkolich/blog/issues/1
             // Set max parsing time to "infinity" such that the parsing
             // of lengthy markdown files will not timeout.

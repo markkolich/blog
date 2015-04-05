@@ -48,7 +48,7 @@ public final class FreeMarkerConfig {
     @Injectable
     public FreeMarkerConfig(final GitRepository git) throws IOException {
         final File templateRoot = git.getFileRelativeToContentRoot(templatesDir__);
-        config_ = new Configuration(Configuration.VERSION_2_3_21);
+        config_ = new Configuration(Configuration.VERSION_2_3_22);
         config_.setDirectoryForTemplateLoading(templateRoot);
         config_.setDefaultEncoding(UTF_8_CHARSET_NAME);
     }
