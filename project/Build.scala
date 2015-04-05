@@ -60,11 +60,11 @@ object Dependencies {
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.7.0.201502260915-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.6.2" % "compile" intransitive()
 
-  private val pegdown = "org.pegdown" % "pegdown" % "1.4.2" % "compile"
-  private val freemarker = "org.freemarker" % "freemarker" % "2.3.21" % "compile"
+  private val pegdown = "org.pegdown" % "pegdown" % "1.5.0" % "compile"
+  private val freemarker = "org.freemarker" % "freemarker" % "2.3.22" % "compile"
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
-  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.15" % "compile"
+  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.17" % "compile"
 
   val deps = Seq(
     kolichCommon,
