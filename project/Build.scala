@@ -42,8 +42,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.9-M1" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.9-M1" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "2.9-M2" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.9-M2" % "compile"
 
   // Jetty 9 stable, version 9.2.9.v20150224 (as of 2/28/15)
   private val jettyVersion = "9.2.9.v20150224"
