@@ -41,7 +41,7 @@ We did some digging and from what we can tell, mild detergents are not a problem
 
 Other than that, our plants seem to love greywater.
 
-My wife and I have been watering our yard using this method for several weeks now, and thus far, everything is healthy.  Despite our fears, not a single plant has keeled over and died (yet) being watered washing machine greywater. 
+My wife and I have been watering our yard using this method for several weeks now, and thus far, everything is healthy.  Despite our fears, not a single plant has keeled over and died (yet) being watered with washing machine greywater. 
 
 ### Caveats
 
