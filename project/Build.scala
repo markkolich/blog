@@ -53,9 +53,9 @@ object Dependencies {
   
   private val servlet = "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" // Provided by container
 
-  private val logback = "ch.qos.logback" % "logback-core" % "1.1.2" % "compile"
-  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.2" % "compile" // An Slf4j impl
-  private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.7" % "compile"
+  private val logback = "ch.qos.logback" % "logback-core" % "1.1.3" % "compile"
+  private val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.3" % "compile" // An Slf4j impl
+  private val slf4j = "org.slf4j" % "slf4j-api" % "1.7.12" % "compile"
 
   private val jGit = "org.eclipse.jgit" % "org.eclipse.jgit" % "3.7.0.201502260915-r" % "compile"
   private val gitblit = "com.gitblit" % "gitblit" % "1.6.2" % "compile" intransitive()
@@ -242,7 +242,7 @@ object Blog extends Build {
   import Resolvers._
 
   private val aName = "blog"
-  private val aVer = "1.4-SNAPSHOT"
+  private val aVer = "1.5-SNAPSHOT"
   private val aOrg = "com.kolich"
 
   lazy val blog: Project = Project(

@@ -1,6 +1,4 @@
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.9.0")
-
-addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.9.1")
 
 addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.2.2")
 
@@ -9,8 +7,8 @@ addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.2.2")
 // these libraries available to the build classpath, namely in Build.scala).
 // This does ~not~ add the dependencies to the compile time or run time classpaths.
 
-libraryDependencies += "org.apache.ant" % "ant" % "1.9.2"
+libraryDependencies += "org.apache.ant" % "ant" % "1.9.4"
 
 libraryDependencies += "com.google.javascript" % "closure-compiler" % "v20131014"
 
-libraryDependencies += "com.yahoo.platform.yui" % "yuicompressor" % "2.4.7"
+libraryDependencies += "com.yahoo.platform.yui" % "yuicompressor" % "2.4.8"

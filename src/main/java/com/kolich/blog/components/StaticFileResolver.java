@@ -34,6 +34,8 @@ import com.kolich.curacao.annotations.Injectable;
 import java.io.File;
 import java.nio.file.Paths;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Component
 public final class StaticFileResolver {
 
@@ -41,7 +43,7 @@ public final class StaticFileResolver {
 
     @Injectable
     public StaticFileResolver(final GitRepository git) {
-        git_ = git;
+        git_ = checkNotNull(git, "Git repository cannot be null.");
     }
 
     public final File getStaticFileInContentRoot(final String uri) {
