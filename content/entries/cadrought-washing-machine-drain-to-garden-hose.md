@@ -15,25 +15,25 @@ Your washing machine, and garden hose, will almost certainly be different so you
 Here's what we used:
 
 1. Flexible Rubber Pipe Coupler with Clamps
-<img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part1.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part1.png"><br/><br/>
 2. PVC Schedule 40, Slip x NPT Female Adapter
-<img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part2.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part2.png"><br/><br/>
 3. PVC Schedule 40, NPT Male x MHT Male Adapter
-<br/><img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part3.png"><br/><br/>
+<br/><img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part3.png"><br/><br/>
 4. Garden Hose
-<img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part4.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-part4.png"><br/><br/>
 
 ### Assembly
 
 With two hands, a wrench, and a gentle but firm touch you should be able to assemble these parts like so:
 
-<img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-winning-arrows.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-winning-arrows.png"><br/><br/>
 
 Some PVC glue for the slip to NPT adapter, and vinyl plumbers tape for the threads is good too, if you're into that sort of thing.
 
 ### Winning
 
-<img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-2.png"> <img src="static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-3.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-2.png"> <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-3.png"><br/><br/>
 
 ### Detergent
 
