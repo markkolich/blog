@@ -27,27 +27,27 @@ Here's what we used:
 
 With two hands, a wrench, and a gentle but firm touch you should be able to assemble these parts like so:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-winning-arrows.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/drain-winning-arrows.png" width="800"><br/><br/>
 
 Some PVC glue for the slip to NPT adapter, and vinyl plumbers tape for the threads is good too, if you're into that sort of thing.
 
 ### Winning
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-2.png"> <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-3.png"><br/><br/>
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-2.png"> <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/cadrought-washing-machine-drain-to-garden-hose/assembly-3.png">
+
+And there you have it: a relatively cheap and clever solution to capture greywater water from your washing machine to be used in/around your yard.
 
 ### Detergent
 
 We did some digging and from what we can tell, mild detergents are not a problem for most ornamental plants and trees &mdash; of course, environmentally friendly detergents that degrade easily are best.  And, it should go without saying, but chlorine bleach/borax is harmful for any living thing so you should avoid draining the water from bleached loads onto your yard.
 
-Other than that, our plants seem to love greywater.
-
-My wife and I have been watering our yard using this method for several weeks now, and thus far, everything is healthy.  Despite our fears, not a single plant has keeled over and died (yet) being watered with washing machine greywater. 
+Our plants love it &mdash; my wife and I have been watering our yard using this method for several weeks now, and thus far, everything is healthy.  Despite our fears, not a single plant has keeled over and died (yet) being watered with washing machine greywater. 
 
 ### Caveats
 
 1. I take no responsibility and hold no liability if, for whatever reason, you break your washing machine or kill the plants in your yard using greywater from your washing machine.  Do your own homework, any mistakes are on you.
 2. Some cities/municipalities have laws regarding greywater usage in/around homes.  Before you try any of this, you should consult with your city officials to make sure it's OK to water your yard with greywater.
 3. It should go without saying, but the water that comes out of your washing machine is non-potable.  Meaning you cannot, and should not, drink it.  Keep thirsty pets and animals away too.
-4. Don't try to store greywater &mdash; in a 50-gallon drum, garbage can, etc.  It's gross.  Apparently if you want to store greywater, there are advanced systems you can buy that will let you do exactly that.  Storing **untreated** greywater from a washing machine in a 50-gallon drum is asking for trouble. 
+4. Don't try to store greywater &mdash; in a 50-gallon drum, garbage can, etc.  It's gross.  Apparently if you want to store greywater, there are advanced systems you can buy that will let you do exactly that.  Storing **untreated** greywater from a washing machine in a 50-gallon drum is just asking for trouble. 
 
 Happy watering!
