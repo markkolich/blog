@@ -48,6 +48,6 @@ My wife and I have been watering our yard using this method for several weeks no
 1. I take no responsibility and hold no liability if, for whatever reason, you break your washing machine or kill the plants in your yard using greywater from your washing machine.  Do your own homework, any mistakes are on you.
 2. Some cities/municipalities have laws regarding greywater usage in/around homes.  Before you try any of this, you should consult with your city officials to make sure it's OK to water your yard with greywater.
 3. It should go without saying, but the water that comes out of your washing machine is non-potable.  Meaning you cannot, and should not, drink it.  Keep thirsty pets and animals away too.
-4. Don't try to store greywater &mdash; in a 50-gallon drum, garbage can, etc.  It's gross.  Apparently if you want to store greywater, there are advanced systems you can buy that will let do exactly that.  Storing **untreated** greywater from a washing machine in a 50-gallon drum is asking for trouble. 
+4. Don't try to store greywater &mdash; in a 50-gallon drum, garbage can, etc.  It's gross.  Apparently if you want to store greywater, there are advanced systems you can buy that will let you do exactly that.  Storing **untreated** greywater from a washing machine in a 50-gallon drum is asking for trouble. 
 
 Happy watering!
