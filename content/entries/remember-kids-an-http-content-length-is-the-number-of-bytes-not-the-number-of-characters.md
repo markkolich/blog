@@ -6,11 +6,11 @@ UTF-8 encodes each character (code point) in 1 to 4 octets (8-bit bytes).  Meani
 
 So, here's the situation: I was working with some XML, where one of the entries happened to contain a special [registered trademark (r) symbol](http://en.wikipedia.org/wiki/Registered_trademark_symbol).  My HTTP response was returning the data contained in this XML element, and on each response, the data was truncated by one-byte.  Though a useful pair programming exercise, a colleague and I looked into the problem, and found that I was improperly computing the `Content-Length`.
 
-<img src="static/entries/remember-kids-an-http-content-length-is-the-number-of-bytes-not-the-number-of-characters/utf-8-registered-trademark.png" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/remember-kids-an-http-content-length-is-the-number-of-bytes-not-the-number-of-characters/utf-8-registered-trademark.png" width="400">
 
 Here's why.  According to the [proper Unicode documentation/chart on unicode.org](http://www.unicode.org/charts/PDF/U0080.pdf), we see that the registered trademark symbol uses two bytes to represent itself: 0x00 AE.  But we know that in UTF-8 land, the [first byte should indicate that we're dealing with a two-byte character sequence](http://en.wikipedia.org/wiki/UTF-8#Description).  Hence, the UTF-8 encoding for the registered trademark symbol is: 0xC2 AE.  Using a trusty hex editor, we can verify that this indeed the correct encoding, by examining the byte sequence for the the UTF-8 encoded registered trademark symbol in the XML:
 
-<img src="static/entries/remember-kids-an-http-content-length-is-the-number-of-bytes-not-the-number-of-characters/registered-trademark-utf8-encoding.png" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/remember-kids-an-http-content-length-is-the-number-of-bytes-not-the-number-of-characters/registered-trademark-utf8-encoding.png" width="400">
 
 Yep, sure enough, `0xC2 AE`.  So this character (r) uses two-bytes to represent itself in UTF-8.  In other words, even though the (r) registered trademark symbol is a single code point in my response, it needs two bytes to properly represent itself.
 

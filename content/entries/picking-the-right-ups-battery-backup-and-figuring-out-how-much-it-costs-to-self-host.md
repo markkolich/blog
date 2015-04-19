@@ -1,6 +1,6 @@
 This past weekend, heavy wind knocked out the power to my home for over an hour or so.  Unfortunately, the Linux server that powers my blog failed to stay on during the outage.  Come to find out, the UPS (uninterruptible power supply, a.k.a., a battery backup) unit it was plugged into is pretty much dead; I suspect the battery is completely trashed.  Once the power returned, I rebooted my server and decided to test the UPS.  I booted up the box, and pulled the plug out from the wall.  The UPS kept my system online for all of about 4-seconds.  So much for being uninterruptible.
 
-<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-xw8000.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-xw8000.jpg" width="500">
 
 ### Gathering the Data
 
@@ -10,13 +10,13 @@ Initially, I took the ammeter and simply clamped it around the untouched power c
 
 As it turns out, I had to carefully strip off the outer shell/insulation of the power cable to expose the individual wires.  I used a small wire cutter to strip off the outer shell, and peeled back about 1.5 ft of insulation (as shown below).
 
-<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-stripped-cable.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-stripped-cable.jpg" width="500">
 
 With each individual wire in the twisted pair exposed, I was able to separate the wires (white/black=current, green=ground) and wrap the ammeter around them one at a time.  With the wires separated, I got a much more accurate reading of about **1.8 to 2.2 A**.
 
 Below you can see the before and after readings on the ammeter.  When the wires are close together the ammeter shows an almost zero reading.  When they are held apart (2-3 inches from one another), I see more reliable numbers:
 
-<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-before-after.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-before-after.jpg" width="500">
 
 A great friend of mine (a physics guy) shared some insight on what's going on here:
 
@@ -28,7 +28,7 @@ Based on my data, I know that my Linux server consumes about 2.0 A on average.  
 
 For my calculations, I'm going to assume the system uses roughly 2.0 A when idling.  Using some basic physics, let's calculate how many W (watts) this system consumes knowing that it's plugged into a standard ~120V outlet:
 
-<img src="static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-wattage.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/picking-the-right-ups-battery-backup-and-figuring-out-how-much-it-costs-to-self-host/ammeter-wattage.png">
 
 So, my Linux box uses about 240 W of power on average.  Not bad &mdash; no where near the max of 450 W the power supply can dish out though.
 
