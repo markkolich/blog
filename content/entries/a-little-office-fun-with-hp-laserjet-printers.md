@@ -2,7 +2,7 @@ It may be more than a month past April Fools' Day, but there's never a bad time 
 
 And to top it all off, I successfully [ported the app to PHP](static/entries/a-little-office-fun-with-hp-laserjet-printers/hpsetdisp.php) and put a nice little front end on it for your added enjoyment.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/a-little-office-fun-with-hp-laserjet-printers/insert-coin-printer.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/a-little-office-fun-with-hp-laserjet-printers/insert-coin-printer.png">
 
 Have fun, and remember, always understand what you're doing.  If your IT department frowns upon stuff like this (what do they not frown upon, right?) then you should probably think twice before trying this at the office.
 

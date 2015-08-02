@@ -18,27 +18,27 @@ Onyx is available at http://onyx.koli.ch.
 
 I'm not a formal user-interface expert, but I built the Onyx UI to be what I think is clean, simple, and elegant.  I settled on a dark gray minimalist style color theme after experimenting with several color options.  The home screen, as shown below, displays a convenient list of recently added files, newest on top.  The "top five" users, determined by the number of files uploaded, are shown under the recently added files list. Note that only "public" files are shown in the recent files list &mdash; files and folders marked private by the user are not visible or accessible to the public.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-homescreen.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-homescreen.jpg" width="400">
 
 ### Adding a Directory and Uploading Files
 
 Once logged in, users are allowed to create folders and upload files. Again, note that users can label folders as public, or private. Public folders, and their public contents are visible to the world. On the other hand, private folders hide their contents.  Onyx understands hierarchical permissions; if the parent of a file or folder in the file structure is labeled private, the child automatically inherits the parents' visibility unless explicitly overridden by the user.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-new-folder-thumb-400x188.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-new-folder-thumb-400x188.jpg" width="400">
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-upload-thumb-400x323.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-upload-thumb-400x323.jpg" width="400">
 
 ### Sharing Content
 
 Files uploaded to the "Onyx cloud" can be easily shared. From the file list browser, users can simply mouse over any file, and click the "Share on Twitter" or "Get Permalink" icons.  Of course, users can also delete, or download their files by clicking the respective delete or download icons in the file list.  If the user deletes a folder, all files and folders under that folder are also deleted automatically.  Registered users can only delete files they own: files they've uploaded, or folders they've created.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-share-shot-thumb-400x223.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-share-shot-thumb-400x223.jpg" width="400">
 
 ### Permalinks and Twitter Integration
 
 Users can instantly snag permalinks for any file or folder in Onyx.  Onyx permalinks can be shared via email, instant messenger, Facebook, Twitter, Digg, or any other instant communication or link aggregation service.  As shown below, I loaded a permalink for a picture of my wife and I.  I then clicked the "Tweet It!" button which redirected me to Twitter.  Notice my Twitter "What are you doing?" status box is automatically populated with the file name, file description, and permalink from Onyx.  One click later, my picture stored in Onyx is instantly shared with my followers on Twitter.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-permalink-share-thumb-400x228.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-permalink-share-thumb-400x228.jpg" width="400">
 
 Enjoy.
 

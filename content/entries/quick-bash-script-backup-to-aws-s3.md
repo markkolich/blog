@@ -47,7 +47,7 @@ find $@ -type f -print0 | while IFS= read -r -d '' i; do
 done
 ```
 
-If you'd rather not copy+paste, download the script [here](https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/quick-bash-script-backup-to-aws-s3/s3-backup.sh).
+If you'd rather not copy+paste, download the script [here](https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/quick-bash-script-backup-to-aws-s3/s3-backup.sh).
 
 A few notes:
 

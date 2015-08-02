@@ -4,7 +4,7 @@ One solution is to use a quick-and-dirty regular expression to cleanup the XML p
 
 First, I wanted to confirm my suspicion about the UTF-8 Byte-order mark.  I used `wget` to download the feed in question [http://www.hp.com/hpinfo/stories.xml](http://www.hp.com/hpinfo/stories.xml) and opened it up using `khexedit`.  Sure enough, the first three bytes are `EF BB BF`:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/resolving-orgxmlsaxsaxparseexception-content-is-not-allowed-in-prolog/rss-feed-extra-bytes.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/resolving-orgxmlsaxsaxparseexception-content-is-not-allowed-in-prolog/rss-feed-extra-bytes.png">
 
 Because these extra three bytes are present in the prolog, you might see an exception that looks something like this when trying to parse the XML:
 

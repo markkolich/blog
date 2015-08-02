@@ -17,7 +17,7 @@ I have yet to encounter a need to actually enable a Server Signature or provide 
 
 Oh, if you want to read up on why most admins hate the Apache web-server, take a look at [Why I Hate The Apache Web Server](http://people.apache.org/~rbowen/presentations/apacheconEU2005/hate_apache.pdf).
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/howto-hide-apache-server-version-for-security-using-servertokens-and-serversignature/http_response.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/howto-hide-apache-server-version-for-security-using-servertokens-and-serversignature/http_response.png">
 
 Cheers.
 

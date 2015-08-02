@@ -1,6 +1,6 @@
 I've been playing around with a lot of installer type stuff recently.  I discovered that [Mozilla Firefox uses the 7zip SFX install launcher](http://howto.gumph.org/content/customize-firefox-installer/) kick off the Firefox installation process.  I started playing around with [7zip SFX, and realized that you can do some pretty cool stuff with it](http://7zsfx.solta.ru/en/).  In fact, I discovered that you can actually bundle a Java app and the Java Runtime Environment (JRE) into your own little 7zip SFX launcher.  Naturally, this means you can write a Java app and then let your users start it by double clicking a native Win32 .exe.  And best of all, because your launcher contains the Java Runtime Environment, the user does not have to have a JRE installed on their system to run your application!
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-extracting-shot-thumb-200x102.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-extracting-shot-thumb-200x102.png">
 
 The launcher extracts the JRE and your app to a temporary directory, then launches it using that freshly extracted JRE.
 
@@ -12,9 +12,9 @@ Not surprisingly, this is completely doable using 7zip SFX.  However, note that 
 
 ### Getting Started
 
-Before you start packaging up your app with 7zip, you'll probably want to [download my complete example pack](https://github.com/markkolich/blog/blob/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-pack.zip?raw=true).  This ZIP file contains everything you'll need to get started, including a ready to ship JRE (Java 6 Update 16) and an Ant build file.  Note that you do not need to install 7zip; I've packed the necessary 7zip.exe to create the archive with the [example pack](https://github.com/markkolich/blog/blob/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-pack.zip?raw=true).  However, if you want to install 7zip, can [download the installer here](http://www.7-zip.org/download.html) or [from my mirror on Onyx](https://onyx.koli.ch/x2v).  This sample pack is also an Eclipse project.  If you work out of Eclipse, you can import the .project inside of the example pack into your Eclipse IDE.
+Before you start packaging up your app with 7zip, you'll probably want to [download my complete example pack](https://github.com/markkolich/blog/blob/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-pack.zip?raw=true).  This ZIP file contains everything you'll need to get started, including a ready to ship JRE (Java 6 Update 16) and an Ant build file.  Note that you do not need to install 7zip; I've packed the necessary 7zip.exe to create the archive with the [example pack](https://github.com/markkolich/blog/blob/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-pack.zip?raw=true).  However, if you want to install 7zip, can [download the installer here](http://www.7-zip.org/download.html) or [from my mirror on Onyx](https://onyx.koli.ch/x2v).  This sample pack is also an Eclipse project.  If you work out of Eclipse, you can import the .project inside of the example pack into your Eclipse IDE.
 
-Or, if you want to see the 7zSD.sfx launcher in action, [download the pre-built demo launcher](https://github.com/markkolich/blog/blob/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-exe.zip?raw=true).
+Or, if you want to see the 7zSD.sfx launcher in action, [download the pre-built demo launcher](https://github.com/markkolich/blog/blob/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zipsfx-launch-java-example-exe.zip?raw=true).
 
 ### Fundamentals
 
@@ -117,7 +117,7 @@ public class StartHere {
 
 Here's a screen shot:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-extracting-shot2-thumb-400x226.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-extracting-shot2-thumb-400x226.png">
 
 The Ant build script in my example pack compiles this app and creates `app.jar`, a runnable JAR file.
 
@@ -215,7 +215,7 @@ You can always manually build the installer package yourself, but why bother if 
 
 If you use Oleg's `7zSD.sfx` launcher as is, you'll notice the icon attached to the resulting `.exe` is quite poor.  In all likelihood, you'll want to replace the icon with one for your application.  Doing so is quite easy with [Resource Hacker](http://www.angusj.com/resourcehacker/), a freeware utility to view, modify, rename, add, delete and extract resources in 32bit Windows executables and resource files.  Detailed instructions on how to replace the icon can be found [here on the 7zSD.sfx web-site](http://7zsfx.solta.ru/en/icon.html).  Note that you can also use Resource Hacker to edit the version and copyright details included in the resulting executable as shown below.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-change-resources-thumb-400x284.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/bundle-java-the-jre-and-launch-a-java-app-with-7zip-sfx/7zip-sfx-change-resources-thumb-400x284.png">
 
 In summary, it's fairly straightforward to bundle and ship the Java Runtime Environment with your Java application using 7zip SFX.  Heck, Sun allows and even tells you how to redistribute the JRE with your applications (just read the LICENSE file provided with any JRE installation).
 

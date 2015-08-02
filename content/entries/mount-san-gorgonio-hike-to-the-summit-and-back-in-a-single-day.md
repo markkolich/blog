@@ -1,6 +1,6 @@
 Last weekend a buddy of mine and I hiked [Mount San Gorgonio](http://en.wikipedia.org/wiki/San_Gorgonio_Mountain).  Sitting at roughly 11,503 feet, Gorgonio is Southern California's tallest mountain nestled in the heart of the [San Bernardino National Forest](http://en.wikipedia.org/wiki/San_Bernardino_National_Forest).  It was a fantastic experience, and probably the 2nd hardest physical challenge of my life (second only to my [single-day domination of Mount Whitney in September of 2006](static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/top-of-mt-whitney-shot1.jpg)).  The most popular trail to the top of Old Greyback is the Vivian Creek Trail, which was supposedly closed last weekend due to excessive bear activity.  As a result, we took the Fish Creek Trail to the summit.  To the top and back, Fish Creek is roughly 20-miles round trip starting at an elevation of approximately 8,180 feet.  Fish Creek is a little longer than Vivian Creek, but less steep which probably saved our legs a little in the long run.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san_gorgonio_mountain.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san_gorgonio_mountain.jpg" width="400">
 
 Here are some of my notes and pictures from the trail.
 
@@ -46,27 +46,27 @@ We returned to Orange County later that night at around 9:30PM.  All-in-all, it 
 
 Me at the Fish Creek trail head:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-trailhead1.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-trailhead1.jpg" width="500">
 
 Plane wreckage at about 10,400 feet:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-plane-wreckage1.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-plane-wreckage1.jpg" width="500">
 
 More plane wreckage from the C-47 crash site:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-plane-wreckage2.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-plane-wreckage2.jpg" width="500">
 
 At the summit, finally made it:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit1.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit1.jpg" width="500">
 
 Me at the summit with [Mount San Jacinto](http://en.wikipedia.org/wiki/San_Jacinto_Peak) behind me:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit3.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit3.jpg" width="500">
 
 Another shot from the summit:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit2.jpg" width="500">
+<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit2.jpg" width="500">
 
 **Special thanks to my buddy J.P. Voisinet for organizing the hike, snagging the permits, and hosting me down in so-cal that weekend.**
 
