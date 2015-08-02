@@ -24,3 +24,5 @@ Here is an example showing how you might use `MaxPermSize`:
 * The JVM option `-XX:+AggressiveHeap` inspects the machine resources (size of memory and number of processors) and attempts to set various heap and memory parameters to be optimal for long-running, memory allocation-intensive jobs.
 
 Cheers.
+
+<!--- tags: java -->

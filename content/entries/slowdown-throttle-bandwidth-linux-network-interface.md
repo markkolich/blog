@@ -76,3 +76,5 @@ Now that we're done, simply delete all traffic control throttling rules to retur
 ```
 
 Cheers!
+
+<!--- tags: linux -->

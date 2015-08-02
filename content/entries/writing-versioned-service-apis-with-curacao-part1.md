@@ -206,3 +206,5 @@ In addition to `@Header`, there are a number of "convenience" request header ann
 Next in this series, [Writing Versioned Service APIs With Curacao: Part 2](writing-versioned-service-apis-with-curacao-part2) discusses routing strategies with Curacao.
 
 Enjoy!
+
+<!--- tags: curacao, java, servlet -->

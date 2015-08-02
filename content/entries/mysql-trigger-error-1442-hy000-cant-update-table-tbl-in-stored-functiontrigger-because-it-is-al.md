@@ -158,3 +158,5 @@ OK, so even using a procedure with a trigger isn't going to solve my problem.  I
 Bottom line, there doesn't appear to be a way to use a trigger in MySQL that loops over all rows in a table when activated.  And, calling a procedure from a trigger isn't going to work either.  Solutions to this problem might include building your web-app to call your procedure at a given interval.  Or, call the procedure when a user logs in (depending on the load).  You might even consider using a cron job.
 
 Good luck.
+
+<!--- tags: mysql -->

@@ -45,10 +45,8 @@ import static org.apache.commons.io.FileUtils.readFileToString;
 
 public final class MarkdownFile {
 
-    private static final int pegDownExtensions__ =
-        // Enable all extensions, but mask off Anchorlinks which we
-        // don't want (makes a few pages look wacky).
-        Extensions.ALL ^ Extensions.ANCHORLINKS;
+    // Enable all extensions, but mask off Anchorlinks which we don't want (makes a few pages look wacky).
+    private static final int pegDownExtensions__ = Extensions.ALL ^ Extensions.ANCHORLINKS;
 
     private final transient File file_;
 
@@ -61,11 +59,10 @@ public final class MarkdownFile {
     }
 
     public final String getHtmlFromMarkdown() throws IOException {
-        final PegDownProcessor p = new PegDownProcessor(pegDownExtensions__,
-            // https://github.com/markkolich/blog/issues/1
-            // Set max parsing time to "infinity" such that the parsing
-            // of lengthy markdown files will not timeout.
-            Long.MAX_VALUE);
+        // https://github.com/markkolich/blog/issues/1
+        // Set max parsing time to "infinity" such that the parsing
+        // of lengthy markdown files will not timeout.
+        final PegDownProcessor p = new PegDownProcessor(pegDownExtensions__, Long.MAX_VALUE);
         return p.markdownToHtml(readFileToString(file_, Charsets.UTF_8));
     }
 
@@ -74,8 +71,7 @@ public final class MarkdownFile {
         return file_.getAbsolutePath();
     }
 
-    public static final class MarkdownFileGsonAdapter
-        implements JsonSerializer<MarkdownFile> {
+    public static final class MarkdownFileGsonAdapter implements JsonSerializer<MarkdownFile> {
 
         @Override
         public final JsonElement serialize(final MarkdownFile src,
@@ -84,8 +80,8 @@ public final class MarkdownFile {
             try {
                 return new JsonPrimitive(src.getHtmlFromMarkdown());
             } catch (Exception e) {
-                throw new ContentRenderException("Failed to serialize " +
-                    "markdown file: " + src.getFile(), e);
+                throw new ContentRenderException("Failed to serialize markdown file: " +
+                    src.getFile(), e);
             }
         }
 

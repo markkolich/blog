@@ -60,3 +60,5 @@ Query OK, 0 rows affected (0.00 sec)
 So, this leads me to conclude with much certainty, that if a PHP script grabs a lock on a table and then dies unexpectedly, MySQL automatically cleans up the transaction and releases all locks grabbed by the script.  Hence, the rest of my application will continue to run unaffected.
 
 And much joy was had by all.
+
+<!--- tags: mysql, php -->

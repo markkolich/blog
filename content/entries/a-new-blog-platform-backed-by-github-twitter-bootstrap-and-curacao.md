@@ -191,3 +191,5 @@ git clone https://github.com/markkolich/blog.git
 Pull requests welcome!
 
 Enjoy.
+
+<!--- tags: blog, curacao, java, markdown -->

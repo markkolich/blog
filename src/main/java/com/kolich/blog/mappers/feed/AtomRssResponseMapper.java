@@ -38,8 +38,7 @@ import javax.annotation.Nonnull;
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.XML;
 
 @Mapper
-public final class AtomRssResponseMapper
-    extends AbstractFeedEntityResponseMapper<AtomRss> {
+public final class AtomRssResponseMapper extends AbstractFeedEntityResponseMapper<AtomRss> {
 
     private static final String ATOM_RSS_FEED_TEMPLATE_NAME = "feed/atom.ftl";
 
@@ -49,8 +48,7 @@ public final class AtomRssResponseMapper
     }
 
     @Override
-    public final Utf8TextEntity renderView(@Nonnull final AtomRss rss)
-        throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final AtomRss rss) throws Exception {
         final Template tp = getTemplate(ATOM_RSS_FEED_TEMPLATE_NAME);
         return buildEntity(tp, getDataMap(tp, rss), XML);
     }

@@ -70,3 +70,5 @@ Finally, remember that you'll need to define your own `FORM_LOGIN_FILTER` inside
 ```
 
 Enjoy!
+
+<!--- tags: spring, java, http -->

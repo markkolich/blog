@@ -44,8 +44,7 @@ import static com.google.common.net.HttpHeaders.CACHE_CONTROL;
  * like proxies that are often overly aggressive at caching things they
  * shouldn't).
  */
-public abstract class AbstractDevModeSafeResponseMapper<T>
-    extends ControllerReturnTypeMapper<T> {
+public abstract class AbstractDevModeSafeResponseMapper<T> extends ControllerReturnTypeMapper<T> {
 
     private static final boolean isDevMode__ = ApplicationConfig.isDevMode();
 

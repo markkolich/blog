@@ -7,3 +7,5 @@ The LNB is a parabolic receiver (an antenna) which converts a high-frequency sat
 I contacted Dish Network Technical Support for help &mdash; they told me that they would only send a technician to my home to replace the LNB if the LNB Drift was less than -8 or greater than +8.  However, after some more digging, I [found this interesting internal Dish Network memo that discusses failing LNB's and Dish's LNB replacement policy](static/entries/dish-network-lnb-drift-detected-dvr-625/lnb-drift-dish-statement.pdf).  According to the memo, Dish should replace the LNB if the drift is +/-5.  Well, my drift is -6 and sometimes -7 (depending on the time of day) so I guess I'm due for a replacement.
 
 The failing LNB on my roof was eventually replaced, and all is well again.
+
+<!--- tags: dish -->

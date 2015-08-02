@@ -83,3 +83,5 @@ Header append Vary User-Agent env=!dont-vary
 In any event, I removed the 2nd line above, restarted Apache and Squid began caching beautifully regardless of which client issued the request.  Essentially, I told Squid to stop caring about the `User-Agent` by removing `User-Agent` from my `Vary` response header, and problem solved!
 
 The joys of HTTP.
+
+<!--- tags: http, apache -->

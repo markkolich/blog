@@ -29,3 +29,5 @@ Now that you've got a key (a `.key` file) and certificate (a `.crt` file), you c
 ```
 
 Remember, your private key (your `.key` file) is important.  You should keep it in a secure/private place on your server, and certainly not in a public readable directory.
+
+<!--- tags: apache, security, ssl -->

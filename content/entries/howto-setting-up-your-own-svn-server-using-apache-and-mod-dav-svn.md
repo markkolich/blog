@@ -208,3 +208,5 @@ Checked out revision 0.
 It worked!  Note that the "Error validating server certificate" warning is because I'm using a self-signed SSL certificate.  When SVN asks if you want to accept the certificate, if you permanently accept it you will not be prompted about this again.  If you use an SSL certificate issued by a real Certificate Authority like Network Solutions, Verisign, or Thawte, you shouldn't see this warning.
 
 Time to start hacking &mdash; cheers!
+
+<!--- tags: apache, svn, security -->

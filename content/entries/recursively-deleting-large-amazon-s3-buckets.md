@@ -111,3 +111,5 @@ Additional notes, and warnings:
 
 * If you're not familiar with using a CountDownLatch, you can find my [detailed blog post on it here](understanding-javas-countdownlatch.html}.
 * If you're going to delete multiple objects at a time, you should confirm the S3 library you're using is thread safe.  Many S3 libraries I've seen rely on the popular [Apache Commons HttpClient](http://hc.apache.org/httpcomponents-client/) to handle the underlying HTTP communication work with S3.  However, you should note that HttpClient isn't thread safe by default, unless you've explicitly set it up to use a [ThreadSafeClientConnManager](http://hc.apache.org/httpcomponents-client/httpclient/apidocs/org/apache/http/impl/conn/tsccm/ThreadSafeClientConnManager.html).
+
+<!--- tags: aws, s3, java -->

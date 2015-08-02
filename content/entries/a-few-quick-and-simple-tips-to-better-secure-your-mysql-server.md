@@ -57,3 +57,5 @@ mysql> quit;
 ```
 
 Cheers.
+
+<!--- tags: mysql, security -->

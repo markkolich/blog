@@ -1,0 +1,52 @@
+option java_package = "com.kolich.blog.protos";
+
+/**
+ * Fired when a Git pull even triggers a fetch from the remote.
+ */
+message GitPullEvent {
+
+    required int64 timestamp = 1;
+
+}
+
+/**
+ * When looping over each file in every commit, this event represents an event on a given file in the repo.
+ */
+message CachedContentEvent {
+
+    enum Operation {
+        ADD = 1;
+        MODIFY = 2;
+        DELETE = 3;
+        RENAME = 4;
+        COPY = 5;
+    }
+
+    required Operation operation = 1;
+
+    required string name = 2;
+    required string title = 3;
+    required string msg = 4;
+    required string hash = 5;
+
+    required int64 timestamp = 6;
+
+    /* Canonical path to file */
+    required string file = 7;
+
+}
+
+/**
+ * Fires when it's time to read cached content.
+ */
+message StartReadCachedContentEvent {}
+
+/**
+ * Fires when reading cached content is finished.
+ */
+message EndReadCachedContentEvent {}
+
+/**
+ * Fires when the in-memory entry cache is ready.
+ */
+message EntryCacheReadyEvent {}

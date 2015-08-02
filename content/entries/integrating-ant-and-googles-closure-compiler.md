@@ -55,3 +55,5 @@ Ok, now that your JavaScript files have been concatenated into a single resource
 ```
 
 Assuming your code compiled cleanly, you'll have a Closure Compiler optimized JavaScript file sitting around ready for deployment!
+
+<!--- tags: ant, javascript, google -->

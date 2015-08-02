@@ -36,3 +36,5 @@ echo $obj->{'field-one'};
 ```
 
 Cheers.
+
+<!--- tags: php -->

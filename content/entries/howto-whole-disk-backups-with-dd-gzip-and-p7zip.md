@@ -119,3 +119,5 @@ Using this technique, on one of my desktops, I compressed a **250GB disk with Wi
 So, if you plan on re-installing your OS, then making a backup, you should always use `/dev/zero` to zero out your disk before doing anything.
 
 Good luck!
+
+<!--- tags: linux, security, backup -->

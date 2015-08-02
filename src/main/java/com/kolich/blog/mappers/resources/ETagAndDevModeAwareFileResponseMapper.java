@@ -36,8 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
 @Mapper
-public final class ETagAndDevModeAwareFileResponseMapper
-    extends AbstractDevModeSafeResponseMapper<File> {
+public final class ETagAndDevModeAwareFileResponseMapper extends AbstractDevModeSafeResponseMapper<File> {
 
     private final AbstractETagAwareFileReturnMapper eTagAwareMapperShim_;
 

@@ -32,6 +32,21 @@ p.hash {
 p.date {
   margin-bottom: 20px;
 }
+p.tags {
+  margin-top: 30px;
+}
+p.tags a {
+  color: white;
+}
+p.tags i {
+  margin-top: 1px;
+  vertical-align: middle;
+}
+h3.tags {
+  margin-top: 0;
+  margin-bottom: 30px;
+  vertical-align: middle;
+}
 
 pre.prettyprint {
   padding: 9.5px !important;

@@ -107,3 +107,5 @@ public ModelAndView better(final MyObject o) {
 ```
 
 No more ugly repetition, and less code.  Enjoy.
+
+<!--- tags: java, spring, http -->

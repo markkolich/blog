@@ -38,10 +38,9 @@ import java.io.IOException;
 @Component
 public final class FreeMarkerConfig {
 
-    private static final String templatesDir__ =
-        ApplicationConfig.getTemplatesDir();
+    private static final String templatesDir__ = ApplicationConfig.getTemplatesDir();
 
-    private static final String UTF_8_CHARSET_NAME = Charsets.UTF_8.name();
+    private static final String UTF_8_CHARSET = Charsets.UTF_8.name();
 
     private final Configuration config_;
 
@@ -50,7 +49,7 @@ public final class FreeMarkerConfig {
         final File templateRoot = git.getFileRelativeToContentRoot(templatesDir__);
         config_ = new Configuration(Configuration.VERSION_2_3_22);
         config_.setDirectoryForTemplateLoading(templateRoot);
-        config_.setDefaultEncoding(UTF_8_CHARSET_NAME);
+        config_.setDefaultEncoding(UTF_8_CHARSET);
     }
 
     public final Configuration getConfig() {

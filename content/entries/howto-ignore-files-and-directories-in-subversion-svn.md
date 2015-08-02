@@ -26,3 +26,5 @@ Of course, if you want to use another editor like `emacs` to set your ignore pro
 ```
 
 Cheers.
+
+<!--- tags: svn -->

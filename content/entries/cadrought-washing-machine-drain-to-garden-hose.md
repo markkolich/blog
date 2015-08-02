@@ -51,3 +51,5 @@ Our plants love it &mdash; my wife and I have been watering our yard using this 
 4. Don't try to store greywater &mdash; in a 50-gallon drum, garbage can, etc.  It's gross.  Apparently if you want to store greywater, there are advanced systems you can buy that will let you do exactly that.  Storing **untreated** greywater from a washing machine in a 50-gallon drum is just asking for trouble. 
 
 Happy watering!
+
+<!--- tags: greywater, california, drought -->

@@ -59,3 +59,5 @@ Note that [closeQuietly()](http://commons.apache.org/io/api-1.2/org/apache/commo
 Lesson learned: regardless of what garbage collector you're using, it's always a good idea to explicitly close the `STDOUT`, `STDIN`, and `STDERR` streams associated with a Process object when you are done with it.
 
 Enjoy.
+
+<!--- tags: java -->

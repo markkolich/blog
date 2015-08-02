@@ -26,70 +26,157 @@
 
 package com.kolich.blog.components.cache;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import com.google.common.eventbus.Subscribe;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.blog.components.GitRepository;
+import com.kolich.blog.components.cache.bus.BlogEventBus;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.exceptions.ContentNotFoundException;
+import com.kolich.blog.protos.Events;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
+import com.kolich.curacao.annotations.Required;
+import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
-public final class EntryCache extends AbstractMarkdownCache<Entry> {
+public final class EntryCache {
 
-    private static final String entriesDir__ =
-        ApplicationConfig.getEntriesDir();
+    private static final Logger logger__ = getLogger(EntryCache.class);
+
+    private static final String contentRootDir__ = ApplicationConfig.getContentRootDir();
+    private static final String entriesDir__ = ApplicationConfig.getEntriesDir();
+
+    private static final String canonicalEntriesDir_ = Paths.get(contentRootDir__, entriesDir__)
+        .toFile().getAbsolutePath();
+
+    private final BlogEventBus eventBus_;
+
+    /**
+     * An internal map that maps the name of each entity to its content, maintaining insertion order.
+     */
+    private final Map<String, Entry> cache_;
+
+    private final Set<Entry> unsortedEntities_;
 
     @Injectable
-    public EntryCache(final GitRepository git) {
-        super(git);
+    public EntryCache(@Required final BlogEventBus eventBus) {
+        eventBus_ = eventBus;
+        eventBus_.register(this);
+        cache_ = Maps.newLinkedHashMap(); // Preserves insertion order, important
+        unsortedEntities_ = Sets.newHashSet();
     }
 
-    @Override
-    public final Entry getEntity(final String name,
-                                 final String title,
-                                 final String commit,
-                                 final Long timestamp,
-                                 final File content) {
-        return new Entry(name, escapeHtml4(title), commit, timestamp, content);
+    @Subscribe
+    public synchronized final void onStartReadCachedContent(final Events.StartReadCachedContentEvent e) {
+        logger__.debug("onStartReadCachedContent: {}", e);
+        unsortedEntities_.clear();
     }
 
-    @Override
-    public final String getCachedContentDirName() {
-        return entriesDir__;
+    @Subscribe
+    public synchronized final void onCachedContent(final Events.CachedContentEvent e) {
+        logger__.trace("onCachedContent: START: {}", e);
+        // Only bother with the event if the incoming event refers to content in a location in the repo
+        // this cache is concerned about.
+        if (!e.getFile().startsWith(canonicalEntriesDir_)) {
+            return;
+        }
+        // Build out a new entry entity and fork based on the event's operation.
+        final Entry entry = new Entry(e.getName(), escapeHtml4(e.getTitle()), e.getMsg(), e.getHash(),
+            e.getTimestamp(), new File(e.getFile()));
+        final Events.CachedContentEvent.Operation op = e.getOperation();
+        if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
+            unsortedEntities_.add(entry);
+        } else if (Events.CachedContentEvent.Operation.DELETE.equals(op)) {
+            unsortedEntities_.remove(entry);
+        } else {
+            logger__.trace("Received unsupported/unknown event: {}", e);
+        }
     }
 
-    @Nullable
-    public final Entry getEntry(final String name) {
-        final Entry e;
-        if((e = get(name)) == null) {
-            throw new ContentNotFoundException("Failed to load entry for " +
-                "key: " + name);
+    @Subscribe
+    public synchronized final void onEndReadCachedContent(final Events.EndReadCachedContentEvent e) {
+        logger__.trace("onEndReadCachedContent: START: {}", e);
+        // Sort the loaded entities in order based on commit date, not the natural ordering of the commits.
+        // Oldest content/entities fall to the bottom regardless of when they were actually committed.  That
+        // is, using the Git environment variables GIT_AUTHOR_DATE and GIT_COMMITTER_DATE, you can commit to a
+        // repo at some arbitrary point in the past.
+        //  #/> GIT_AUTHOR_DATE='Tue Dec 7 09:32:10 1982 -0800' \
+        //      GIT_COMMITTER_DATE='Tue Dec 7 09:32:10 1982 -0800' \
+        //      git commit
+        // Sorting based on this commit date enforces that older content, recently committed to the repo, are
+        // ordered correctly.
+        final List<Entry> sorted = unsortedEntities_.stream().sorted((a, b) -> b.getDate().compareTo(a.getDate()))
+            .collect(Collectors.toList());
+        // In a thread safe manner, clear the existing cache and then add all new entries into it.  This is
+        // essentially just a synchronized "swap" in place.
+        // Transform the list of entities into a proper map that maps the entity name to itself.  The key of the
+        // map is the "name" of the entity, and the value is the entity.
+        final Map<String, Entry> newCache = Maps.uniqueIndex(sorted, new Function<Entry, String>() {
+            @Nullable @Override
+            public String apply(final Entry input) {
+                checkNotNull(input, "Input cannot be null.");
+                return input.getName();
+            }
+        });
+        cache_.clear();
+        cache_.putAll(newCache);
+        // Probably not really needed, but clear out the unsorted entries set for good measure.
+        unsortedEntities_.clear();
+        logger__.debug("onEndReadCachedContent: END: {} -> {}", e, cache_);
+        // Let any listeners know that the "entry cache" is ready and willing.
+        eventBus_.post(Events.EntryCacheReadyEvent.newBuilder().build());
+    }
+
+    public synchronized final Entry get(final String key) {
+        final Entry e = cache_.get(key);
+        if (e == null) {
+            throw new ContentNotFoundException("Failed to load entry for key: " + key);
         }
         return e;
     }
 
-    public final PagedContent<Entry> getEntries(final int limit) {
-        return getAll(limit);
+    /**
+     * Returns an immutable list of all content in this cache, in sorted order.
+     */
+    public synchronized final List<Entry> getAll() {
+        return ImmutableList.copyOf(cache_.values());
     }
 
-    public final PagedContent<Entry> getEntriesBefore(@Nullable final String commit,
-                                                      final int limit) {
-        return getAllBefore(commit, limit);
+    public synchronized final PagedContent<Entry> getAll(@Nullable final Integer limit) {
+        final List<Entry> list = getAll();
+        final PagedContent<Entry> result;
+        if(limit != null && limit > 0 && limit <= list.size()) {
+            final List<Entry> sublist = list.subList(0, limit);
+            result = new PagedContent<>(sublist, list.size() - sublist.size());
+        } else {
+            result = new PagedContent<>(list, 0);
+        }
+        return result;
     }
 
-    public final AtomRss getAtomFeed(final int limit) {
+    public synchronized final AtomRss getAtomFeed(final int limit) {
         return new AtomRss(getAll(limit));
     }
 
-    public final Sitemap getSitemap() {
+    public synchronized final Sitemap getSitemap() {
         return new Sitemap(getAll());
     }
 

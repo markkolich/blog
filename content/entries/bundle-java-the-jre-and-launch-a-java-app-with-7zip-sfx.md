@@ -222,3 +222,5 @@ In summary, it's fairly straightforward to bundle and ship the Java Runtime Envi
 ### On GitHub
 
 All code shown here is available in my [7zip-sfx-java project on GitHub](https://github.com/markkolich/7zip-sfx-java).
+
+<!--- tags: java, 7zip sfx -->

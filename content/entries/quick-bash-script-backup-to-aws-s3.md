@@ -73,3 +73,5 @@ Or maybe you only want to upload `foobar/baz/*`:
 ```
 
 Happy uploading.
+
+<!--- tags: aws, s3, curl, bash, backup -->

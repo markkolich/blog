@@ -40,12 +40,10 @@ public final class AtomRss extends AbstractFeedEntity {
 
     public static class AtomRssRFC3339DateFormat {
 
-        private static final String RFC3339_DATE_FORMAT_STRING =
-            "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        private static final String RFC3339_DATE_FORMAT_STRING = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
         public static final DateFormat getNewInstance() {
-            final DateFormat df = new SimpleDateFormat(
-                RFC3339_DATE_FORMAT_STRING);
+            final DateFormat df = new SimpleDateFormat(RFC3339_DATE_FORMAT_STRING);
             df.setTimeZone(getTimeZone("GMT-0"));
             return df;
         }

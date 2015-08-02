@@ -54,3 +54,5 @@ echo $toSign;
 This was tested on RHEL4 U7, with PHP version 4.3.9.  I'm sure it will work on PHP 5+, but I haven't tried it.
 
 Good luck.
+
+<!--- tags: php, security -->

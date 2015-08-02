@@ -202,3 +202,5 @@ Here are a few links and other resources I gathered while writing this blog post
 * [Onyx: UAC Resources (my personal UAC resources collection)](https://onyx.koli.ch/x2e3)
 
 Cheers.
+
+<!--- tags: windows, security -->

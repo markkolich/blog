@@ -36,3 +36,5 @@ You can prove to yourself that this works, by using a tool like curl to issue an
 ```
 
 Yep, works nicely.  One thing that slightly annoys me, however, is that the HTTP `OPTIONS` method still reports that my server supports `TRACE`, even though I clearly don't anymore.  A quick Google search reports that many other folks have had the same concern, with no clear resolution.
+
+<!--- tags: apache, mod_rewrite, security -->

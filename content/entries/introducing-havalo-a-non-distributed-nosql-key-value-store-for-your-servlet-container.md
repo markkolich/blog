@@ -41,3 +41,5 @@ You can find instructions and additional technical details on how to download an
 Havalo is open source, so you are always welcome to browse the source and submit a pull request if you'd like to contribute.
 
 Enjoy!
+
+<!--- tags: havalo-kvs, curacao, servlet, java -->

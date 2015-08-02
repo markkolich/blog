@@ -34,3 +34,5 @@ getProperty() says => x86
 ```
 
 In this case, one would expect to see something like `x86_64` or `amd64` instead of just `x86`.  Bottom line, don't believe what you read about `os.arch` and other Java system properties.  They are usually properties of the JRE/JDK itself, and not necessarily the real properties of the underlying OS or architecture.  If you need to check if a system is actually 32 or 64-bit, you should look elsewhere in the system registry or [write your own native app and call it from Java](reliably-checking-os-bitness-32-or-64-bit-on-windows-with-a-tiny-c-app).
+
+<!--- tags: java, c, windows -->

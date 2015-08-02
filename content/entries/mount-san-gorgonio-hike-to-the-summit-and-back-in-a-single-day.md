@@ -69,3 +69,5 @@ Another shot from the summit:
 <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/mount-san-gorgonio-hike-to-the-summit-and-back-in-a-single-day/san-gorgonio-summit2.jpg" width="500">
 
 **Special thanks to my buddy J.P. Voisinet for organizing the hike, snagging the permits, and hosting me down in so-cal that weekend.**
+
+<!--- tags: hiking, outdoors -->

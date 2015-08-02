@@ -43,19 +43,13 @@ import java.util.Map;
 
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
-public abstract class AbstractFreeMarkerAwareResponseMapper<T>
-    extends AbstractETagAwareResponseMapper<T> {
+public abstract class AbstractFreeMarkerAwareResponseMapper<T> extends AbstractETagAwareResponseMapper<T> {
 
-    protected static final String appContextPath__ =
-        ApplicationConfig.getContextPath();
-    protected static final String blogTitle__ =
-        ApplicationConfig.getBlogTitle();
-    protected static final String getBlogSubTitle__ =
-        ApplicationConfig.getBlogSubTitle();
-    protected static final String hostname__  =
-        ApplicationConfig.getHostname();
-    protected static final String fullUri__ =
-        ApplicationConfig.getFullUri();
+    protected static final String appContextPath__ = ApplicationConfig.getContextPath();
+    protected static final String blogTitle__ = ApplicationConfig.getBlogTitle();
+    protected static final String getBlogSubTitle__ = ApplicationConfig.getBlogSubTitle();
+    protected static final String hostname__  = ApplicationConfig.getHostname();
+    protected static final String fullUri__ = ApplicationConfig.getFullUri();
 
     protected static final String TEMPLATE_ATTR_CONTEXT_PATH = "context";
 
@@ -74,6 +68,9 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T>
     protected static final String TEMPLATE_ATTR_ENTRIES = "entries";
     protected static final String TEMPLATE_ATTR_ENTRIES_REMAINING = "remaining";
 
+    protected static final String TEMPLATE_ATTR_TAG = "tag";
+    protected static final String TEMPLATE_ATTR_TAGS = "tags";
+
     private final Configuration config_;
 
     public AbstractFreeMarkerAwareResponseMapper(final FreeMarkerConfig config) {
@@ -90,8 +87,7 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T>
         return map;
     }
 
-    protected final Template getTemplate(final String templateName)
-        throws IOException {
+    protected final Template getTemplate(final String templateName) throws IOException {
         return config_.getTemplate(templateName);
     }
 

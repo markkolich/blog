@@ -7,3 +7,5 @@ gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -sOutputFile=output.jpg -r100 input.ps
 ```
 
 Use the `-r` argument to tweak the resolution/quality of the JPG.
+
+<!--- tags: postscript -->

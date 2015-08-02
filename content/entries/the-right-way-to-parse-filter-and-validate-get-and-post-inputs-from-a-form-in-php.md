@@ -198,3 +198,5 @@ try {
 ```
 
 Enjoy.
+
+<!--- tags: php, security -->

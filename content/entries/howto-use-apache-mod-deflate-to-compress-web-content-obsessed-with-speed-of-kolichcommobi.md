@@ -46,3 +46,5 @@ Some things to consider when using `mod_deflate`:
 * High-traffic sites will want to think twice about compression.  You wouldn't want the added CPU consumption from compression to impact your overall site experience.
 
 Cheers.
+
+<!--- tags: apache, performance -->

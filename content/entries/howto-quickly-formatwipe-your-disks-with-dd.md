@@ -23,3 +23,5 @@ Or, erase the device with a random bit pattern using `/dev/urandom`:
 ```
 
 Side note, you can also [generate decent passwords using /dev/random](howto-generating-good-random-passwords-with-devurandom).
+
+<!--- tags: linux -->

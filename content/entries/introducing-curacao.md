@@ -557,3 +557,5 @@ Curacao is [free on GitHub](https://github.com/markkolich/curacao) and licensed 
 Issues and pull requests welcome.
 
 Cheers!
+
+<!--- tags: curacao, java, servlet -->

@@ -69,3 +69,5 @@ That's the smell of delicious do-it-yourself satisfaction.  Cheers!
 * https://onyx.koli.ch/x3c3 &mdash; A PDF spec of the G4 fuse from Therm-O-Disc, the manufacturer of the thermal fuses used in the KM7000.
 
 Very special thanks to [Jimmy Su](http://www.jimmysu.net/component/content/article/1-latest/971-oh-the-coffeemaker-is-broken-again) for all of his help and advice along the way.  Thanks, Jimmy!
+
+<!--- tags: krups, coffee -->

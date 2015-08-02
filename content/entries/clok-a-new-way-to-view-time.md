@@ -33,3 +33,5 @@ My version of Clok is pure CSS, JavaScript, and PHP (no Flash).  When the DOM is
 http://clok.koli.ch
 
 Enjoy.
+
+<!--- tags: clok, php, projects -->

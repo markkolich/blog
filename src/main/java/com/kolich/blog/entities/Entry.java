@@ -26,38 +26,48 @@
 
 package com.kolich.blog.entities;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class Entry extends MarkdownContent {
 
-    private static final String TEMPLATE_NAME = "entry.ftl";
+    private static final Pattern TAGS_REGEX = Pattern.compile("<!---\\s*tags:\\s*(.*?)-->",
+        Pattern.CASE_INSENSITIVE);
+
+    private static final Splitter COMMA_SPLITTER = Splitter.on(",").trimResults().omitEmptyStrings();
+
+    private static final String ENTRY_TEMPLATE_NAME = "entry.ftl";
 
     public Entry(final String name,
                  final String title,
+                 final String message,
                  final String commit,
                  final Long timestamp,
                  final File content) {
-        super(ContentType.ENTRY, name, title, commit, timestamp, content);
+        super(ContentType.ENTRY, name, title, message, commit, timestamp, content);
     }
 
     @Override
     public final String getTemplateName() {
-        return TEMPLATE_NAME;
+        return ENTRY_TEMPLATE_NAME;
     }
 
     /**
-     * Returns the entry date formatted using the RFC3339 Atom/RSS
-     * timestamp format.
+     * Returns the entry date formatted using the RFC3339 Atom/RSS timestamp format.
      */
     public final String getAtomFeedDateFormatted() {
         final Date date = getDate();
-        return (date != null) ?
-            AtomRss.AtomRssRFC3339DateFormat.format(date) :
-            null;
+        return (date != null) ? AtomRss.AtomRssRFC3339DateFormat.format(date) : null;
     }
 
     /**
@@ -65,9 +75,32 @@ public final class Entry extends MarkdownContent {
      */
     public final String getSitemapDateFormatted() {
         final Date date = getDate();
-        return (date != null) ?
-            Sitemap.SitemapDateFormat.format(date) :
-            null;
+        return (date != null) ? Sitemap.SitemapDateFormat.format(date) : null;
+    }
+
+    /**
+     * Returns an immutable list of all tags in the entry.  Will return an
+     * empty list when no tags are present; guaranteed not to return null.
+     */
+    @Nonnull
+    public final List<EntryTag> getTags() {
+        final ImmutableList.Builder<EntryTag> tags = ImmutableList.builder();
+        final String content = getContent();
+        if (content != null) {
+            // Find all tag comments/directives in the content.
+            final Matcher m = TAGS_REGEX.matcher(content);
+            while (m.find()) {
+                final String tagGroup = m.group(1);
+                // Split each tag set on a comma, and add all to the resulting list; the splitter takes care of
+                // empty strings and stripping off whitespace.
+                final List<String> tagList = COMMA_SPLITTER.splitToList(tagGroup);
+                // Convert the list of extracted tags into their corresponding entry tag objects that allow things
+                // like URL encoding.
+                final List<EntryTag> entryTags = tagList.stream().map(EntryTag::new).collect(Collectors.toList());
+                tags.addAll(entryTags);
+            }
+        }
+        return tags.build();
     }
 
 }

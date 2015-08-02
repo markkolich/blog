@@ -34,8 +34,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public final class PagedContent<T extends MarkdownContent>
-    extends GsonAppendableBlogEntity {
+public final class PagedContent<T extends MarkdownContent> extends GsonAppendableBlogEntity {
 
     @SerializedName("content")
     private final List<T> content_;

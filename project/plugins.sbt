@@ -1,5 +1,7 @@
 addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.9.1")
 
+addSbtPlugin("com.github.gseitz" % "sbt-protobuf" % "0.4.0")
+
 addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.2.2")
 
 // Add dependencies for JS and CSS "compilation".

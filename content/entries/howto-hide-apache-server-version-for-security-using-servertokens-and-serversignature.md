@@ -20,3 +20,5 @@ Oh, if you want to read up on why most admins hate the Apache web-server, take a
 <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/howto-hide-apache-server-version-for-security-using-servertokens-and-serversignature/http_response.png">
 
 Cheers.
+
+<!--- tags: apache, security -->

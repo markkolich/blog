@@ -6,3 +6,5 @@ In 2004, I prepared a technical research paper on [SCSI (Small Computer System I
 Here's the abstract from my technical research paper:
 
 "Since 1981, SCSI has been one of the most powerful and reliable peripheral technologies used in high-performance computing environments. Five years after its conception, A.N.S.I. (American National Standards Institute) approved the SCSI interface as an official industry connectivity standard. Today, SCSI technology continues to grow and is used across the world in the most demanding computing environments. While newer storage technologies, such as Fibre Channel, continue to outperform and outsell SCSI storage systems, the demand for fast and reliable SCSI products remains in the marketplace. This paper is intended to provide a fairly in-depth exploration of SCSI technologies, and the applications behind a SCSI infrastructure."
+
+<!--- tags: scsi, whitepaper -->

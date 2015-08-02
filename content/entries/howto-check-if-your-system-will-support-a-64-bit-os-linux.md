@@ -22,3 +22,5 @@ In the Linux kernel, this is defined in `include/asm-x86_64/cpufeature.h`:
 ```
 
 Cheers.
+
+<!--- tags: linux -->

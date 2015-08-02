@@ -184,3 +184,5 @@ Inside of postHandle() my MobileInterceptor retrieves the resolved view name, th
 Putting everything together, the `<mvc:interceptor>` XML configuration tells Spring to call my interceptor bean whenever it encounters a specific path.  In this case, I told Spring to watch for the paths /somepath and /anotherpath based on the <mvc:mapping>'s you see above in the XML.  When Spring handles a request for /somepath or /anotherpath it will call the interceptor at the appropriate point in the chain based on the methods overridden by my bean.  In this case, I've overridden the postHandle() method such that Spring will call my interceptor bean to do what it needs to do once the view has been resolved and it's ready to render up some content.  Of course, you could also override preHandle() if you needed the interceptor to be called before a view is selected, and so on.  Again, take a peek at HandlerInterceptorAdapter for all of the gory details.
 
 Enjoy!
+
+<!--- tags: spring, java, http -->

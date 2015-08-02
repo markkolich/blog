@@ -27,6 +27,8 @@
 import sbt._
 import sbt.Keys._
 
+import sbtprotobuf.{ProtobufPlugin=>PB}
+
 import de.johoop.findbugs4sbt.FindBugs._
 import de.johoop.findbugs4sbt.ReportType
 
@@ -42,8 +44,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "2.9-M2" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "2.9-M2" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "3.1.1" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "3.1.1" % "compile"
 
   // Jetty 9 stable, version 9.2.10.v20150310
   private val jettyVersion = "9.2.10.v20150310"
@@ -66,6 +68,8 @@ object Dependencies {
 
   private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.17" % "compile"
 
+  private val protobuf = "com.google.protobuf" % "protobuf-java" % "2.5.0" % "compile"
+
   val deps = Seq(
     kolichCommon,
     curacao, curacaoGson,
@@ -74,7 +78,8 @@ object Dependencies {
     jGit, gitblit,
     pegdown,
     freemarker, htmlCompressor,
-    asyncHttpClient
+    asyncHttpClient,
+    protobuf
   )
 
 }
@@ -334,7 +339,16 @@ object Blog extends Build {
           file("dist") / defaultPath.getName
         }
       ) ++
-      PackageJs.settings ++ PackageCss.settings
+      // Packager settings
+      PackageJs.settings ++
+      PackageCss.settings ++
+      // Protobuf plugin settings
+      PB.protobufSettings ++ Seq(
+        // Overrides the location of Protobuf generated Java classes to src/main/generated
+        javaSource in PB.protobufConfig <<= (sourceDirectory in Compile)(_ / "generated"),
+        // Add src/main/generated to the classpath of the project
+        unmanagedSourceDirectories in Compile <++= baseDirectory(new File(_, "src/main/generated"))(Seq(_))
+      )
   )
 
 }

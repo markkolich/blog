@@ -13,3 +13,5 @@ RewriteRule ^/(.*)$ - [G,L]
 Note the `[G,L]` on the RewriteRule directive.  `G`, meaning Gone, and `L` meaning the last rule in the chain to apply to this request.  In this case, any request for a resource that doesn't end in .html (or .htm) and isn't aimed at the server root, I immediately respond with an `HTTP 410 Gone`.  I'm handling HTML pages a little differently.  Requests for an actual blog entry itself (a resource that ends in `.html`), are caught an handled a little more gracefully.  I haven't yet decided when to phase out this graceful catch.
 
 In any event, let's see if an HTTP 410 gets the attention of those pesky crawlers and RSS feed readers.
+
+<!--- tags: http -->

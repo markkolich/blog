@@ -27,3 +27,5 @@ Wikipedia has a lot of good information on selecting a good password.  [Password
 * Avoid any password based on repetition, dictionary words, letter or number sequences, usernames, relative or pet names, or biographical information (eg, dates, ID numbers, ancestors names or dates, ...).
 
 Cheers.
+
+<!--- tags: security, bash -->

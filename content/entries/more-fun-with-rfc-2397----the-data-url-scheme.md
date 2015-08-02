@@ -188,3 +188,5 @@ final String dataUri = String.format(DATA_URI_SCHEME,
 ```
 
 Now that you've assembled a valid data URI String, it's simple to attach it to a JSON object and return it to the caller.
+
+<!--- tags: java, rfc2397, http -->

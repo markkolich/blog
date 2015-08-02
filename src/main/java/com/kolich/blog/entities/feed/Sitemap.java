@@ -40,12 +40,10 @@ public final class Sitemap extends AbstractFeedEntity {
 
     public static class SitemapDateFormat {
 
-        private static final String SITEMAP_DATE_FORMAT_STRING =
-            "yyyy-MM-dd";
+        private static final String SITEMAP_DATE_FORMAT_STRING = "yyyy-MM-dd";
 
         public static final DateFormat getNewInstance() {
-            final DateFormat df = new SimpleDateFormat(
-                SITEMAP_DATE_FORMAT_STRING);
+            final DateFormat df = new SimpleDateFormat(SITEMAP_DATE_FORMAT_STRING);
             df.setTimeZone(getTimeZone("GMT-0"));
             return df;
         }

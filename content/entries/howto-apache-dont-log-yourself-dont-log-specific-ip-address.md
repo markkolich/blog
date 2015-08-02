@@ -25,3 +25,5 @@ CustomLog logs/mark.koli.ch-access_log combined env=!dontlog
 You can use `SetEnvIfNoCase User-Agent` if you want to stop logging requests from specific `User-Agent`'s.  However, I would recommend that you avoid using this feature because it is extremely easy to forge/fake the `User-Agent` header of an HTTP request.  If a hacker tries to probe or attack your site disguised as the "GoogleBot", and your Apache server is configured to not log requests from clients that claim they are the "GoogleBot", you won't see the probe attacks in your log files.  In short, Apache will think the request is from the GoogleBot, when in fact, it could be a hacker or malicious user masquerading as a web-crawler.
 
 Cheers.
+
+<!--- tags: apache, security -->

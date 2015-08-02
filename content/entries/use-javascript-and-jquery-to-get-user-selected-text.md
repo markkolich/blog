@@ -72,3 +72,5 @@ $(document).ready(function(){
 ### Demo
 
 Complete [demo here](static/entries/use-javascript-and-jquery-to-get-user-selected-text/get-selected-text-javascript.html).
+
+<!--- tags: javascript -->

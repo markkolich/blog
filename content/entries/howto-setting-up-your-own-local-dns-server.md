@@ -170,3 +170,5 @@ Perfect.  Internal hosts resolve correctly, and my DNS server is forwarding all 
 Finally, with a proper DNS server up and running, I can get back to my project.
 
 Enjoy.
+
+<!--- tags: linux, dns -->

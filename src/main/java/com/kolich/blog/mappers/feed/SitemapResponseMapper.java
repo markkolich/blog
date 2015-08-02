@@ -38,8 +38,7 @@ import javax.annotation.Nonnull;
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.XML;
 
 @Mapper
-public final class SitemapResponseMapper
-    extends AbstractFeedEntityResponseMapper<Sitemap> {
+public final class SitemapResponseMapper extends AbstractFeedEntityResponseMapper<Sitemap> {
 
     private static final String SITEMAP_TEMPLATE_NAME = "feed/sitemap.ftl";
 
@@ -49,8 +48,7 @@ public final class SitemapResponseMapper
     }
 
     @Override
-    public final Utf8TextEntity renderView(@Nonnull final Sitemap sm)
-        throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final Sitemap sm) throws Exception {
         final Template tp = getTemplate(SITEMAP_TEMPLATE_NAME);
         return buildEntity(tp, getDataMap(tp, sm), XML);
     }

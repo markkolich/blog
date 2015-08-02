@@ -44,17 +44,18 @@ public abstract class MarkdownContent {
 
     private static final Logger logger__ = getLogger(MarkdownContent.class);
 
-    private static final String CLASS_SN =
-        MarkdownContent.class.getSimpleName();
+    private static final String CLASS_SN = MarkdownContent.class.getSimpleName();
 
-    public static enum ContentType {
-        INDEX, ENTRY, PAGE
+    public enum ContentType {
+        INDEX, ENTRY, PAGE, TAGGED
     }
 
     public static final class BlogContentDateFormat {
 
-        private static final String GIT_DATE_FORMAT_STRING =
-            "EEE dd MMM yyyy HH:mm:ss Z";
+        /**
+         * The default date format string used in Git.
+         */
+        private static final String GIT_DATE_FORMAT_STRING = "EEE dd MMM yyyy HH:mm:ss Z";
 
         public static final DateFormat getNewInstance() {
             final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
@@ -77,6 +78,9 @@ public abstract class MarkdownContent {
     @SerializedName("title")
     private final String title_;
 
+    @SerializedName("message")
+    private final String message_;
+
     @SerializedName("commit")
     private final String commit_;
 
@@ -89,12 +93,14 @@ public abstract class MarkdownContent {
     public MarkdownContent(@Nonnull final ContentType type,
                            @Nullable final String name,
                            @Nullable final String title,
+                           @Nullable final String message,
                            @Nullable final String commit,
                            @Nullable final Long timestamp,
                            @Nullable final File content) {
         type_ = checkNotNull(type, "Markdown content type cannot be null.");
         name_ = name;
         title_ = title;
+        message_ = message;
         commit_ = commit;
         date_ = (timestamp != null) ? new Date(timestamp) : null;
         content_ = (content != null) ? new MarkdownFile(content) : null;
@@ -103,9 +109,10 @@ public abstract class MarkdownContent {
     public MarkdownContent(@Nonnull final ContentType type,
                            @Nullable final String name,
                            @Nullable final String title,
+                           @Nullable final String message,
                            @Nullable final String commit,
                            @Nullable final Long timestamp) {
-        this(type, name, title, commit, timestamp, null);
+        this(type, name, title, message, commit, timestamp, null);
     }
 
     @Nonnull
@@ -121,6 +128,11 @@ public abstract class MarkdownContent {
     @Nullable
     public final String getTitle() {
         return title_;
+    }
+
+    @Nullable
+    public final String getMessage() {
+        return message_;
     }
 
     @Nullable
@@ -170,8 +182,8 @@ public abstract class MarkdownContent {
 
     @Override
     public final String toString() {
-        return String.format("%s(name=\"%s\", title=\"%s\", file=\"%s\")",
-            CLASS_SN, name_, title_, content_);
+        return String.format("%s(name=\"%s\", title=\"%s\", file=\"%s\", commit=\"%s\")",
+            CLASS_SN, name_, title_, content_, commit_);
     }
 
     public abstract String getTemplateName();

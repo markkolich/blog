@@ -84,3 +84,5 @@ Tested and works on the following printers:
 Power cycle the printer to return the message to the "default".
 
 Be safe you crazy kids.
+
+<!--- tags: hp, php, printers -->

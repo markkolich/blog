@@ -41,3 +41,5 @@ Connection: close
 ```
 
 Yay for HTTP.
+
+<!--- tags: apache, http -->

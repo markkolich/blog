@@ -12,6 +12,7 @@ target
 bin
 config
 
+src/main/generated
 src/main/webapp/WEB-INF/work
 
 content/static/js/build

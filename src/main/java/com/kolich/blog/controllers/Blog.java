@@ -31,18 +31,23 @@ import com.kolich.blog.components.StaticFileResolver;
 import com.kolich.blog.components.TwitterFeedHttpClient;
 import com.kolich.blog.components.TwitterFeedHttpClient.TwitterFeed;
 import com.kolich.blog.components.cache.EntryCache;
+import com.kolich.blog.components.cache.EntryShadowCache;
+import com.kolich.blog.components.cache.EntryTagCache;
 import com.kolich.blog.components.cache.PageCache;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.Page;
+import com.kolich.blog.entities.Tagged;
 import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.blog.entities.txt.RobotsTxt;
+import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.curacao.annotations.Controller;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.RequestMapping;
+import com.kolich.curacao.annotations.Required;
 import com.kolich.curacao.annotations.parameters.Path;
 import com.kolich.curacao.annotations.parameters.Query;
 
@@ -53,27 +58,30 @@ import java.util.concurrent.Future;
 @Controller
 public final class Blog {
 
-    private static final int entryLimit__ =
-        ApplicationConfig.getHomepageEntryLimit();
-    private static final int entryLimitLoadMore__ =
-        ApplicationConfig.getLoadMoreEntryLimit();
-    private static final int entryLimitAtomFeed__ =
-        ApplicationConfig.getAtomFeedEntryLimit();
+    private static final int entryLimit__ = ApplicationConfig.getHomepageEntryLimit();
+    private static final int entryLimitLoadMore__ = ApplicationConfig.getLoadMoreEntryLimit();
+    private static final int entryLimitAtomFeed__ = ApplicationConfig.getAtomFeedEntryLimit();
 
     private static final String PAGE_ABOUT = "about";
 
     private final EntryCache entries_;
+    private final EntryTagCache tagCache_;
+    private final EntryShadowCache shadowCache_;
     private final PageCache pages_;
 
     private final TwitterFeedHttpClient twitterClient_;
     private final StaticFileResolver staticResolver_;
 
     @Injectable
-    public Blog(final EntryCache entries,
-                final PageCache pages,
-                final TwitterFeedHttpClient twitterClient,
-                final StaticFileResolver staticResolver) {
+    public Blog(@Required final EntryCache entries,
+                @Required final EntryTagCache tagCache,
+                @Required final EntryShadowCache shadowCache,
+                @Required final PageCache pages,
+                @Required final TwitterFeedHttpClient twitterClient,
+                @Required final StaticFileResolver staticResolver) {
         entries_ = entries;
+        tagCache_ = tagCache;
+        shadowCache_ = shadowCache;
         pages_ = pages;
         twitterClient_ = twitterClient;
         staticResolver_ = staticResolver;
@@ -83,7 +91,7 @@ public final class Blog {
 
     @RequestMapping("^\\/$")
     public final Index index() {
-        return new Index(entries_.getEntries(entryLimit__));
+        return new Index(entries_.getAll(entryLimit__));
     }
     @RequestMapping("^\\/about$")
     public final Page about() {
@@ -94,7 +102,17 @@ public final class Blog {
 
     @RequestMapping("^\\/((?!about$)(?<name>[a-zA-Z_0-9\\-]+))$")
     public final Entry entry(@Path("name") final String name) {
-        return entries_.getEntry(name);
+        return entries_.get(name);
+    }
+
+    @RequestMapping("^\\/tagged\\/(?<tag>.+)$")
+    public final Tagged tagged(@Path("tag") final String tag) {
+        final PagedContent<Entry> tagged = tagCache_.getAllTagged(tag);
+        // If no content was found with the given tag, bail early; this results in a clean 404 Not Found page.
+        if (tagged.getContent().isEmpty()) {
+            throw new ContentNotFoundException("Found no content tagged with: " + tag);
+        }
+        return new Tagged(tag, tagged);
     }
 
     // Static resources
@@ -127,7 +145,7 @@ public final class Blog {
 
     @RequestMapping("^\\/api\\/blog\\.json$")
     public final PagedContent<Entry> jsonFeed(@Query("before") final String commit) {
-        return entries_.getEntriesBefore(commit, entryLimitLoadMore__);
+        return shadowCache_.getAllBefore(commit, entryLimitLoadMore__);
     }
     @RequestMapping("^\\/api\\/tweets\\.json$")
     public final Future<TwitterFeed> tweets() throws IOException {

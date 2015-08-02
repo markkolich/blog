@@ -104,3 +104,5 @@ e~fZ@<}2'2a|)TGV
 The ultra paranoid should take a look at [The Diceware Passphrase Home Page](http://world.std.com/~reinhold/diceware.html) for more information on actually using one or more dice to generate a password (a.k.a., passphrase).  From the Diceware web-site:  "[Diceware is a method for picking passphrases](http://en.wikipedia.org/wiki/Diceware) that uses dice to select words at random from a special list called the [Diceware Word List](http://zzzen.com/dialdice.html). Each word in the list is preceded by a five digit number. All the digits are between one and six, allowing you to use the outcomes of five dice rolls to select one unique word from the list."
 
 Cheers.
+
+<!--- tags: security, bash -->

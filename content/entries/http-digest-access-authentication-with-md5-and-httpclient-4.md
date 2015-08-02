@@ -47,3 +47,5 @@ if(authResponse.getStatusLine().getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
 ```
 
 Enjoy.
+
+<!--- tags: java, security, http, apache -->

@@ -37,3 +37,5 @@ So, my Linux box uses about 240 W of power on average.  Not bad &mdash; no where
 ## Conclusion
 
 Knowing the wattage is critical because I can now make a more informed purchase.  The unit I actually purchased is an [APC BR1500LCD 1500VA @ 865 Watts](http://www.amazon.com/gp/product/B000NDA5E0).  From what I can tell, the **BR1500LCD** will be more than enough to power my HP xw8200 Linux server for almost 30-minutes at an idle 240 W!
+
+<!--- tags: backup -->

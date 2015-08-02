@@ -41,8 +41,7 @@ import static com.google.common.net.HttpHeaders.IF_NONE_MATCH;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED;
 
-public abstract class AbstractETagAwareResponseMapper<T>
-    extends AbstractDevModeSafeResponseMapper<T> {
+public abstract class AbstractETagAwareResponseMapper<T> extends AbstractDevModeSafeResponseMapper<T> {
 
     /**
      * We're using the "strong ETag" header format because the ETag we
@@ -51,8 +50,7 @@ public abstract class AbstractETagAwareResponseMapper<T>
      */
     private static final String STRONG_ETAG_HEADER_FORMAT = "\"%s\"";
 
-    private static final CuracaoEntity NOT_MODIFIED_ENTITY =
-        new StatusCodeOnlyCuracaoEntity(SC_NOT_MODIFIED);
+    private static final CuracaoEntity NOT_MODIFIED_ENTITY = new StatusCodeOnlyCuracaoEntity(SC_NOT_MODIFIED);
 
     @Override
     public final void renderSafe(final AsyncContext context,
@@ -83,8 +81,7 @@ public abstract class AbstractETagAwareResponseMapper<T>
         throws Exception;
 
     private static String getIfNoneMatchFromRequest(final AsyncContext context) {
-        final HttpServletRequest request = (HttpServletRequest)context
-            .getRequest();
+        final HttpServletRequest request = (HttpServletRequest)context.getRequest();
         return request.getHeader(IF_NONE_MATCH);
     }
 

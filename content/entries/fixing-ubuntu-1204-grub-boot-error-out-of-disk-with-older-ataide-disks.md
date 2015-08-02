@@ -31,3 +31,5 @@ And, run **update-grub** to re-generate your boot configuration with the correct
 Reboot, and enjoy.
 
 Oh, and by the way, updating **/etc/default/grub** will naturally persist your desired configuration across kernel updates -- when a new kernel is installed, your Grub will be updated with the right pre-load ATA module setting.  In other words, you don't have to continuously remember to update /etc/default/grub every time a new kernel is installed.
+
+<!--- tags: ubuntu, linux -->

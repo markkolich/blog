@@ -135,3 +135,5 @@ You can, of course, implement your own logic to "pull apart" a custom header val
 In the upcoming Part 3 of this series, I'll cover the creation and serving of versioned response objects using Curacao.
   
 Stay thirsty, my friends.
+
+<!--- tags: curacao, java, servlet -->

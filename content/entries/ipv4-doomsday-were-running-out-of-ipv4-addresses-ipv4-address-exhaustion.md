@@ -76,3 +76,5 @@ Here are a few interesting takeaways:
 5. I don't see why companies like Apple, Ford Motor Company, HP, IBM, Haliburton, etc. need their own blocks.  Using NAT for most internal IT operations should be sufficient; there's no need to hold onto the glory days of excessively hogging IPv4 blocks.
 
 Bottom line, we're running out of IPv4 addresses.  However, I don't think the problem is directly due to the number of new countries or devices coming online.  Rather I think the core of the IPv4 exhaustion issue is directly related to IPv4 address hogs: colleges, businesses, or organizations that hold onto large blocks of Class A IP addresses simply because they can.  Instead of pushing some cumbersome IPv4 replacement (*ahem* [IPv6 this means you](http://en.wikipedia.org/wiki/IPv6)), why don't we work together to encourage the current IPv4 holders to reevaluate, and possibly release, unused blocks of addresses?
+
+<!--- tags: ipv4, ipv6 -->

@@ -22,3 +22,5 @@ $(document).ready(function($) {
 ```
 
 Cheers.
+
+<!--- tags: javascript, jquery -->

@@ -75,3 +75,5 @@ public class Dog implements Serializable {
 ```
 
 Each of the objects you wish to save to disk will have to implement java.io.Serializable.  This will let you convert a Java object into something that can be written out to disk.  From there, you will have to write some type of queue or stack control mechanism that will know when, from where, and how to page these objects in and out of the disk.
+
+<!--- tags: java -->

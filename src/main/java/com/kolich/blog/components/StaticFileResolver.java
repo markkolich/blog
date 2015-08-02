@@ -50,11 +50,9 @@ public final class StaticFileResolver {
         final File file = new File(git_.getContentRoot(),
             Paths.get(uri).toString());
         if(!file.exists()) {
-            throw new ContentNotFoundException("Could not find static " +
-                "resource file: " + file.getAbsolutePath());
+            throw new ContentNotFoundException("Could not find static resource file: " + file.getAbsolutePath());
         } else if(file.isDirectory()) {
-            throw new DirectoryListingException("Will not list contents " +
-                "of directory: " + file.getAbsolutePath());
+            throw new DirectoryListingException("Will not list contents of directory: " + file.getAbsolutePath());
         }
         return file;
     }

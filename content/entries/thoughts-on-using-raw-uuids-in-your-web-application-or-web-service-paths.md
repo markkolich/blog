@@ -82,3 +82,5 @@ Yay!  Note that on the first call to `findFirstIn`, a `None` (no match) was retu
 So, in the end, not a huge deal but it's good to keep in mind that when dealing with UUID's you cannot rely on `java.util.UUID` alone to parse and verify an incoming identifier.  In the end, you've got to use your own UUID verification regular expression.  Or, better yet, use the verification mechanisms provided by your web-service or web-application framework (if one exists) to verify the length of incoming UUID's.
 
 Enjoy.
+
+<!--- tags: scala, java, security -->

@@ -17,3 +17,5 @@ Once started, Cappuccino serves up static files in the current directory on port
 ### On GitHub
 
 Cappuccino is available on GitHub https://github.com/markkolich/cappuccino.
+
+<!--- tags: restlet -->

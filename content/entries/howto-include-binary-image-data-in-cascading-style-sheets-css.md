@@ -114,3 +114,5 @@ Remember, you can pretty much use the data URI scheme anywhere in a browser that
 Even though base-64 encoded images could use up to 33% more bandwidth, many mobile portal operators have decided that the extra bandwidth usage is a small price to pay to save a few costly connection cycles on a slow wireless network.  Given the poor latency of wireless cell networks, sending several extra bytes in a single transfer is often faster than sending small chunks of bytes across multiple transfers.
 
 Enjoy.
+
+<!--- tags: css, base64 -->

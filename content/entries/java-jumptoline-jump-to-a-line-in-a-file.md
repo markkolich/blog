@@ -59,3 +59,5 @@ try {
 ```
 
 `JumpToLine` is now formally part of my `kolich-common` Java library [available on Github](https://github.com/markkolich/kolich-common).
+
+<!--- tags: java -->

@@ -31,3 +31,5 @@ function addEngine(xml,icon,provider,cat) {
 The call to `window.external.AddSearchProvider()` is for Internet Explorer.  The call to `window.sidebar.addSearchEngine()` is for all other browsers.
 
 Special thanks to Network Solutions for featuring my WHOIS browser plugin on their [Network Solutions Labs homepage](http://www.networksolutions.com/labs/index.jsp)!
+
+<!--- tags: whois, network solutions -->

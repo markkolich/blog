@@ -44,3 +44,5 @@ res1: Seq[java.io.File] = ArrayBuffer(./.gitattributes,...
 ```
 
 Cheers.
+
+<!--- tags: scala, sbt -->

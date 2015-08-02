@@ -49,3 +49,5 @@ exit;
 This seems to work nicely, but is quite kludgy.
 
 Better to use `RedirectMatch` instead.
+
+<!--- tags: apache, http -->

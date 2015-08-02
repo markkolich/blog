@@ -107,3 +107,5 @@ Yeah, probably not a bad idea.
 It's just that I have 4 separate development environments and I didn't really feel comfortable copying my [GitHub SSH key](https://help.github.com/articles/generating-ssh-keys#platform-all) to multiple computers, some of which are property of my employer.  That said, I'd rather just be prompted for my password if pushing to a "personal" GitHub repository -- which frankly, really isn't all that often.
 
 But yes, most folks would create a new SSH key (one per computer) then add the public side of those keys to GitHub.  I just found it easier to use a password.
+
+<!--- tags: git, http -->

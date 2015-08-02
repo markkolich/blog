@@ -15,3 +15,5 @@ Using this method, here's what the `Content-Disposition` header looks like accor
 <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/apache-setting-the-content-disposition-header-with-mod-rewrite/httpfox-snapshot-cappuccino-kolich.jpg" width="400">
 
 Cheers.
+
+<!--- tags: apache, httpd, mod_rewrite -->

@@ -24,3 +24,5 @@ I thought that MySQL might "wrap the value" around back to zero if you try to UP
 It seems a little presumptuous, but I guess Hibernate operates on the assumption that a real database would never reach this limit.
 
 Food for thought...
+
+<!--- tags: mysql -->

@@ -13,6 +13,15 @@
 
         <article id="${commit}">${content}</article>
 
+        <#if tags?has_content>
+            <p class="tags">
+                <i class="fa fa-tags"></i>
+            <#list tags as t>
+                <span class="label label-default"><a href="${context}tagged/${t.urlEncodedText}">${t.displayText}</a></span>
+            </#list>
+            </p>
+        </#if>
+
     </div>
     <!-- /article column -->
 

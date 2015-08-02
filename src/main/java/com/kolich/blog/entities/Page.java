@@ -30,19 +30,20 @@ import java.io.File;
 
 public final class Page extends MarkdownContent {
 
-    private static final String TEMPLATE_NAME = "page.ftl";
+    private static final String PAGE_TEMPLATE_NAME = "page.ftl";
 
     public Page(final String name,
                 final String title,
+                final String message,
                 final String commit,
                 final Long timestamp,
                 final File content) {
-        super(ContentType.PAGE, name, title, commit, timestamp, content);
+        super(ContentType.PAGE, name, title, message, commit, timestamp, content);
     }
 
     @Override
     public final String getTemplateName() {
-        return TEMPLATE_NAME;
+        return PAGE_TEMPLATE_NAME;
     }
 
 }

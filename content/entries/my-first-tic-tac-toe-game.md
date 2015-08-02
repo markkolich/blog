@@ -3,3 +3,5 @@ Every once in a while I'll dig into my code archive and stumble across a total g
 <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/my-first-tic-tac-toe-game/tic-tac-toe2.png" width="500">
 
 Oh, and [here's the source](static/entries/my-first-tic-tac-toe-game/tic-tac-toe-everything.zip) as if anyone cares.
+
+<!--- tags: c, games -->

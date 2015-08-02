@@ -41,3 +41,5 @@ Users can instantly snag permalinks for any file or folder in Onyx.  Onyx permal
 <img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/onyx-my-custom-solution-to-the-digital-clutter-problem/onyx-permalink-share-thumb-400x228.jpg" width="400">
 
 Enjoy.
+
+<!--- tags: onyx, php, projects -->

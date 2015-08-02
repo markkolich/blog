@@ -118,7 +118,7 @@ new ReentrantReadWriteEntityLock<T>(foo) {
 
 ### An Example
 
-The [Havalo project](https://github.com/markkolich/havalo) makes extensive real-world use of this locking mechanism, as a way to manage shared entities that may be concurrently accessed by any number of threads.  Havalo is a lightweight key-value store written in Java.  Internally, it maintains a collection of repositories and objects, and uses *Bolt* to conditionally gate access to these objects in local memory.
+The [Havalo-KVS project](https://github.com/markkolich/havalo-kvs) makes extensive real-world use of this locking mechanism, as a way to manage shared entities that may be concurrently accessed by any number of threads.  Havalo-KVS is a lightweight key-value store written in Java.  Internally, it maintains a collection of repositories and objects, and uses *Bolt* to conditionally gate access to these objects in local memory.
 
 ### GitHub
 
@@ -127,3 +127,5 @@ Bolt is free, and open source, on GitHub:
 https://github.com/markkolich/kolich-bolt
 
 Pull requests welcome.
+
+<!--- tags: bolt, java -->

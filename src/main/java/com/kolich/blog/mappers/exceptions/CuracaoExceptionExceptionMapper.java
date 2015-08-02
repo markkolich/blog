@@ -45,17 +45,13 @@ import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Mapper
-public final class CuracaoExceptionExceptionMapper
-    extends AbstractFreeMarkerAwareResponseMapper<CuracaoException> {
+public final class CuracaoExceptionExceptionMapper extends AbstractFreeMarkerAwareResponseMapper<CuracaoException> {
 
-    private static final Logger logger__ =
-        getLogger(CuracaoExceptionExceptionMapper.class);
+    private static final Logger logger__ = getLogger(CuracaoExceptionExceptionMapper.class);
 
-    private static final String ERROR_TEMPLATE_FREEMARKER_PATH =
-        "errors/%s.ftl";
+    private static final String ERROR_TEMPLATE_FREEMARKER_PATH = "errors/%s.ftl";
 
-    private static final int DEFAULT_ERROR_STATUS_CODE =
-        SC_INTERNAL_SERVER_ERROR;
+    private static final int DEFAULT_ERROR_STATUS_CODE = SC_INTERNAL_SERVER_ERROR;
 
     @Injectable
     public CuracaoExceptionExceptionMapper(final FreeMarkerConfig config) {
@@ -72,40 +68,34 @@ public final class CuracaoExceptionExceptionMapper
         // that with the error response.
         if(e instanceof CuracaoException.WithEntity) {
             final CuracaoEntity entity;
-            if((entity = ((CuracaoException.WithEntity)e).getEntity())
-                != null) {
+            if((entity = ((CuracaoException.WithEntity)e).getEntity()) != null) {
                 status = entity.getStatus();
             }
         }
-        // Attempt to load the error page template associated with the resulting
-        // status code, if one exists.  The template may not exist, in which
-        // case we fall back to the default to render a generic 500 error page.
+        // Attempt to load the error page template associated with the resulting status code, if one exists.
+        // The template may not exist, in which case we fall back to the default to render a generic 500
+        // error page.
         Template tp = null;
         try {
             tp = getErrorTemplateForStatus(status);
         } catch (Exception f) {
-            // Loading the error template for the actual status code failed,
-            // so let's load the default error template which should, in theory,
-            // always exist.
-            logger__.warn("Failed to load FreeMarker error page " +
-                "template for HTTP status code: " + status, f);
-            // Use default!  This ~should~ not fail given that the 500 error
-            // page template must exist... if it doesn't then something else
-            // is wrong.
+            // Loading the error template for the actual status code failed, so let's load the default error
+            // template which should, in theory, always exist.
+            logger__.warn("Failed to load FreeMarker error page template for HTTP status code: " + status, f);
+            // Use default!  This ~should~ not fail given that the 500 error page template must exist... if it
+            // doesn't then something else is wrong.
             tp = getErrorTemplateForStatus(SC_INTERNAL_SERVER_ERROR);
             status = SC_INTERNAL_SERVER_ERROR;
         }
         return buildEntity(tp, getDataMap(tp), HTML, status);
     }
 
-    private final Template getErrorTemplateForStatus(final int status)
-        throws IOException {
+    private final Template getErrorTemplateForStatus(final int status) throws IOException {
         return getTemplate(getTemplateName(status));
     }
 
     private final String getTemplateName(final int status) {
-        return String.format(ERROR_TEMPLATE_FREEMARKER_PATH,
-            Integer.toString(status));
+        return String.format(ERROR_TEMPLATE_FREEMARKER_PATH, Integer.toString(status));
     }
 
     @Override

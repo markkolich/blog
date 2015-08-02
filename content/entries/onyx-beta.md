@@ -13,3 +13,5 @@ For the curious software engineer, Onyx is written entirely in PHP running on Ap
 If you'd like to read a little more about my Onyx project, [you might find this post interesting](onyx-my-custom-solution-to-the-digital-clutter-problem).
 
 Cheers.
+
+<!--- tags: onyx, php, projects -->

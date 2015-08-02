@@ -27,8 +27,10 @@
 package com.kolich.blog.mappers.markdown;
 
 import com.kolich.blog.components.FreeMarkerConfig;
+import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.Index;
 import com.kolich.blog.entities.MarkdownContent;
+import com.kolich.blog.entities.Tagged;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
@@ -67,18 +69,27 @@ public final class MarkdownDrivenContentResponseMapper
         map.put(TEMPLATE_ATTR_COMMIT, (hash == null) ? md.getCommit() : hash);
         final Object date = tp.getCustomAttribute(TEMPLATE_ATTR_DATE);
         map.put(TEMPLATE_ATTR_DATE, (date == null) ? md.getDateFormatted() : date);
+
         // Attach the Markdown content converted to a String to the data map.
         final String content;
-        if((content = md.getContent()) != null) {
+        if ((content = md.getContent()) != null) {
             map.put(TEMPLATE_ATTR_CONTENT, content);
         }
-        // Only Index types get a list of entries and a remaining count
-        // attached to their data map.
-        if(md instanceof Index) {
+
+        // Vary template ops based on the underlying type of markdown content.
+        if (md instanceof Index) {
             final Index idx = (Index)md;
             map.put(TEMPLATE_ATTR_ENTRIES, idx.getEntries());
             map.put(TEMPLATE_ATTR_ENTRIES_REMAINING, idx.getRemaining());
+        } else if (md instanceof Entry) {
+            final Entry e = (Entry)md;
+            map.put(TEMPLATE_ATTR_TAGS, e.getTags());
+        } else if (md instanceof Tagged) {
+            final Tagged tagged = (Tagged)md;
+            map.put(TEMPLATE_ATTR_TAG, tagged.getTagDisplayText());
+            map.put(TEMPLATE_ATTR_ENTRIES, tagged.getEntries());
         }
+
         return map;
     }
 

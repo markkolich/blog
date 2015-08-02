@@ -37,3 +37,5 @@ So how exactly am I supposed to load this trigger?  Well as far as I can tell, a
 2. Log into the database as root/admin and load the trigger on behalf of the normal user.  If I wasn't the owner of this database server, this would probably involve asking my database administrator to load the trigger for me.
 
 Just one of many common annoyances with MySQL.
+
+<!--- tags: mysql, security -->

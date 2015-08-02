@@ -62,3 +62,5 @@ header(LOCATION_HEADER.': '.$url);
 ```
 
 That's it.  Cheers.
+
+<!--- tags: php -->

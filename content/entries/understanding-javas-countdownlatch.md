@@ -128,3 +128,5 @@ public final class CyclicExample {
 ```
 
 Enjoy.
+
+<!--- tags: java -->

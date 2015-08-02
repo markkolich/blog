@@ -35,3 +35,5 @@ xml = xml.trim().replaceFirst("^([\\W]+)<","<");
 ```
 
 Note that calling `String.trim()` on the XML isn't good enough, because `trim()` only handles leading and trailing white space.  Once I got rid of the UTF-8 Byte-order mark, my XML parser handled the feed with no issues.
+
+<!--- tags: java, xml -->
