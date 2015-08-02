@@ -108,7 +108,8 @@ public final class Blog {
     @RequestMapping("^\\/tagged\\/(?<tag>.+)$")
     public final Tagged tagged(@Path("tag") final String tag) {
         final PagedContent<Entry> tagged = tagCache_.getAllTagged(tag);
-        // If no content was found with the given tag, bail early; this results in a clean 404 Not Found page.
+        // If no content was found with the given tag, bail early; this results in a clean
+        // 404 Not Found page.
         if (tagged.getContent().isEmpty()) {
             throw new ContentNotFoundException("Found no content tagged with: " + tag);
         }

@@ -6,9 +6,10 @@ import com.kolich.blog.ApplicationConfig;
 import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.components.cache.bus.BlogEventBus;
 import com.kolich.blog.protos.Events;
-import com.kolich.blog.protos.Events.*;
 import com.kolich.blog.protos.Events.CachedContentEvent;
 import com.kolich.blog.protos.Events.CachedContentEvent.Operation;
+import com.kolich.blog.protos.Events.EndReadCachedContentEvent;
+import com.kolich.blog.protos.Events.StartReadCachedContentEvent;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Required;
@@ -18,7 +19,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.nio.file.FileSystems;
 import java.util.List;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
@@ -48,7 +48,7 @@ public final class MarkdownCacheBuilder {
         final Git git = git_.getGit();
         final Repository repo = git_.getRepo();
         // Rebuild the new cache using the "updated" content on disk, if any.
-        final String pathToContent = FileSystems.getDefault().getPath(contentRootDir__).toString();
+        final String pathToContent = git_.getContentRoot().getName();
         // Alert any listeners that we're starting to read cached content from the Git repo.
         eventBus_.post(StartReadCachedContentEvent.newBuilder().build());
         for (final RevCommit commit : git.log().call()) {

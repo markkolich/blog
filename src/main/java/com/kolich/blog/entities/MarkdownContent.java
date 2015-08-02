@@ -153,13 +153,18 @@ public abstract class MarkdownContent {
     public final MarkdownFile getMarkdownFile() {
         return content_;
     }
+
+    /**
+     * Returns the content in its rendered HTML form.  May return null if this entity has no
+     * associated content, or HTML could not be generated for some reason.
+     */
+    @Nullable
     public final String getContent() {
         String result = null;
         try {
             result = (content_ != null) ? content_.getHtmlFromMarkdown() : null;
         } catch (Exception e) {
-            logger__.warn("Failed to generate HTML from Markdown content: " +
-                toString(), e);
+            logger__.warn("Failed to generate HTML from Markdown content: {}", toString(), e);
             result = null;
         }
         return result;

@@ -32,6 +32,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.eventbus.Subscribe;
 import com.kolich.blog.ApplicationConfig;
+import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.components.cache.bus.BlogEventBus;
 import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.feed.AtomRss;
@@ -45,15 +46,12 @@ import com.kolich.curacao.annotations.Required;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
@@ -61,12 +59,11 @@ public final class EntryCache {
 
     private static final Logger logger__ = getLogger(EntryCache.class);
 
-    private static final String contentRootDir__ = ApplicationConfig.getContentRootDir();
     private static final String entriesDir__ = ApplicationConfig.getEntriesDir();
 
-    private static final String canonicalEntriesDir_ = Paths.get(contentRootDir__, entriesDir__)
-        .toFile().getAbsolutePath();
-
+    /**
+     * The blog internal state machine; passes events between components.
+     */
     private final BlogEventBus eventBus_;
 
     /**
@@ -74,20 +71,31 @@ public final class EntryCache {
      */
     private final Map<String, Entry> cache_;
 
-    private final Set<Entry> unsortedEntities_;
+    /**
+     * A set of unsorted entries as read from the Git repo on cache build; is a temporary holding object
+     * which is read from later to build out the cache map.
+     */
+    private final Set<Entry> unsortedEntries_;
+
+    /**
+     * The full canonical path to the directory on disk that holds the entry markdown files.
+     */
+    private final String canonicalEntriesDir_;
 
     @Injectable
-    public EntryCache(@Required final BlogEventBus eventBus) {
+    public EntryCache(@Required final GitRepository repo,
+                      @Required final BlogEventBus eventBus) {
         eventBus_ = eventBus;
         eventBus_.register(this);
         cache_ = Maps.newLinkedHashMap(); // Preserves insertion order, important
-        unsortedEntities_ = Sets.newHashSet();
+        unsortedEntries_ = Sets.newLinkedHashSet();
+        canonicalEntriesDir_ = repo.getFileRelativeToContentRoot(entriesDir__).getAbsolutePath();
     }
 
     @Subscribe
     public synchronized final void onStartReadCachedContent(final Events.StartReadCachedContentEvent e) {
         logger__.debug("onStartReadCachedContent: {}", e);
-        unsortedEntities_.clear();
+        unsortedEntries_.clear();
     }
 
     @Subscribe
@@ -99,13 +107,12 @@ public final class EntryCache {
             return;
         }
         // Build out a new entry entity and fork based on the event's operation.
-        final Entry entry = new Entry(e.getName(), escapeHtml4(e.getTitle()), e.getMsg(), e.getHash(),
-            e.getTimestamp(), new File(e.getFile()));
+        final Entry entry = new Entry(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
-            unsortedEntities_.add(entry);
+            unsortedEntries_.add(entry);
         } else if (Events.CachedContentEvent.Operation.DELETE.equals(op)) {
-            unsortedEntities_.remove(entry);
+            unsortedEntries_.remove(entry);
         } else {
             logger__.trace("Received unsupported/unknown event: {}", e);
         }
@@ -123,10 +130,8 @@ public final class EntryCache {
         //      git commit
         // Sorting based on this commit date enforces that older content, recently committed to the repo, are
         // ordered correctly.
-        final List<Entry> sorted = unsortedEntities_.stream().sorted((a, b) -> b.getDate().compareTo(a.getDate()))
+        final List<Entry> sorted = unsortedEntries_.stream().sorted((a, b) -> b.getDate().compareTo(a.getDate()))
             .collect(Collectors.toList());
-        // In a thread safe manner, clear the existing cache and then add all new entries into it.  This is
-        // essentially just a synchronized "swap" in place.
         // Transform the list of entities into a proper map that maps the entity name to itself.  The key of the
         // map is the "name" of the entity, and the value is the entity.
         final Map<String, Entry> newCache = Maps.uniqueIndex(sorted, new Function<Entry, String>() {
@@ -136,10 +141,12 @@ public final class EntryCache {
                 return input.getName();
             }
         });
+        // Clear the existing cache and then add all new entries into it.  This is essentially just a
+        // synchronized "swap" in place.
         cache_.clear();
         cache_.putAll(newCache);
         // Probably not really needed, but clear out the unsorted entries set for good measure.
-        unsortedEntities_.clear();
+        unsortedEntries_.clear();
         logger__.debug("onEndReadCachedContent: END: {} -> {}", e, cache_);
         // Let any listeners know that the "entry cache" is ready and willing.
         eventBus_.post(Events.EntryCacheReadyEvent.newBuilder().build());

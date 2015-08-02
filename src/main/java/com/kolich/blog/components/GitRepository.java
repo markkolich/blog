@@ -75,7 +75,7 @@ public final class GitRepository implements CuracaoComponent {
         eventBus_ = eventBus;
         executor_ = newSingleThreadScheduledExecutor(new ThreadFactoryBuilder()
             .setDaemon(true)
-            .setNameFormat("git-puller")
+            .setNameFormat("blog-git-puller")
             .build());
         final File repoDir = getRepoDir(context);
         logger__.info("Activated repository path: {}", repoDir.getCanonicalFile());

@@ -39,6 +39,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+
 public final class Entry extends MarkdownContent {
 
     private static final Pattern TAGS_REGEX = Pattern.compile("<!---\\s*tags:\\s*(.*?)-->",
@@ -54,7 +56,16 @@ public final class Entry extends MarkdownContent {
                  final String commit,
                  final Long timestamp,
                  final File content) {
-        super(ContentType.ENTRY, name, title, message, commit, timestamp, content);
+        super(ContentType.ENTRY, name, escapeHtml4(title), message, commit, timestamp, content);
+    }
+
+    public Entry(final String name,
+                 final String title,
+                 final String message,
+                 final String commit,
+                 final Long timestamp,
+                 final String content) {
+        this(name, title, message, commit, timestamp, new File(content));
     }
 
     @Override
@@ -79,15 +90,15 @@ public final class Entry extends MarkdownContent {
     }
 
     /**
-     * Returns an immutable list of all tags in the entry.  Will return an
-     * empty list when no tags are present; guaranteed not to return null.
+     * Returns an immutable list of all tags in the entry.  Will return an empty list when no tags
+     * are present; guaranteed not to return null.
      */
     @Nonnull
     public final List<EntryTag> getTags() {
         final ImmutableList.Builder<EntryTag> tags = ImmutableList.builder();
-        final String content = getContent();
+        final String content = getContent(); // Converts the entry Markdown to HTML
         if (content != null) {
-            // Find all tag comments/directives in the content.
+            // Find all tag comments/directives in the markdown content.
             final Matcher m = TAGS_REGEX.matcher(content);
             while (m.find()) {
                 final String tagGroup = m.group(1);

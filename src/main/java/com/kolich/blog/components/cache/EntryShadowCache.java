@@ -55,6 +55,9 @@ public final class EntryShadowCache {
      */
     private final EntryCache entryCache_;
 
+    /**
+     * The blog internal state machine; passes events between components.
+     */
     private final BlogEventBus eventBus_;
 
     /**

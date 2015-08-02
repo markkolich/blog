@@ -10,4 +10,4 @@ When not at Apple, I'm a part-time software engineering consultant that builds a
 
 As far as learnin' goes, I hold a B.S. in Computer Science from [Loyola Marymount University](http://www.lmu.edu) in Los Angeles.
 
-And lastly, **any opinions expressed on this site are mine, and under no circumstances represent those of my employer.**
+And lastly, any opinions expressed on this site are mine, and under no circumstances represent those of my employer.

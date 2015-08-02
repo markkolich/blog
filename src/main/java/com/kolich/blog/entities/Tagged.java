@@ -26,17 +26,11 @@
 
 package com.kolich.blog.entities;
 
-import com.google.common.base.Charsets;
 import com.kolich.blog.entities.gson.PagedContent;
 
-import java.net.URLDecoder;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
-
 public final class Tagged extends MarkdownContent {
-
-    private static final String UTF_8_CHARSET = Charsets.UTF_8.name();
 
     private static final String TAGGED_TEMPLATE_NAME = "tagged.ftl";
 
@@ -51,12 +45,7 @@ public final class Tagged extends MarkdownContent {
     }
 
     public final String getTagDisplayText() {
-        try {
-            return escapeHtml4(URLDecoder.decode(tag_, UTF_8_CHARSET));
-        } catch (Exception e) {
-            // Ugh, is this really even possible on modern stacks?
-            throw new RuntimeException("Failed miserably to UTF-8 URL decode entry tag: " + tag_, e);
-        }
+        return EntryTag.encodeAndEscapeTag(tag_);
     }
 
     public final List<Entry> getEntries() {

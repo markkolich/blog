@@ -29,6 +29,7 @@ package com.kolich.blog.components.cache;
 import com.google.common.collect.Maps;
 import com.google.common.eventbus.Subscribe;
 import com.kolich.blog.ApplicationConfig;
+import com.kolich.blog.components.GitRepository;
 import com.kolich.blog.components.cache.bus.BlogEventBus;
 import com.kolich.blog.entities.Page;
 import com.kolich.blog.exceptions.ContentNotFoundException;
@@ -38,11 +39,8 @@ import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Required;
 import org.slf4j.Logger;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.Map;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
@@ -50,12 +48,11 @@ public final class PageCache {
 
     private static final Logger logger__ = getLogger(PageCache.class);
 
-    private static final String contentRootDir__ = ApplicationConfig.getContentRootDir();
     private static final String pagesDir__ = ApplicationConfig.getPagesDir();
 
-    private static final String canonicalPagesDir_ = Paths.get(contentRootDir__, pagesDir__)
-        .toFile().getAbsolutePath();
-
+    /**
+     * The blog internal state machine; passes events between components.
+     */
     private final BlogEventBus eventBus_;
 
     /**
@@ -63,24 +60,30 @@ public final class PageCache {
      */
     private final Map<String, Page> cache_;
 
+    /**
+     * The full canonical path to the directory on disk that holds the page markdown files.
+     */
+    private final String canonicalPagesDir_;
+
     @Injectable
-    public PageCache(@Required final BlogEventBus eventBus) {
+    public PageCache(@Required final GitRepository repo,
+                     @Required final BlogEventBus eventBus) {
         eventBus_ = eventBus;
         eventBus_.register(this);
         cache_ = Maps.newLinkedHashMap();
+        canonicalPagesDir_ = repo.getFileRelativeToContentRoot(pagesDir__).getAbsolutePath();
     }
 
     @Subscribe
     public synchronized final void onCachedContent(final Events.CachedContentEvent e) {
         logger__.trace("onCachedContent: START: {}", e);
-        // Only bother with the event if the incoming event refers to content in a location in the repo
-        // this cache is concerned about.
+        // Only bother with the event if the incoming event refers to content in a location in the
+        // repo this cache is concerned about.
         if (!e.getFile().startsWith(canonicalPagesDir_)) {
             return;
         }
         // Build out a new page entity and fork based on the event's operation.
-        final Page page = new Page(e.getName(), escapeHtml4(e.getTitle()), e.getMsg(), e.getHash(),
-            e.getTimestamp(), new File(e.getFile()));
+        final Page page = new Page(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
             cache_.put(page.getName(), page);

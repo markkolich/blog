@@ -48,8 +48,7 @@ import static org.apache.commons.io.IOUtils.copyLarge;
 @Component
 public class TwitterFeedHttpClient implements ComponentDestroyable {
 
-    private static final String twitterFeedUrl__ =
-        ApplicationConfig.getTwitterFeedUrl();
+    private static final String twitterFeedUrl__ = ApplicationConfig.getTwitterFeedUrl();
 
     private static final String UTF_8_STRING = UTF_8.toString();
 

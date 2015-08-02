@@ -28,6 +28,8 @@ package com.kolich.blog.entities;
 
 import java.io.File;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+
 public final class Page extends MarkdownContent {
 
     private static final String PAGE_TEMPLATE_NAME = "page.ftl";
@@ -38,7 +40,16 @@ public final class Page extends MarkdownContent {
                 final String commit,
                 final Long timestamp,
                 final File content) {
-        super(ContentType.PAGE, name, title, message, commit, timestamp, content);
+        super(ContentType.PAGE, name, escapeHtml4(title), message, commit, timestamp, content);
+    }
+
+    public Page(final String name,
+                final String title,
+                final String message,
+                final String commit,
+                final Long timestamp,
+                final String content) {
+        this(name, title, message, commit, timestamp, new File(content));
     }
 
     @Override

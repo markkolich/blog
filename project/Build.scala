@@ -44,8 +44,8 @@ object Dependencies {
 
   // External dependencies
 
-  private val curacao = "com.kolich.curacao" % "curacao" % "3.1.1" % "compile"
-  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "3.1.1" % "compile"
+  private val curacao = "com.kolich.curacao" % "curacao" % "3.1.2" % "compile"
+  private val curacaoGson = "com.kolich.curacao" % "curacao-gson" % "3.1.2" % "compile"
 
   // Jetty 9 stable, version 9.2.10.v20150310
   private val jettyVersion = "9.2.10.v20150310"
@@ -66,7 +66,7 @@ object Dependencies {
   private val freemarker = "org.freemarker" % "freemarker" % "2.3.22" % "compile"
   private val htmlCompressor = "com.googlecode.htmlcompressor" % "htmlcompressor" % "1.5.2" % "compile" intransitive()
 
-  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.17" % "compile"
+  private val asyncHttpClient = "com.ning" % "async-http-client" % "1.9.30" % "compile"
 
   private val protobuf = "com.google.protobuf" % "protobuf-java" % "2.5.0" % "compile"
 

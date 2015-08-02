@@ -27,7 +27,6 @@
 package com.kolich.blog.entities;
 
 import com.google.common.base.Charsets;
-import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,11 +34,8 @@ import java.net.URLEncoder;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
-import static org.slf4j.LoggerFactory.getLogger;
 
 public final class EntryTag {
-
-    private static final Logger logger__ = getLogger(EntryTag.class);
 
     private static final String UTF_8_CHARSET = Charsets.UTF_8.name();
 
@@ -50,24 +46,36 @@ public final class EntryTag {
     }
 
     /**
-     * Returns the raw tag, as ingested from the content.
+     * Returns the raw tag, as ingested from the content.  This version is suitable for display only,
+     * and is not safe to be used on a URL.  Is typically invoked from within a Freemarker template.
      */
     public String getDisplayText() {
-        return escapeHtml4(tag_);
+        return escapeTag(tag_);
     }
 
     /**
-     * Returns a tag that has been URL encoded, and is suitable to be
-     * appended onto a URL.
+     * Returns a tag that has been URL encoded, and is suitable to be appended onto a URL.
      */
     @Nullable
     public String getUrlEncodedText() {
+        return encodeTag(tag_);
+    }
+
+    public static final String encodeTag(final String tag) {
         try {
-            return URLEncoder.encode(tag_, UTF_8_CHARSET);
+            return URLEncoder.encode(tag, UTF_8_CHARSET);
         } catch (Exception e) {
             // Ugh, is this really even possible on modern stacks?
-            throw new RuntimeException("Failed miserably to UTF-8 URL encode entry tag: " + tag_, e);
+            throw new RuntimeException("Failed miserably to UTF-8 URL encode entry tag: " + tag, e);
         }
+    }
+
+    public static final String escapeTag(final String tag) {
+        return escapeHtml4(tag);
+    }
+
+    public static final String encodeAndEscapeTag(final String tag) {
+        return escapeTag(encodeTag(tag));
     }
 
 }

@@ -30,6 +30,7 @@ import com.google.common.base.Charsets;
 import com.kolich.blog.ApplicationConfig;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.annotations.Injectable;
+import com.kolich.curacao.annotations.Required;
 import freemarker.template.Configuration;
 
 import java.io.File;
@@ -45,7 +46,7 @@ public final class FreeMarkerConfig {
     private final Configuration config_;
 
     @Injectable
-    public FreeMarkerConfig(final GitRepository git) throws IOException {
+    public FreeMarkerConfig(@Required final GitRepository git) throws IOException {
         final File templateRoot = git.getFileRelativeToContentRoot(templatesDir__);
         config_ = new Configuration(Configuration.VERSION_2_3_22);
         config_.setDirectoryForTemplateLoading(templateRoot);

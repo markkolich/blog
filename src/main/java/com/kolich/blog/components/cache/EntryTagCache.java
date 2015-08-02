@@ -26,8 +26,8 @@
 
 package com.kolich.blog.components.cache;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.eventbus.Subscribe;
 import com.kolich.blog.components.cache.bus.BlogEventBus;
@@ -57,10 +57,13 @@ public final class EntryTagCache {
      */
     private final EntryCache entryCache_;
 
+    /**
+     * The blog internal state machine; passes events between components.
+     */
     private final BlogEventBus eventBus_;
 
     /**
-     * An internal multimap which maps a tag/keyword to a list of entries
+     * An internal multimap which maps a tag/keyword to a list of content
      * that are referenced by that tag.
      */
     private final Multimap<String, Entry> tagCache_;
@@ -71,16 +74,22 @@ public final class EntryTagCache {
         entryCache_ = entryCache;
         eventBus_ = eventBus;
         eventBus_.register(this);
-        tagCache_ = ArrayListMultimap.create(); // Preserves order
+        tagCache_ = LinkedHashMultimap.create(); // Preserves order
     }
 
     @Subscribe
     public synchronized final void onEntryCacheReady(final Events.EntryCacheReadyEvent e) {
         logger__.trace("onEntryCacheReady: START: {}", e);
         tagCache_.clear();
+        // Get all entries, and iterate over them.
         final List<Entry> all = entryCache_.getAll();
         for (final Entry entry : all) {
+            // Get all tags, if any, on the entry.
             final List<EntryTag> tags = entry.getTags();
+            // Note we're indexing the entries based on their "URL encoded tag" text. This is so that we
+            // don't have to URL decode the incoming tag from the request URI on lookup.  In other words,
+            // if the URI is /tagged/foo+bar then the key in this map is literally the URL encoded "foo+bar",
+            // and not "foo bar".
             tags.stream().forEach(tag -> tagCache_.put(tag.getUrlEncodedText(), entry));
         }
         logger__.debug("onEntryCacheReady: END: {} -> {}", e, tagCache_);
@@ -89,8 +98,7 @@ public final class EntryTagCache {
     public synchronized final PagedContent<Entry> getAllTagged(@Nonnull final String tag) {
         checkNotNull(tag, "Content tag cannot be null.");
         final Collection<Entry> tagged = tagCache_.get(tag);
-        final PagedContent<Entry> result = new PagedContent<>(ImmutableList.copyOf(tagged), 0);
-        return result;
+        return new PagedContent<>(ImmutableList.copyOf(tagged), 0);
     }
 
 }
