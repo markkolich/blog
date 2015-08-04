@@ -41,6 +41,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 public abstract class AbstractFreeMarkerAwareResponseMapper<T> extends AbstractETagAwareResponseMapper<T> {
@@ -74,7 +75,7 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T> extends AbstractE
     private final Configuration config_;
 
     public AbstractFreeMarkerAwareResponseMapper(final FreeMarkerConfig config) {
-        config_ = config.getConfig();
+        config_ = checkNotNull(config, "Freemarker config cannot be null.").getConfig();
     }
 
     protected Map<String,Object> getDataMap(final Template tp) {

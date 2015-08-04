@@ -45,7 +45,7 @@ public final class Utf8TextEntity extends AppendableCuracaoEntity {
     private static final String XML_UTF_8_STRING = XML_UTF_8.toString();
     private static final String TEXT_UTF_8_STRING = PLAIN_TEXT_UTF_8.toString();
 
-    public static enum TextEntityType {
+    public enum TextEntityType {
 
         /**
          * HTML page; compressable.
@@ -75,8 +75,8 @@ public final class Utf8TextEntity extends AppendableCuracaoEntity {
          */
         private final boolean compressable_;
 
-        private TextEntityType(final String contentType,
-                               final boolean compressable) {
+        TextEntityType(final String contentType,
+                       final boolean compressable) {
             contentType_ = contentType;
             compressable_ = compressable;
         }
@@ -101,6 +101,8 @@ public final class Utf8TextEntity extends AppendableCuracaoEntity {
         super();
         type_ = type;
         status_ = status;
+        // If the type of the content is "compressable" then invoke the HTML compressor on
+        // the body of the content.
         body_ = (type.isCompressable()) ? compressHtml(body) : body;
     }
 

@@ -31,6 +31,7 @@ import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
@@ -43,7 +44,7 @@ public final class SitemapResponseMapper extends AbstractFeedEntityResponseMappe
     private static final String SITEMAP_TEMPLATE_NAME = "feed/sitemap.ftl";
 
     @Injectable
-    public SitemapResponseMapper(final FreeMarkerConfig config) {
+    public SitemapResponseMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 

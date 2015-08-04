@@ -79,6 +79,9 @@ public final class ApplicationConfig {
 
     private final Config config_;
 
+    private static class LazyHolder {
+        private static final ApplicationConfig instance__ = new ApplicationConfig();
+    }
     private ApplicationConfig() {
         final Config refConfConfig = load();
         // Load the external 'blog.conf' application configuration file specific to the internal Servlet container.
@@ -97,9 +100,6 @@ public final class ApplicationConfig {
             logger__.trace("Loaded config (key={}, value={})", entry.getKey(), entry.getValue());
         }
         config_ = blogConfig;
-    }
-    private static class LazyHolder {
-        private static final ApplicationConfig instance__ = new ApplicationConfig();
     }
 
     /**

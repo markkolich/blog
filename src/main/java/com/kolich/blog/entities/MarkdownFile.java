@@ -71,6 +71,10 @@ public final class MarkdownFile {
         return file_.getAbsolutePath();
     }
 
+    /**
+     * Provides GSON serialization support to render a {@link MarkdownFile} to a raw HTML
+     * string to be used within a JSON object.
+     */
     public static final class MarkdownFileGsonAdapter implements JsonSerializer<MarkdownFile> {
 
         @Override

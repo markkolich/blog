@@ -5,7 +5,8 @@ option java_package = "com.kolich.blog.protos";
  */
 message GitPullEvent {
 
-    required int64 timestamp = 1;
+    required string uuid = 1;
+    required int64 timestamp = 2;
 
 }
 
@@ -22,31 +23,47 @@ message CachedContentEvent {
         COPY = 5;
     }
 
-    required Operation operation = 1;
+    required string uuid = 1;
+    required int64 timestamp = 2;
 
-    required string name = 2;
-    required string title = 3;
-    required string msg = 4;
-    required string hash = 5;
+    required Operation operation = 3;
 
-    required int64 timestamp = 6;
+    required string name = 4;
+    required string title = 5;
+    required string msg = 6;
+    required string hash = 7;
 
     /* Canonical path to file */
-    required string file = 7;
+    required string file = 8;
 
 }
 
 /**
  * Fires when it's time to read cached content.
  */
-message StartReadCachedContentEvent {}
+message StartReadCachedContentEvent {
+
+    required string uuid = 1;
+    required int64 timestamp = 2;
+
+}
 
 /**
  * Fires when reading cached content is finished.
  */
-message EndReadCachedContentEvent {}
+message EndReadCachedContentEvent {
+
+    required string uuid = 1;
+    required int64 timestamp = 2;
+
+}
 
 /**
  * Fires when the in-memory entry cache is ready.
  */
-message EntryCacheReadyEvent {}
+message EntryCacheReadyEvent {
+
+    required string uuid = 1;
+    required int64 timestamp = 2;
+
+}

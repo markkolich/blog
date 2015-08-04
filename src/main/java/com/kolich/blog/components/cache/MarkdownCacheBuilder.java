@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import static com.gitblit.utils.JGitUtils.getFilesInCommit;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
@@ -50,7 +51,10 @@ public final class MarkdownCacheBuilder {
         // Rebuild the new cache using the "updated" content on disk, if any.
         final String pathToContent = git_.getContentRoot().getName();
         // Alert any listeners that we're starting to read cached content from the Git repo.
-        eventBus_.post(StartReadCachedContentEvent.newBuilder().build());
+        eventBus_.post(StartReadCachedContentEvent.newBuilder()
+            .setUuid(UUID.randomUUID().toString())
+            .setTimestamp(System.currentTimeMillis())
+            .build());
         for (final RevCommit commit : git.log().call()) {
             final List<PathModel.PathChangeModel> files = getFilesInCommit(repo, commit);
             // For each of the files that "changed" (added, removed, modified) in the commit...
@@ -70,6 +74,8 @@ public final class MarkdownCacheBuilder {
                 final File markdown = new File(repo.getWorkTree(), name);
                 final String entityName = removeExtension(markdown.getName());
                 final CachedContentEvent.Builder event = CachedContentEvent.newBuilder()
+                    .setUuid(UUID.randomUUID().toString())
+                    .setTimestamp(System.currentTimeMillis())
                     .setName(entityName)
                     .setTitle(title)
                     .setMsg(message)
@@ -79,9 +85,7 @@ public final class MarkdownCacheBuilder {
                 // Vector based on the change type.
                 switch (change.changeType) {
                     case ADD:
-                        // If the change type was an add, but the file that was added no longer exists,
-                        // then treat the operation as a delete instead.
-                        event.setOperation(markdown.exists() ? Operation.ADD : Operation.DELETE);
+                        event.setOperation(Operation.ADD);
                         break;
                     case MODIFY:
                         event.setOperation(Operation.MODIFY);
@@ -104,7 +108,10 @@ public final class MarkdownCacheBuilder {
             }
         }
         // Alert any listeners that we're finished reading all cached content from the Git repo.
-        eventBus_.post(EndReadCachedContentEvent.newBuilder().build());
+        eventBus_.post(EndReadCachedContentEvent.newBuilder()
+            .setUuid(UUID.randomUUID().toString())
+            .setTimestamp(System.currentTimeMillis())
+            .build());
     }
 
 }

@@ -57,7 +57,7 @@ public abstract class AbstractDevModeSafeResponseMapper<T> extends ControllerRet
                              @Nonnull final T content) throws Exception {
         // When in 'development' mode we set this header to prevent
         // any browser or proxy caching of CSS, JavaScript, or images.
-        if(isDevMode__) {
+        if (isDevMode__) {
             response.addHeader(CACHE_CONTROL, CACHE_CONTROL_NO_CACHE);
         }
         renderSafe(context, response, content);

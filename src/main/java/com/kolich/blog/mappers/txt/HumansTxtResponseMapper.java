@@ -30,15 +30,15 @@ import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 
 @Mapper
-public final class HumansTxtResponseMapper
-    extends AbstractTxtResponseMapper<HumansTxt> {
+public final class HumansTxtResponseMapper extends AbstractTxtResponseMapper<HumansTxt> {
 
     private static final String HUMANS_TXT_TEMPLATE_NAME = "txt/humans.ftl";
 
     @Injectable
-    public HumansTxtResponseMapper(final FreeMarkerConfig config) {
+    public HumansTxtResponseMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 

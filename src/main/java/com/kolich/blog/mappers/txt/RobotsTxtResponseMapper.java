@@ -30,15 +30,15 @@ import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 
 @Mapper
-public final class RobotsTxtResponseMapper
-    extends AbstractTxtResponseMapper<RobotsTxt> {
+public final class RobotsTxtResponseMapper extends AbstractTxtResponseMapper<RobotsTxt> {
 
     private static final String ROBOTS_TXT_TEMPLATE_NAME = "txt/robots.ftl";
 
     @Injectable
-    public RobotsTxtResponseMapper(final FreeMarkerConfig config) {
+    public RobotsTxtResponseMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 

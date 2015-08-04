@@ -46,9 +46,11 @@ import com.kolich.curacao.annotations.Required;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -85,11 +87,11 @@ public final class EntryCache {
     @Injectable
     public EntryCache(@Required final GitRepository repo,
                       @Required final BlogEventBus eventBus) {
-        eventBus_ = eventBus;
-        eventBus_.register(this);
         cache_ = Maps.newLinkedHashMap(); // Preserves insertion order, important
         unsortedEntries_ = Sets.newLinkedHashSet();
         canonicalEntriesDir_ = repo.getFileRelativeToContentRoot(entriesDir__).getAbsolutePath();
+        eventBus_ = eventBus;
+        eventBus_.register(this);
     }
 
     @Subscribe
@@ -110,9 +112,15 @@ public final class EntryCache {
         final Entry entry = new Entry(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
-            unsortedEntries_.add(entry);
-        } else if (Events.CachedContentEvent.Operation.DELETE.equals(op)) {
-            unsortedEntries_.remove(entry);
+            final File markdownFile = entry.getMarkdownFile().getFile();
+            // If the markdown file actually exists on disk (hasn't been deleted) and the cache
+            // doesn't already contain a value for this entry then add it.  This prevents an entry from
+            // being added to the cache, deleted, and then re-added again with the wrong commit message/title.
+            if (markdownFile.exists() && !unsortedEntries_.contains(entry)) {
+                unsortedEntries_.add(entry);
+            } else if (!markdownFile.exists()) {
+                unsortedEntries_.remove(entry);
+            }
         } else {
             logger__.trace("Received unsupported/unknown event: {}", e);
         }
@@ -149,7 +157,10 @@ public final class EntryCache {
         unsortedEntries_.clear();
         logger__.debug("onEndReadCachedContent: END: {} -> {}", e, cache_);
         // Let any listeners know that the "entry cache" is ready and willing.
-        eventBus_.post(Events.EntryCacheReadyEvent.newBuilder().build());
+        eventBus_.post(Events.EntryCacheReadyEvent.newBuilder()
+            .setUuid(UUID.randomUUID().toString())
+            .setTimestamp(System.currentTimeMillis())
+            .build());
     }
 
     public synchronized final Entry get(final String key) {

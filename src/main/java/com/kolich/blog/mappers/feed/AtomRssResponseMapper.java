@@ -31,6 +31,7 @@ import com.kolich.blog.entities.feed.AtomRss;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
@@ -43,7 +44,7 @@ public final class AtomRssResponseMapper extends AbstractFeedEntityResponseMappe
     private static final String ATOM_RSS_FEED_TEMPLATE_NAME = "feed/atom.ftl";
 
     @Injectable
-    public AtomRssResponseMapper(final FreeMarkerConfig config) {
+    public AtomRssResponseMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 

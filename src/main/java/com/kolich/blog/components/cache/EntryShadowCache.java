@@ -56,11 +56,6 @@ public final class EntryShadowCache {
     private final EntryCache entryCache_;
 
     /**
-     * The blog internal state machine; passes events between components.
-     */
-    private final BlogEventBus eventBus_;
-
-    /**
      * An internal map that maps each SHA-1 commit hash to a list of content/entries that was written before
      * that commit.  For example if A, B, C, D are a list of commits in order, then list [A, B, C, D] will
      * be translated and cached here as:
@@ -79,9 +74,8 @@ public final class EntryShadowCache {
     public EntryShadowCache(@Required final EntryCache entryCache,
                             @Required final BlogEventBus eventBus) {
         entryCache_ = entryCache;
-        eventBus_ = eventBus;
-        eventBus_.register(this);
         shadowCache_ = ArrayListMultimap.create(); // Preserves order
+        eventBus.register(this);
     }
 
     @Subscribe

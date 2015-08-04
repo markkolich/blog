@@ -31,6 +31,7 @@ import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 import com.kolich.curacao.entities.CuracaoEntity;
 import com.kolich.curacao.exceptions.CuracaoException;
 import freemarker.template.Template;
@@ -54,7 +55,7 @@ public final class CuracaoExceptionExceptionMapper extends AbstractFreeMarkerAwa
     private static final int DEFAULT_ERROR_STATUS_CODE = SC_INTERNAL_SERVER_ERROR;
 
     @Injectable
-    public CuracaoExceptionExceptionMapper(final FreeMarkerConfig config) {
+    public CuracaoExceptionExceptionMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 

@@ -35,6 +35,7 @@ import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
 import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Mapper;
+import com.kolich.curacao.annotations.Required;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;
@@ -47,13 +48,12 @@ public final class MarkdownDrivenContentResponseMapper
     extends AbstractFreeMarkerAwareResponseMapper<MarkdownContent> {
 
     @Injectable
-    public MarkdownDrivenContentResponseMapper(final FreeMarkerConfig config) {
+    public MarkdownDrivenContentResponseMapper(@Required final FreeMarkerConfig config) {
         super(config);
     }
 
     @Override
-    public final Utf8TextEntity renderView(@Nonnull final MarkdownContent md)
-        throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final MarkdownContent md) throws Exception {
         final Template tp = getTemplate(md.getTemplateName());
         return buildEntity(tp, getDataMap(tp, md), HTML);
     }

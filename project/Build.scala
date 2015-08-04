@@ -247,7 +247,7 @@ object Blog extends Build {
   import Resolvers._
 
   private val aName = "blog"
-  private val aVer = "1.5-SNAPSHOT"
+  private val aVer = "1.6-SNAPSHOT"
   private val aOrg = "com.kolich"
 
   lazy val blog: Project = Project(

@@ -35,8 +35,7 @@ import javax.annotation.Nonnull;
 
 import static com.kolich.blog.entities.html.Utf8TextEntity.TextEntityType.TXT;
 
-public abstract class AbstractTxtResponseMapper<T>
-    extends AbstractFreeMarkerAwareResponseMapper<T> {
+public abstract class AbstractTxtResponseMapper<T> extends AbstractFreeMarkerAwareResponseMapper<T> {
 
     public AbstractTxtResponseMapper(final FreeMarkerConfig config) {
         super(config);

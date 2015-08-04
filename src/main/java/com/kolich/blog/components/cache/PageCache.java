@@ -39,6 +39,7 @@ import com.kolich.curacao.annotations.Injectable;
 import com.kolich.curacao.annotations.Required;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.util.Map;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -49,11 +50,6 @@ public final class PageCache {
     private static final Logger logger__ = getLogger(PageCache.class);
 
     private static final String pagesDir__ = ApplicationConfig.getPagesDir();
-
-    /**
-     * The blog internal state machine; passes events between components.
-     */
-    private final BlogEventBus eventBus_;
 
     /**
      * An internal map that maps the name of each entity to its content.
@@ -68,10 +64,9 @@ public final class PageCache {
     @Injectable
     public PageCache(@Required final GitRepository repo,
                      @Required final BlogEventBus eventBus) {
-        eventBus_ = eventBus;
-        eventBus_.register(this);
         cache_ = Maps.newLinkedHashMap();
         canonicalPagesDir_ = repo.getFileRelativeToContentRoot(pagesDir__).getAbsolutePath();
+        eventBus.register(this);
     }
 
     @Subscribe
@@ -86,9 +81,16 @@ public final class PageCache {
         final Page page = new Page(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
-            cache_.put(page.getName(), page);
-        } else if (Events.CachedContentEvent.Operation.DELETE.equals(op)) {
-            cache_.remove(page.getName());
+            final File markdownFile = page.getMarkdownFile().getFile();
+            final String pageName = page.getName();
+            // If the markdown file actually exists on disk (hasn't been deleted) and the cache
+            // doesn't already contain a value for this page then add it.  This prevents a page from
+            // being added to the cache, deleted, and then re-added again with the wrong commit message/title.
+            if (markdownFile.exists() && !cache_.containsKey(pageName)) {
+                cache_.put(pageName, page);
+            } else if (!markdownFile.exists()) {
+                cache_.remove(pageName);
+            }
         } else {
             logger__.trace("Received unsupported/unknown event: {}", e);
         }

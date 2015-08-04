@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.util.UUID;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -184,6 +185,7 @@ public final class GitRepository implements CuracaoComponent {
                 // Async post a message to the event bus indicating that a pull event has fired *and*
                 // completed successfully.
                 final Events.GitPullEvent gitPullEvent = Events.GitPullEvent.newBuilder()
+                    .setUuid(UUID.randomUUID().toString())
                     .setTimestamp(System.currentTimeMillis())
                     .build();
                 eventBus_.post(gitPullEvent);

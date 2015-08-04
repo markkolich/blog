@@ -58,11 +58,6 @@ public final class EntryTagCache {
     private final EntryCache entryCache_;
 
     /**
-     * The blog internal state machine; passes events between components.
-     */
-    private final BlogEventBus eventBus_;
-
-    /**
      * An internal multimap which maps a tag/keyword to a list of content
      * that are referenced by that tag.
      */
@@ -72,9 +67,8 @@ public final class EntryTagCache {
     public EntryTagCache(@Required final EntryCache entryCache,
                          @Required final BlogEventBus eventBus) {
         entryCache_ = entryCache;
-        eventBus_ = eventBus;
-        eventBus_.register(this);
         tagCache_ = LinkedHashMultimap.create(); // Preserves order
+        eventBus.register(this);
     }
 
     @Subscribe

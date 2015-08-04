@@ -28,7 +28,6 @@ package com.kolich.blog.entities.feed;
 
 import com.google.common.collect.Iterables;
 import com.kolich.blog.entities.Entry;
-import com.kolich.blog.entities.gson.PagedContent;
 
 import java.util.List;
 
@@ -40,10 +39,6 @@ public abstract class AbstractFeedEntity {
 
     public AbstractFeedEntity(final List<Entry> entries) {
         entries_ = checkNotNull(entries, "Entries list cannot be null.");
-    }
-
-    public AbstractFeedEntity(final PagedContent<Entry> entries) {
-        this(entries.getContent());
     }
 
     public final List<Entry> getEntries() {

@@ -46,7 +46,7 @@ public final class Entry extends MarkdownContent {
     private static final Pattern TAGS_REGEX = Pattern.compile("<!---\\s*tags:\\s*(.*?)-->",
         Pattern.CASE_INSENSITIVE);
 
-    private static final Splitter COMMA_SPLITTER = Splitter.on(",").trimResults().omitEmptyStrings();
+    private static final Splitter TAGS_COMMA_SPLITTER = Splitter.on(",").trimResults().omitEmptyStrings();
 
     private static final String ENTRY_TEMPLATE_NAME = "entry.ftl";
 
@@ -104,7 +104,7 @@ public final class Entry extends MarkdownContent {
                 final String tagGroup = m.group(1);
                 // Split each tag set on a comma, and add all to the resulting list; the splitter takes care of
                 // empty strings and stripping off whitespace.
-                final List<String> tagList = COMMA_SPLITTER.splitToList(tagGroup);
+                final List<String> tagList = TAGS_COMMA_SPLITTER.splitToList(tagGroup);
                 // Convert the list of extracted tags into their corresponding entry tag objects that allow things
                 // like URL encoding.
                 final List<EntryTag> entryTags = tagList.stream().map(EntryTag::new).collect(Collectors.toList());
