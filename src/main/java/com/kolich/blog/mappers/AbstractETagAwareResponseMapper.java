@@ -56,19 +56,19 @@ public abstract class AbstractETagAwareResponseMapper<T> extends AbstractDevMode
                                  final HttpServletResponse response,
                                  @Nonnull final T entity) throws Exception {
         final Utf8TextEntity rendered = renderView(entity);
-        // Only attach an ETag response header to the response if the
-        // rendered entity indicates success.  No ETag is sent back with
-        // error pages, like a "404 Not Found" response.
+        // Only attach an ETag response header to the response if the rendered entity indicates success.
+        // No ETag is sent back with error pages, like a "404 Not Found" response.
         if (rendered.getStatus() < SC_BAD_REQUEST) {
             final String ifNoneMatch = getIfNoneMatchFromRequest(context);
+            // Compute the SHA-1 hash of the response body.
             final String sha1 = DigestUtils.sha1Hex(rendered.getBody());
+            // Attach the SHA-1 hash of the response body to the outgoing response.
             final String eTag = String.format(STRONG_ETAG_HEADER_FORMAT, sha1);
             response.setHeader(ETAG, eTag); // Strong ETag!
-            // If the If-None-Match header matches the computed SHA-1 hash of
-            // the rendered content, then we send back "304 Not Modified"
-            // without a body.  If not, then send back the rendered content.
+            // If the If-None-Match header matches the computed SHA-1 hash of the rendered content, then we
+            // send back "304 Not Modified" without a body.  If not, then send back the rendered content.
             if (eTag.equals(ifNoneMatch) || "*".equals(ifNoneMatch)) {
-                // Return a 304, done.
+                // Return a 304. Done.
                 renderEntity(response, NOT_MODIFIED_ENTITY);
                 return;
             }

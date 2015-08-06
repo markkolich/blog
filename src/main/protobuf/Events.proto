@@ -32,9 +32,10 @@ message CachedContentEvent {
     required string title = 5;
     required string msg = 6;
     required string hash = 7;
+    required int64 commitTime = 8;
 
     /* Canonical path to file */
-    required string file = 8;
+    required string file = 9;
 
 }
 

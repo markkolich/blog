@@ -39,12 +39,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
 public final class Entry extends MarkdownContent {
 
-    private static final Pattern TAGS_REGEX = Pattern.compile("<!---\\s*tags:\\s*(.*?)-->",
-        Pattern.CASE_INSENSITIVE);
+    private static final Pattern TAGS_REGEX = Pattern.compile("<!---\\s*tags:\\s*(.*?)-->", CASE_INSENSITIVE);
 
     private static final Splitter TAGS_COMMA_SPLITTER = Splitter.on(",").trimResults().omitEmptyStrings();
 
@@ -56,7 +55,7 @@ public final class Entry extends MarkdownContent {
                  final String commit,
                  final Long timestamp,
                  final File content) {
-        super(ContentType.ENTRY, name, escapeHtml4(title), message, commit, timestamp, content);
+        super(ContentType.ENTRY, name, title, message, commit, timestamp, content);
     }
 
     public Entry(final String name,

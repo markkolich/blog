@@ -45,6 +45,15 @@ import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * This cache is similar to {@link EntryCache} except this in-memory cache maps an {@link Entry}
+ * entity to the set of {@link Entry} entities that logically come before it.  Before here is defined
+ * in terms of commit history; if you have entries [A, B, C] in sorted order, the set of commits that
+ * were committed to the repo "before A" is [B, C] where "A" is the latest/newest.
+ *
+ * This is used exclusively for the "Load More" button on the blog homepage.  We want to be able to
+ * fetch the list of entries that come before (is older than) a given entry in constant time.
+ */
 @Component
 public final class EntryShadowCache {
 
@@ -74,13 +83,18 @@ public final class EntryShadowCache {
     public EntryShadowCache(@Required final EntryCache entryCache,
                             @Required final BlogEventBus eventBus) {
         entryCache_ = entryCache;
-        shadowCache_ = ArrayListMultimap.create(); // Preserves order
+        shadowCache_ = ArrayListMultimap.create(); // Preserves insertion order
         eventBus.register(this);
     }
 
+    /**
+     * Fires when the global {@link EntryCache} is built and ready for reading.
+     */
     @Subscribe
     public synchronized final void onEntryCacheReady(final Events.EntryCacheReadyEvent e) {
         final List<Entry> allEntries = entryCache_.getAll();
+        // Clear the current shadow cache.
+        shadowCache_.clear();
         // Construct a map which maps each ordered commit hash to the list of content that comes after it.  Note,
         // a SortedSetMultimap could have been used here, but that implementation depends on the natural ordering of
         // the keys and values in the map.  In this case, the ordering isn't the "natural" ordering but is rather
@@ -96,13 +110,12 @@ public final class EntryShadowCache {
                 }
             }
         }
-        shadowCache_.clear();
         shadowCache_.putAll(shadowCache);
     }
 
     /**
-     * Returns all cached content that was committed to the repo before
-     * (older, prior to) the given commit, not including the commit itself.
+     * Returns all cached content that was committed to the repo before (older, prior to) the given
+     * commit, not including the commit itself.
      */
     public synchronized final PagedContent<Entry> getAllBefore(@Nullable final String commit,
                                                                @Nullable final Integer limit) {

@@ -58,7 +58,7 @@ import java.util.concurrent.Future;
 @Controller
 public final class Blog {
 
-    private static final int entryLimit__ = ApplicationConfig.getHomepageEntryLimit();
+    private static final int entryLimitHomepage__ = ApplicationConfig.getHomepageEntryLimit();
     private static final int entryLimitLoadMore__ = ApplicationConfig.getLoadMoreEntryLimit();
     private static final int entryLimitAtomFeed__ = ApplicationConfig.getAtomFeedEntryLimit();
 
@@ -91,7 +91,7 @@ public final class Blog {
 
     @RequestMapping("^\\/$")
     public final Index index() {
-        return new Index(entries_.getAll(entryLimit__));
+        return new Index(entries_.getAll(entryLimitHomepage__));
     }
     @RequestMapping("^\\/about$")
     public final Page about() {

@@ -44,6 +44,9 @@ public final class MarkdownCacheBuilder {
         eventBus_.register(this);
     }
 
+    /**
+     * Fires when the pull/update of the local Git repo clone is complete.
+     */
     @Subscribe
     public final void onGitPull(final Events.GitPullEvent e) throws Exception {
         final Git git = git_.getGit();
@@ -55,7 +58,9 @@ public final class MarkdownCacheBuilder {
             .setUuid(UUID.randomUUID().toString())
             .setTimestamp(System.currentTimeMillis())
             .build());
-        for (final RevCommit commit : git.log().call()) {
+        // Get a list of all commits in the current Git log.
+        final Iterable<RevCommit> commits = git.log().call();
+        for (final RevCommit commit : commits) {
             final List<PathModel.PathChangeModel> files = getFilesInCommit(repo, commit);
             // For each of the files that "changed" (added, removed, modified) in the commit...
             for (final PathModel.PathChangeModel change : files) {
@@ -80,7 +85,7 @@ public final class MarkdownCacheBuilder {
                     .setTitle(title)
                     .setMsg(message)
                     .setHash(hash)
-                    .setTimestamp(timestamp)
+                    .setCommitTime(timestamp)
                     .setFile(markdown.getCanonicalPath());
                 // Vector based on the change type.
                 switch (change.changeType) {

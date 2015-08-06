@@ -34,14 +34,12 @@ import javax.annotation.Nonnull;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * This event bus allows publish-subscribe-style communication between
- * components without requiring the components to explicitly register with one
- * another (and thus be aware of each other).  It is designed exclusively to
- * replace traditional Java in-process event distribution using explicit
+ * This event bus allows publish-subscribe-style communication between components without requiring
+ * the components to explicitly register with one another (and thus be aware of each other).  It is
+ * designed exclusively to replace traditional Java in-process event distribution using explicit
  * registration.
  *
- * Used here as an internal state machine to pass messages and events between
- * components.
+ * Used here as an internal state machine to pass messages and events between components.
  */
 @Component
 public final class BlogEventBus {

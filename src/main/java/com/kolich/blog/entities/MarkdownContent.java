@@ -38,6 +38,7 @@ import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.TimeZone.getTimeZone;
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class MarkdownContent {
@@ -59,7 +60,7 @@ public abstract class MarkdownContent {
 
         public static final DateFormat getNewInstance() {
             final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
-            df.setTimeZone(getTimeZone("GMT-8"));
+            df.setTimeZone(getTimeZone("GMT-8")); // US-Pacific time
             return df;
         }
 
@@ -95,14 +96,14 @@ public abstract class MarkdownContent {
                            @Nullable final String title,
                            @Nullable final String message,
                            @Nullable final String commit,
-                           @Nullable final Long timestamp,
+                           @Nullable final Long commitTime,
                            @Nullable final File content) {
         type_ = checkNotNull(type, "Markdown content type cannot be null.");
         name_ = name;
-        title_ = title;
+        title_ = escapeHtml4(title);
         message_ = message;
         commit_ = commit;
-        date_ = (timestamp != null) ? new Date(timestamp) : null;
+        date_ = (commitTime != null) ? new Date(commitTime) : null;
         content_ = (content != null) ? new MarkdownFile(content) : null;
     }
 
@@ -111,8 +112,8 @@ public abstract class MarkdownContent {
                            @Nullable final String title,
                            @Nullable final String message,
                            @Nullable final String commit,
-                           @Nullable final Long timestamp) {
-        this(type, name, title, message, commit, timestamp, null);
+                           @Nullable final Long commitTime) {
+        this(type, name, title, message, commit, commitTime, null);
     }
 
     @Nonnull

@@ -78,13 +78,16 @@ public final class MarkdownDrivenContentResponseMapper
 
         // Vary template ops based on the underlying type of markdown content.
         if (md instanceof Index) {
+            // Index (home) page
             final Index idx = (Index)md;
             map.put(TEMPLATE_ATTR_ENTRIES, idx.getEntries());
             map.put(TEMPLATE_ATTR_ENTRIES_REMAINING, idx.getRemaining());
         } else if (md instanceof Entry) {
+            // Entry page
             final Entry e = (Entry)md;
             map.put(TEMPLATE_ATTR_TAGS, e.getTags());
         } else if (md instanceof Tagged) {
+            // Tagged content page
             final Tagged tagged = (Tagged)md;
             map.put(TEMPLATE_ATTR_TAG, tagged.getTagDisplayText());
             map.put(TEMPLATE_ATTR_ENTRIES, tagged.getEntries());

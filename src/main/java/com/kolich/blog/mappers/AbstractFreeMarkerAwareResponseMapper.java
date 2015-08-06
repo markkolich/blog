@@ -101,8 +101,8 @@ public abstract class AbstractFreeMarkerAwareResponseMapper<T> extends AbstractE
                                                       final Map<String, Object> dataMap,
                                                       final TextEntityType type,
                                                       final int status) throws Exception {
-        try(final ByteArrayOutputStream os = new ByteArrayOutputStream();
-            final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
+        try (final ByteArrayOutputStream os = new ByteArrayOutputStream();
+             final Writer w = new OutputStreamWriter(os, Charsets.UTF_8)) {
             tp.process(dataMap, w);
             return new Utf8TextEntity(type, status, os);
         }

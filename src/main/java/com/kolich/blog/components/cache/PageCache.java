@@ -78,7 +78,7 @@ public final class PageCache {
             return;
         }
         // Build out a new page entity and fork based on the event's operation.
-        final Page page = new Page(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
+        final Page page = new Page(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getCommitTime(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
             final File markdownFile = page.getMarkdownFile().getFile();

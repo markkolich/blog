@@ -45,6 +45,9 @@ public abstract class AbstractFeedEntity {
         return entries_;
     }
 
+    /**
+     * Returns the first entry in the list of entries, or null if there was no first entry.
+     */
     public final Entry getFirst() {
         return Iterables.getFirst(entries_, null);
     }

@@ -109,7 +109,7 @@ public final class EntryCache {
             return;
         }
         // Build out a new entry entity and fork based on the event's operation.
-        final Entry entry = new Entry(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getTimestamp(), e.getFile());
+        final Entry entry = new Entry(e.getName(), e.getTitle(), e.getMsg(), e.getHash(), e.getCommitTime(), e.getFile());
         final Events.CachedContentEvent.Operation op = e.getOperation();
         if (Events.CachedContentEvent.Operation.ADD.equals(op)) {
             final File markdownFile = entry.getMarkdownFile().getFile();

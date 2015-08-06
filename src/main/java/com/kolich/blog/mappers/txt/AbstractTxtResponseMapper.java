@@ -42,8 +42,7 @@ public abstract class AbstractTxtResponseMapper<T> extends AbstractFreeMarkerAwa
     }
 
     @Override
-    public final Utf8TextEntity renderView(@Nonnull final T entity)
-        throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final T entity) throws Exception {
         final Template tp = getTemplate(getTemplateName());
         return buildEntity(tp, getDataMap(tp), TXT);
     }

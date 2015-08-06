@@ -60,13 +60,11 @@ public final class CuracaoExceptionExceptionMapper extends AbstractFreeMarkerAwa
     }
 
     @Override
-    public final Utf8TextEntity renderView(@Nonnull final CuracaoException e)
-        throws Exception {
+    public final Utf8TextEntity renderView(@Nonnull final CuracaoException e) throws Exception {
         int status = DEFAULT_ERROR_STATUS_CODE; // initialized to default
-        // If the incoming exception to handle is an instance of a type that
-        // contains a status code (e.g., with entity or with status) then we
-        // extract the status code from the entity backed exception and use
-        // that with the error response.
+        // If the incoming exception to handle is an instance of a type that contains a status code
+        // (e.g., with entity or with status) then we extract the status code from the entity backed
+        // exception and use that with the error response.
         if(e instanceof CuracaoException.WithEntity) {
             final CuracaoEntity entity;
             if((entity = ((CuracaoException.WithEntity)e).getEntity()) != null) {
@@ -82,7 +80,7 @@ public final class CuracaoExceptionExceptionMapper extends AbstractFreeMarkerAwa
         } catch (Exception f) {
             // Loading the error template for the actual status code failed, so let's load the default error
             // template which should, in theory, always exist.
-            logger__.warn("Failed to load FreeMarker error page template for HTTP status code: " + status, f);
+            logger__.warn("Failed to load FreeMarker error page template for HTTP status code: {}", status, f);
             // Use default!  This ~should~ not fail given that the 500 error page template must exist... if it
             // doesn't then something else is wrong.
             tp = getErrorTemplateForStatus(SC_INTERNAL_SERVER_ERROR);

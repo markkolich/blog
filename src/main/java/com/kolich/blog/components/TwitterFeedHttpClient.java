@@ -59,8 +59,8 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
     }
 
     public final Future<TwitterFeed> getTweets() throws IOException {
-        return asyncHttpClient_.prepareGet(twitterFeedUrl__)
-            .execute(new AsyncCompletionHandler<TwitterFeed>() {
+        return asyncHttpClient_.prepareGet(twitterFeedUrl__).execute(
+            new AsyncCompletionHandler<TwitterFeed>() {
                 @Override
                 public TwitterFeed onCompleted(final Response r) throws Exception {
                     return new TwitterFeed(r.getResponseBody(UTF_8_STRING));
@@ -85,7 +85,7 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
 
         @Override
         public final void toWriter(final Writer writer) throws Exception {
-            try(final Reader reader = new StringReader(jsonString_)) {
+            try (final Reader reader = new StringReader(jsonString_)) {
                 copyLarge(reader, writer);
             }
         }

@@ -58,6 +58,10 @@ public final class MarkdownFile {
         return file_;
     }
 
+    /**
+     * Renders this markdown file into HTML.  The resulting string is a partial UTF-8 encoded HTML
+     * fragment that can be injected into a larger HTML page or JSON object.
+     */
     public final String getHtmlFromMarkdown() throws IOException {
         // https://github.com/markkolich/blog/issues/1
         // Set max parsing time to "infinity" such that the parsing

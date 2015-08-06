@@ -27,6 +27,7 @@
 package com.kolich.blog.entities;
 
 import com.google.common.base.Charsets;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,7 +48,8 @@ public final class EntryTag {
 
     /**
      * Returns the raw tag, as ingested from the content.  This version is suitable for display only,
-     * and is not safe to be used on a URL.  Is typically invoked from within a Freemarker template.
+     * and is not safe to be used on a URL.  This method is typically invoked from within a Freemarker
+     * template at render time.
      */
     public String getDisplayText() {
         return escapeTag(tag_);
@@ -61,6 +63,9 @@ public final class EntryTag {
         return encodeTag(tag_);
     }
 
+    /**
+     * Helper method to URL encode the incoming tag.
+     */
     public static final String encodeTag(final String tag) {
         try {
             return URLEncoder.encode(tag, UTF_8_CHARSET);
@@ -70,10 +75,18 @@ public final class EntryTag {
         }
     }
 
+    /**
+     * Helper method that HTML escapes the incoming tag.  Tags with HTML unsafe characters in them
+     * are escaped to their HTML entity equivalents.  See the Javadoc for {@link StringEscapeUtils#escapeHtml4(String)}
+     * for more details.
+     */
     public static final String escapeTag(final String tag) {
         return escapeHtml4(tag);
     }
 
+    /**
+     * Helper convenience method to URL encode and HTML escape the incoming tag in a single call.
+     */
     public static final String encodeAndEscapeTag(final String tag) {
         return escapeTag(encodeTag(tag));
     }

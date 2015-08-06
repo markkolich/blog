@@ -47,6 +47,11 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * This in-memory cache maps a list of tags to a set of {@link Entry} entities that are tagged
+ * with those keywords.  This is used for finding other content similar to a given {@link Entry}
+ * as tagged by the entry author.
+ */
 @Component
 public final class EntryTagCache {
 
