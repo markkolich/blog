@@ -133,13 +133,8 @@ object PackageJs extends AntHelpers {
       val release = base / "release"
       val libs = getFileList(js / "lib", Seq(
         "json2.js",
-        "jquery-1.10.2.min.js",
+        "jquery-1.11.3.min.js",
         "jquery.timeago-1.4.1.js",
-        //"jquery.localtime-0.8.0.js",
-        // I discovered I wasn't actually using any of Bootstrap's JS
-        // in the web-application, so there's no need to include it in
-        // the apps "released" JavaScript bundle.
-        //"bootstrap.min.js",
         "prettify.js"))
       val sources = getFileList(js, Seq(
         "kolich.js",
@@ -247,7 +242,7 @@ object Blog extends Build {
   import Resolvers._
 
   private val aName = "blog"
-  private val aVer = "1.6-SNAPSHOT"
+  private val aVer = "1.6.1-SNAPSHOT"
   private val aOrg = "com.kolich"
 
   lazy val blog: Project = Project(
