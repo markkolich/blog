@@ -6,9 +6,9 @@ The content and code herein is documented with reasonable depth in this blog pos
 
 http://mark.koli.ch/a-new-blog-platform-backed-by-github-twitter-bootstrap-and-curacao
 
-This blogging platform is built around:
+This custom blogging platform is built with:
 
-* Java 7
+* Java 8
 * GitHub and [JGit](http://www.eclipse.org/jgit/)
 * [Curacao](https://github.com/markkolich/curacao)
 * [Markdown](http://daringfireball.net/projects/markdown/) with [Pegdown](https://github.com/sirthias/pegdown)
@@ -16,51 +16,28 @@ This blogging platform is built around:
 
 ## Bootstrap
 
-This project is built and managed using <a href="http://www.scala-sbt.org">SBT</a>.
+This project is built and managed using Apache Maven.
 
-To clone and build this project, you must have <a href="http://www.scala-sbt.org/release/docs/Getting-Started/Setup">SBT installed and configured</a>.
+To clone, build, and run this project you must have <a href="https://maven.apache.org">Maven installed and configured</a>.
 
-To start, clone the repository.
+To begin, clone the repository.
 
-    #~> git clone git://github.com/markkolich/blog.git
+    #~> git clone https://github.com/markkolich/blog.git
 
-Run `sbt` from within your newly cloned *blog* directory.
+Run `mvn jetty:run` from within your newly cloned *blog* directory to start the local servlet container. 
 
     #~> cd blog
-    #~/blog> sbt
-    ...
-    blog:1.0-SNAPSHOT>
+    #~/blog> mvn jetty:run
 
-You will see a `blog` SBT prompt once all dependencies are resolved and the project is loaded.
+In your nearest web-browser, visit <a href="http://localhost:8080/blog">http://localhost:8080/blog</a>.
 
-In SBT, run `start` to start the local Servlet container.  By default the server listens on **port 8080**.
+To stop the development server, press `Ctrl-C`.
 
-    blog:1.0-SNAPSHOT> start
-    [info] jetty-9.1.0.v20131115
-    [info] Started ServerConnector@369620a9{HTTP/1.1}{0.0.0.0:8080}
+To build a deployable WAR for your favorite servlet container, run `mvn package`.
 
-In your nearest web-browser, visit <a href="http://localhost:8080/blog">http://localhost:8080/blog</a> and you should see a local version of this blog in your browser.
+    #~/blog> mvn package
 
-To stop the development server, run `stop`.
-
-To build a deployable WAR for your favorite Servlet container, run `war` in SBT.
-
-    blog:1.0-SNAPSHOT> war
-    Compiling CSS...
-    Compiling JavaScript...
-    Compiling 2 file(s) with 42 extern(s)
-    0 error(s), 0 warning(s)
-    [info] Packaging ~/dev/github/blog/dist/blog-1.0-SNAPSHOT.war ...
-    [info] Done packaging.
-    [success] Total time: 3 s, completed Feb 3, 2015 6:26:07 PM
-
-Note the resulting WAR is placed into the **blog/dist** directory.  Deploy and enjoy.
-
-To create an Intellij IDEA project for this codebase, run `gen-idea` in SBT.
-
-    blog:1.0-SNAPSHOT> gen-idea
-
-Open the resulting project using your favorite IntelliJ IDEA instance.
+The resulting WAR is placed into the local *dist* directory.  Deploy and enjoy.
 
 ## Licensing
 
