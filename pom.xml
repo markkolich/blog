@@ -205,8 +205,11 @@
                 <configuration>
                     <webApp>
                         <contextPath>/blog</contextPath>
+                        <!-- Intentionally skip scanning JARs for Servlet 3 annotations. -->
+                        <WebInfIncludeJarPattern>^$</WebInfIncludeJarPattern>
                     </webApp>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <!--<dumpOnStart>true</dumpOnStart>-->
                 </configuration>
             </plugin>
             <!-- Copies the resulting WAR from the sub-module into the dist/ directory of the parent. -->
