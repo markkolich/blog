@@ -190,7 +190,7 @@
             <plugin>
                 <groupId>com.google.protobuf.tools</groupId>
                 <artifactId>maven-protoc-plugin</artifactId>
-                <version>0.1.10</version>
+                <version>0.4.2</version>
                 <configuration>
                     <!--<protocExecutable>/usr/local/bin/protoc</protocExecutable>-->
                     <protoSourceRoot>src/main/protobuf</protoSourceRoot>
@@ -307,9 +307,9 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>maven-davidtrott</id>
-            <name>maven-davidtrott</name>
-            <url>http://maven.davidtrott.com/repository</url>
+            <id>maven-sergei-ivanov</id>
+            <name>maven-sergei-ivanov</name>
+            <url>https://dl.bintray.com/sergei-ivanov/maven/</url>
             <releases />
             <snapshots>
                 <enabled>false</enabled>
