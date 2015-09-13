@@ -15,10 +15,10 @@ If you're still using Ant, set a series of `<compilerarg>` tags in your `<javac>
 
 ```xml
 <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="libraries">
-    <compilerarg value="-Xlint:all"/>
-    <compilerarg value="-Xlint:-processing"/>
-    <compilerarg value="-Xlint:-serial"/>
-    <compilerarg value="-Werror"/>
+  <compilerarg value="-Xlint:all"/>
+  <compilerarg value="-Xlint:-processing"/>
+  <compilerarg value="-Xlint:-serial"/>
+  <compilerarg value="-Werror"/>
 </javac> 
 ```
 
@@ -28,19 +28,19 @@ Using the `maven-compiler-plugin` add a few `<compilerArgs>` to your configurati
 
 ```xml
 <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.3</version>
-    <configuration>
-        <source>1.8</source>
-        <target>1.8</target>
-        <compilerArgs>
-            <arg>-Xlint:all</arg>
-            <arg>-Xlint:-processing</arg>
-            <arg>-Xlint:-serial</arg>
-            <arg>-Werror</arg>
-        </compilerArgs>
-    </configuration>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.3</version>
+  <configuration>
+    <source>1.8</source>
+    <target>1.8</target>
+    <compilerArgs>
+      <arg>-Xlint:all</arg>
+      <arg>-Xlint:-processing</arg>
+      <arg>-Xlint:-serial</arg>
+      <arg>-Werror</arg>
+    </compilerArgs>
+  </configuration>
 </plugin>
 ```
 
@@ -50,7 +50,7 @@ To fail the build on any compiler warning, in main source and in test source, se
 
 ```groovy
 tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
+  options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
 }
 ```
 
@@ -63,7 +63,9 @@ lazy val projectSettings = Defaults.coreDefaultSettings ++ Seq(
   scalacOptions ++= Seq(
     "-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings", "-encoding", "utf8"
   ),
-  javacOptions ++= Seq("-Xlint:all,-processing,-serial", "-Werror", "-encoding", "utf8", "-g")
+  javacOptions ++= Seq(
+    "-Xlint:all,-processing,-serial", "-Werror", "-encoding", "utf8", "-g"
+  )
 )
 ```
 
