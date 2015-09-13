@@ -135,6 +135,8 @@ Finally, edit `/etc/httpd/conf.d/ssl.conf` to point to your newly generated SSL 
 ##
 
 <VirtualHost _default_:443>
+ ## Required, see http://serverfault.com/a/440452
+ SSLEngine On
  ...
  SSLCertificateFile /etc/httpd/ssl/svn.kolich.local.crt
  SSLCertificateKeyFile /etc/httpd/ssl/svn.kolich.local.key
