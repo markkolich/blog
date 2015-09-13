@@ -52,8 +52,6 @@ import com.kolich.curacao.annotations.parameters.Path;
 import com.kolich.curacao.annotations.parameters.Query;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.Future;
 
 @Controller
 public final class Blog {
@@ -149,7 +147,7 @@ public final class Blog {
         return shadowCache_.getAllBefore(commit, entryLimitLoadMore__);
     }
     @RequestMapping("^\\/api\\/tweets\\.json$")
-    public final Future<TwitterFeed> tweets() throws IOException {
+    public final TwitterFeed tweets() {
         return twitterClient_.getTweets();
     }
 

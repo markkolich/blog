@@ -27,18 +27,19 @@
 package com.kolich.blog.components;
 
 import com.kolich.blog.ApplicationConfig;
+import com.kolich.blog.exceptions.ContentNotFoundException;
+import com.kolich.common.functional.either.Either;
 import com.kolich.curacao.annotations.Component;
 import com.kolich.curacao.components.ComponentDestroyable;
 import com.kolich.curacao.entities.AppendableCuracaoEntity;
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
+import com.kolich.http.HttpClient4ClosureBuilder;
+import com.kolich.http.helpers.StringClosures.StringOrNullClosure;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.util.concurrent.Future;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.net.MediaType.JSON_UTF_8;
@@ -51,27 +52,6 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
     private static final String twitterFeedUrl__ = ApplicationConfig.getTwitterFeedUrl();
 
     private static final String UTF_8_STRING = UTF_8.toString();
-
-    private final AsyncHttpClient asyncHttpClient_;
-
-    public TwitterFeedHttpClient() {
-        asyncHttpClient_ = new AsyncHttpClient();
-    }
-
-    public final Future<TwitterFeed> getTweets() throws IOException {
-        return asyncHttpClient_.prepareGet(twitterFeedUrl__).execute(
-            new AsyncCompletionHandler<TwitterFeed>() {
-                @Override
-                public TwitterFeed onCompleted(final Response r) throws Exception {
-                    return new TwitterFeed(r.getResponseBody(UTF_8_STRING));
-                }
-            });
-    }
-
-    @Override
-    public final void destroy() throws Exception {
-        asyncHttpClient_.close();
-    }
 
     public static final class TwitterFeed extends AppendableCuracaoEntity {
 
@@ -100,6 +80,25 @@ public class TwitterFeedHttpClient implements ComponentDestroyable {
             return JSON_UTF_8_TYPE;
         }
 
+    }
+
+    private final HttpClient httpClient_;
+
+    public TwitterFeedHttpClient() {
+        httpClient_ = HttpClient4ClosureBuilder.Factory.getNewInstanceWithProxySelector();
+    }
+
+    public final TwitterFeed getTweets() {
+        final Either<Void,String> feed = new StringOrNullClosure(httpClient_, UTF_8_STRING){}.get(twitterFeedUrl__);
+        if (!feed.success()) {
+            throw new ContentNotFoundException("Failed to load Twitter feed from URL: " + twitterFeedUrl__);
+        }
+        return new TwitterFeed(feed.right());
+    }
+
+    @Override
+    public final void destroy() throws Exception {
+        ((CloseableHttpClient) httpClient_).close();
     }
 
 }
