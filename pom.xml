@@ -213,6 +213,7 @@
                         <contextPath>/blog</contextPath>
                         <!-- Intentionally skip scanning JARs for Servlet 3 annotations. -->
                         <WebInfIncludeJarPattern>^$</WebInfIncludeJarPattern>
+                        <containerIncludeJarPattern>^$</containerIncludeJarPattern>
                     </webApp>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <!--<dumpOnStart>true</dumpOnStart>-->
