@@ -27,6 +27,7 @@
 package com.kolich.blog.entities;
 
 import com.google.gson.annotations.SerializedName;
+import com.kolich.blog.ApplicationConfig;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
@@ -53,14 +54,17 @@ public abstract class MarkdownContent {
 
     public static final class BlogContentDateFormat {
 
+        private static final String TIME_ZONE_ID = ApplicationConfig.getTimeZone();
+
         /**
-         * The default date format string used in Git.
+         * The default date format string used in Git.  Produces a date that looks like:
+         * Sat Sep 12 16:37:41 2015 -0700
          */
-        private static final String GIT_DATE_FORMAT_STRING = "EEE dd MMM yyyy HH:mm:ss Z";
+        private static final String GIT_DATE_FORMAT_STRING = "EEE MMM dd HH:mm:ss yyyy Z";
 
         public static final DateFormat getNewInstance() {
             final DateFormat df = new SimpleDateFormat(GIT_DATE_FORMAT_STRING);
-            df.setTimeZone(getTimeZone("GMT-8")); // US-Pacific time
+            df.setTimeZone(getTimeZone(TIME_ZONE_ID)); // US-Pacific time
             return df;
         }
 

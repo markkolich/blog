@@ -53,6 +53,7 @@ public final class ApplicationConfig {
     private static final String CONTEXT_PATH_PROPERTY = "context-path";
     private static final String HOSTNAME_PROPERTY = "hostname";
     private static final String FULL_URI_PROPERTY = "fullUri";
+    private static final String TIME_ZONE_PROPERTY = "time-zone";
 
     private static final String BLOG_REPO_CLONE_URL_PROPERTY = "clone.url";
     private static final String CLONE_ON_STARTUP_PROPERTY = "clone.on-startup";
@@ -178,6 +179,10 @@ public final class ApplicationConfig {
 
     public static final String getFullUri() {
         return getConfigInstance().getString(FULL_URI_PROPERTY);
+    }
+
+    public static final String getTimeZone() {
+        return getConfigInstance().getString(TIME_ZONE_PROPERTY);
     }
 
     // Clone property helpers
