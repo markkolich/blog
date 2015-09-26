@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.kolich</groupId>
             <artifactId>kolich-httpclient4-closure</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>
 
         <dependency>
