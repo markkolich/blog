@@ -88,6 +88,7 @@ public final class PageCache {
             // being added to the cache, deleted, and then re-added again with the wrong commit message/title.
             if (markdownFile.exists() && !cache_.containsKey(pageName)) {
                 cache_.put(pageName, page);
+                logger__.debug("Loaded page: {}", page.getTitle());
             } else if (!markdownFile.exists()) {
                 cache_.remove(pageName);
             }

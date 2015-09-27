@@ -118,6 +118,7 @@ public final class EntryCache {
             // being added to the cache, deleted, and then re-added again with the wrong commit message/title.
             if (markdownFile.exists() && !unsortedEntries_.contains(entry)) {
                 unsortedEntries_.add(entry);
+                logger__.debug("Loaded entry: {}", entry.getTitle());
             } else if (!markdownFile.exists()) {
                 unsortedEntries_.remove(entry);
             }
