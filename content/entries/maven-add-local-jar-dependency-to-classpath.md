@@ -110,3 +110,5 @@ Note the structure here mimics what you'd find in `~/.m2`.
 At runtime, Maven will consult the local repo at `${basedir}/lib` in addition to `~/.m2` and any other remote repositories you have defined.   
 
 Ship it!
+
+<!--- tags: java, maven -->
