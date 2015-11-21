@@ -2,7 +2,7 @@
 <div class="col-md-3 col-lg-3 hidden-sm hidden-xs">
 
     <div class="panel panel-default twitter">
-        <div class="panel-heading">Twitter <a class="twitter-follow-button" href="https://twitter.com/markkolich" data-show-count="false" data-lang="en">Follow @markkolich</a></div>
+        <div class="panel-heading">Twitter <a class="twitter-follow-button" href="https://twitter.com/markkolich" data-show-count="false" data-lang="en">&nbsp;</a></div>
         <div class="panel-body tweets"></div>
     </div>
 

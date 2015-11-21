@@ -207,7 +207,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.3.2.v20150730</version>
+                <version>9.3.6.v20151106</version>
                 <configuration>
                     <webApp>
                         <contextPath>/blog</contextPath>
@@ -216,6 +216,9 @@
                         <containerIncludeJarPattern>^$</containerIncludeJarPattern>
                     </webApp>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <!-- Use with "mvn jetty:run-forked fizzed-watcher:run" to start Jetty and watch static resources. -->
+                    <waitForChild>false</waitForChild>
+                    <!--<daemon>true</daemon>-->
                     <!--<dumpOnStart>true</dumpOnStart>-->
                 </configuration>
             </plugin>
@@ -251,7 +254,7 @@
                 <executions>
                     <execution>
                         <id>compile-js</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>minify</goal>
                         </goals>
@@ -293,6 +296,25 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.fizzed</groupId>
+                <artifactId>fizzed-watcher-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <configuration>
+                    <!-- Run "mvn fizzed-watcher:run" to watch for changes to static resources. -->
+                    <watches>
+                        <watch>
+                            <directory>${basedir}/content/static/js</directory>
+                        </watch>
+                        <watch>
+                            <directory>${basedir}/content/static/css</directory>
+                        </watch>
+                    </watches>
+                    <goals>
+                        <param>process-resources</param>
+                    </goals>
+                </configuration>
             </plugin>
         </plugins>
 
