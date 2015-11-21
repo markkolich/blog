@@ -91,7 +91,7 @@ li.tweet.first {
 
 /* For the follow twitter widget */
 div.panel.twitter iframe {
-  margin-top: 1px;
+  margin-top: 2px;
   float: right;
 }
 
