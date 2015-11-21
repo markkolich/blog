@@ -29,6 +29,10 @@ Run `mvn jetty:run` from within your newly cloned *blog* directory to start the 
     #~> cd blog
     #~/blog> mvn jetty:run
 
+Run `mvn jetty:run-forked fizzed-watcher:run` to start Jetty in "forked" mode and watch for resource changes. Any changes to `.js` or `.css` files will invoke the `process-resources` goal to minfiy and compress all static resources while the Jetty server continues to run:
+
+    #~/blog> mvn jetty:run-forked fizzed-watcher:run
+
 In your nearest web-browser, visit <a href="http://localhost:8080/blog">http://localhost:8080/blog</a>.
 
 To stop the development server, press `Ctrl-C`.
