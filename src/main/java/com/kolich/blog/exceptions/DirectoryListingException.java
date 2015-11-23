@@ -26,7 +26,7 @@
 
 package com.kolich.blog.exceptions;
 
-import com.kolich.curacao.exceptions.routing.CuracaoRoutingException;
+import curacao.exceptions.routing.CuracaoRoutingException;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 

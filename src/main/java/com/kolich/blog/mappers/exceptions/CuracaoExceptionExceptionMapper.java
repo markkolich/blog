@@ -29,11 +29,11 @@ package com.kolich.blog.mappers.exceptions;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.html.Utf8TextEntity;
 import com.kolich.blog.mappers.AbstractFreeMarkerAwareResponseMapper;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.Mapper;
-import com.kolich.curacao.annotations.Required;
-import com.kolich.curacao.entities.CuracaoEntity;
-import com.kolich.curacao.exceptions.CuracaoException;
+import curacao.annotations.Injectable;
+import curacao.annotations.Mapper;
+import curacao.annotations.Required;
+import curacao.entities.CuracaoEntity;
+import curacao.exceptions.CuracaoException;
 import freemarker.template.Template;
 import org.slf4j.Logger;
 

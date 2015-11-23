@@ -35,9 +35,9 @@ import com.kolich.blog.entities.Entry;
 import com.kolich.blog.entities.EntryTag;
 import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.protos.Events;
-import com.kolich.curacao.annotations.Component;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.Required;
+import curacao.annotations.Component;
+import curacao.annotations.Injectable;
+import curacao.annotations.Required;
 import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;

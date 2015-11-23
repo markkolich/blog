@@ -9,12 +9,12 @@
 	<description>This is my blog. There are many like it, but this one is mine.</description>
 
     <listener>
-        <listener-class>com.kolich.curacao.CuracaoContextListener</listener-class>
+        <listener-class>curacao.CuracaoContextListener</listener-class>
     </listener>
 
 	<servlet>
 		<servlet-name>CuracaoDispatcherServlet</servlet-name>
-		<servlet-class>com.kolich.curacao.CuracaoDispatcherServlet</servlet-class>
+		<servlet-class>curacao.CuracaoDispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>

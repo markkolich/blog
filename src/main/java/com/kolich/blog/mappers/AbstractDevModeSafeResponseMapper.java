@@ -27,7 +27,7 @@
 package com.kolich.blog.mappers;
 
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.curacao.mappers.response.ControllerReturnTypeMapper;
+import curacao.mappers.response.ControllerReturnTypeMapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;

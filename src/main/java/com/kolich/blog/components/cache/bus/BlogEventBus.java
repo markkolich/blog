@@ -27,7 +27,7 @@
 package com.kolich.blog.components.cache.bus;
 
 import com.google.common.eventbus.EventBus;
-import com.kolich.curacao.annotations.Component;
+import curacao.annotations.Component;
 
 import javax.annotation.Nonnull;
 

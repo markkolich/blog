@@ -29,9 +29,9 @@ package com.kolich.blog.mappers.feed;
 import com.kolich.blog.components.FreeMarkerConfig;
 import com.kolich.blog.entities.feed.Sitemap;
 import com.kolich.blog.entities.html.Utf8TextEntity;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.Mapper;
-import com.kolich.curacao.annotations.Required;
+import curacao.annotations.Injectable;
+import curacao.annotations.Mapper;
+import curacao.annotations.Required;
 import freemarker.template.Template;
 
 import javax.annotation.Nonnull;

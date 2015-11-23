@@ -28,9 +28,9 @@ package com.kolich.blog.components;
 
 import com.google.common.base.Charsets;
 import com.kolich.blog.ApplicationConfig;
-import com.kolich.curacao.annotations.Component;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.Required;
+import curacao.annotations.Component;
+import curacao.annotations.Injectable;
+import curacao.annotations.Required;
 import freemarker.template.Configuration;
 
 import java.io.File;

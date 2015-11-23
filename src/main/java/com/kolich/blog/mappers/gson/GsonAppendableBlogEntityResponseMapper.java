@@ -28,7 +28,7 @@ package com.kolich.blog.mappers.gson;
 
 import com.kolich.blog.entities.gson.GsonAppendableBlogEntity;
 import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
-import com.kolich.curacao.annotations.Mapper;
+import curacao.annotations.Mapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;

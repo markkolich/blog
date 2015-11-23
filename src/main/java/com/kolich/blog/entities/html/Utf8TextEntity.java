@@ -27,7 +27,7 @@
 package com.kolich.blog.entities.html;
 
 import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
-import com.kolich.curacao.entities.AppendableCuracaoEntity;
+import curacao.entities.AppendableCuracaoEntity;
 import org.apache.commons.codec.binary.StringUtils;
 
 import java.io.ByteArrayOutputStream;

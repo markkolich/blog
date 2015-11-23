@@ -27,8 +27,8 @@
 package com.kolich.blog.mappers.resources;
 
 import com.kolich.blog.mappers.AbstractDevModeSafeResponseMapper;
-import com.kolich.curacao.annotations.Mapper;
-import com.kolich.curacao.mappers.response.types.resources.AbstractETagAwareFileReturnMapper;
+import curacao.annotations.Mapper;
+import curacao.mappers.response.types.resources.AbstractETagAwareFileReturnMapper;
 
 import javax.annotation.Nonnull;
 import javax.servlet.AsyncContext;

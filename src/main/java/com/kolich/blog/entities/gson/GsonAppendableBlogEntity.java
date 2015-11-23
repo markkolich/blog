@@ -33,7 +33,7 @@ import com.kolich.blog.entities.MarkdownContent.BlogContentDateFormat;
 import com.kolich.blog.entities.MarkdownFile;
 import com.kolich.common.entities.KolichCommonEntity;
 import com.kolich.common.entities.gson.KolichDefaultDateTypeAdapter;
-import com.kolich.curacao.gson.GsonAppendableCuracaoEntity;
+import curacao.gson.GsonAppendableCuracaoEntity;
 
 import java.util.Date;
 

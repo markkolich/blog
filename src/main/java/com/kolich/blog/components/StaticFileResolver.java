@@ -28,9 +28,9 @@ package com.kolich.blog.components;
 
 import com.kolich.blog.exceptions.ContentNotFoundException;
 import com.kolich.blog.exceptions.DirectoryListingException;
-import com.kolich.curacao.annotations.Component;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.Required;
+import curacao.annotations.Component;
+import curacao.annotations.Injectable;
+import curacao.annotations.Required;
 
 import java.io.File;
 import java.nio.file.Paths;

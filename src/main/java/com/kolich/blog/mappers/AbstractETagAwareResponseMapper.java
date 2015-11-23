@@ -27,8 +27,8 @@
 package com.kolich.blog.mappers;
 
 import com.kolich.blog.entities.html.Utf8TextEntity;
-import com.kolich.curacao.entities.CuracaoEntity;
-import com.kolich.curacao.entities.empty.StatusCodeOnlyCuracaoEntity;
+import curacao.entities.CuracaoEntity;
+import curacao.entities.empty.StatusCodeOnlyCuracaoEntity;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.annotation.Nonnull;

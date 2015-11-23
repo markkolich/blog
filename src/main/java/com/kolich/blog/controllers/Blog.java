@@ -44,12 +44,12 @@ import com.kolich.blog.entities.gson.PagedContent;
 import com.kolich.blog.entities.txt.HumansTxt;
 import com.kolich.blog.entities.txt.RobotsTxt;
 import com.kolich.blog.exceptions.ContentNotFoundException;
-import com.kolich.curacao.annotations.Controller;
-import com.kolich.curacao.annotations.Injectable;
-import com.kolich.curacao.annotations.RequestMapping;
-import com.kolich.curacao.annotations.Required;
-import com.kolich.curacao.annotations.parameters.Path;
-import com.kolich.curacao.annotations.parameters.Query;
+import curacao.annotations.Controller;
+import curacao.annotations.Injectable;
+import curacao.annotations.RequestMapping;
+import curacao.annotations.Required;
+import curacao.annotations.parameters.Path;
+import curacao.annotations.parameters.Query;
 
 import java.io.File;
 
