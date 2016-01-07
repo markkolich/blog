@@ -12,7 +12,7 @@
             <div class="row">
 
                 <div class="col-xs-12">
-                    <p class="header-pic"><a href="${context}"><img src="${context}static/images/mark-xmas.png"></a></p>
+                    <p class="header-pic"><a href="${context}"><img src="${context}static/images/mark.jpg"></a></p>
                     <h1>${blogTitle}</h1>
                     <p class="lead">${blogSubTitle}</p>
                 </div>
