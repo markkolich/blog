@@ -45,7 +45,7 @@ The resulting WAR is placed into the local *dist* directory.  Deploy and enjoy.
 
 ## Licensing
 
-Copyright (c) 2015 <a href="http://mark.koli.ch">Mark S. Kolich</a>
+Copyright (c) 2016 <a href="http://mark.koli.ch">Mark S. Kolich</a>
 
 All code in this project is freely available for use and redistribution under the <a href="http://opensource.org/comment/991">MIT License</a>.
 

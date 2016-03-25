@@ -12,7 +12,7 @@ Header set Content-Disposition "attachment; filename=build-latest.jar" env=build
 
 Using this method, here's what the `Content-Disposition` header looks like according to HttpFox:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/apache-setting-the-content-disposition-header-with-mod-rewrite/httpfox-snapshot-cappuccino-kolich.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/apache-setting-the-content-disposition-header-with-mod-rewrite/httpfox-snapshot-cappuccino-kolich.jpg" width="400">
 
 Cheers.
 

@@ -1,6 +1,6 @@
 When dealing with AJAX, you might need to configure Apache to return a HTTP `204 No Content`.  This is useful when your AJAX scripts need to "ping" the server, but you don't want the server to actually return any data in the response (e.g., just acknowledge the request and return and empty response body).  The server might do something behind the scenes though (like log the request) before it returns a 204.  As I understand it, the only difference between a 200 and a 204, is that a [204 response means that "the server has fulfilled the request but does not need to return an entity-body"](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5).
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/howto-configure-apache-to-return-a-http-204-no-content-for-ajax/apache-gen-http-204-small.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/howto-configure-apache-to-return-a-http-204-no-content-for-ajax/apache-gen-http-204-small.png">
 
 I tried to figure out how to configure Apache to return a `204 No Content` using one of the built in modules, like [mod_actions](http://httpd.apache.org/docs/2.2/mod/mod_actions.html), or [mod_headers](http://httpd.apache.org/docs/2.2/mod/mod_headers.html).
 

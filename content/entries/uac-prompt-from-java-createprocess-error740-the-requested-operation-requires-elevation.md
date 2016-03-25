@@ -118,15 +118,15 @@ C:\> uac-example.exe <working directory>
 
 My UAC example works by attempting to create an empty file in the working directory specified by the command line argument.  If the working directory happens to be a Windows protected location on the file system, like `C:\Program Files`, the example app will initially fail to create this empty file.  In that case, it will re-spawn a copy of itself via a UAC prompt and try again as an Administrator.  If the app successfully created the file when elevated, you will see the following success message:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/worked-with-uac.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/worked-with-uac.png">
 
 If you reject the UAC prompt (clicked Deny), you'll see this:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/rejected-uac-prompt.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/rejected-uac-prompt.png">
 
 If your working directory isn't a Windows protected directory, like `%APPDATA%` or your Desktop, you'll immediately see this without a UAC prompt:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/worked-no-uac-req.png">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/uac-prompt-from-java-createprocess-error740-the-requested-operation-requires-elevation/worked-no-uac-req.png">
 
 Here are some example working directories you might like to try:
 

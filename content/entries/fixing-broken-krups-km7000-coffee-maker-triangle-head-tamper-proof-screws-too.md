@@ -20,11 +20,11 @@ First shot, I called a few local hardware stores looking for a triangle shaped r
 
 For the record, I found these bits at [McMaster-Carr online](http://www.mcmaster.com/#triangle-screwdriver-bits/=6ce2zm):
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/triangle-bit.gif">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/triangle-bit.gif">
 
 If you're curious, here's a close up shot of a standard Phillips head (left) and triangular bit tamper-proof screw (right):
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/phillips-and-triangle-tamper-proof-screw.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/phillips-and-triangle-tamper-proof-screw.jpg" width="400">
 
 In the end, my solution to this problem involved an old flat-head screwdriver, a vice and metal file.  I snagged an old beat-up flat-head screwdriver, locked it into my vice, and filed the tip into a triangular point.  About 10-minutes later, with a little trial and error, I had myself a pretty sweet triangular screwdriver bit that could easily handle these ridiculous tamper-proof screws!
 
@@ -53,11 +53,11 @@ Once my replacement fuses arrived, I grabbed the closest soldering gun and got d
 
 I opted to use a few simple butt-connectors between the fuses, and the main line:
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-replacement-fuses-butt-connectors.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-replacement-fuses-butt-connectors.jpg" width="400">
 
 With both fuses replaced, I verified each with a multimeter and carefully reassembled my KM7000.  I dusted it off, brought it back into my kitchen, plugged it in, and brewed up one heck of a great tasting pot of coffee.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-fixed-victory-is-mine.jpg" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/fixing-broken-krups-km7000-coffee-maker-triangle-head-tamper-proof-screws-too/km7000-fixed-victory-is-mine.jpg" width="400">
 
 That's the smell of delicious do-it-yourself satisfaction.  Cheers!
 

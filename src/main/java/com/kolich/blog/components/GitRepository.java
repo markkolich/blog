@@ -91,7 +91,7 @@ public final class GitRepository implements CuracaoComponent {
             Git.cloneRepository()
                 .setURI(blogRepoCloneUrl__)
                 .setDirectory(repoDir)
-                .setBranch("release")
+                .setBranch("master")
                 .call();
         }
         // Construct a new pointer to the repository on disk.

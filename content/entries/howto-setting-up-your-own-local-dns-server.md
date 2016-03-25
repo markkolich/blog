@@ -4,7 +4,7 @@ This weekend I setup my own [SVN source control server](howto-setting-up-your-ow
 
 My network topology, shown in the diagram below, isn't too complicated. In fact, it's probably quite standard for an average developer &mdash; I've got a typical wireless router and firewall appliance connected to an HP Procurve 1800-8G Gigabit switch which fans out the bandwidth from there. Generally speaking, most traffic on my home network is local so everything sits behind the HP Procurve Gigabit switch. I'm more concerned about the internal network speed between devices, instead of device to the outside world. And of course, all of my devices sit behind NAT, which the router handles for me.
 
-<img src="https://raw.githubusercontent.com/markkolich/blog/release/content/static/entries/howto-setting-up-your-own-local-dns-server/kolich.com-network-topology.png" width="400">
+<img src="https://raw.githubusercontent.com/markkolich/blog/master/content/static/entries/howto-setting-up-your-own-local-dns-server/kolich.com-network-topology.png" width="400">
 
 ### The Problem
 
