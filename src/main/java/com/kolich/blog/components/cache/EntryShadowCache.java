@@ -26,8 +26,9 @@
 
 package com.kolich.blog.components.cache;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.eventbus.Subscribe;
 import com.kolich.blog.components.cache.bus.BlogEventBus;
@@ -83,7 +84,7 @@ public final class EntryShadowCache {
     public EntryShadowCache(@Required final EntryCache entryCache,
                             @Required final BlogEventBus eventBus) {
         entryCache_ = entryCache;
-        shadowCache_ = ArrayListMultimap.create(); // Preserves insertion order
+        shadowCache_ = LinkedListMultimap.create(); // Preserves insertion order
         eventBus.register(this);
     }
 
@@ -99,7 +100,7 @@ public final class EntryShadowCache {
         // a SortedSetMultimap could have been used here, but that implementation depends on the natural ordering of
         // the keys and values in the map.  In this case, the ordering isn't the "natural" ordering but is rather
         // dictated by time (e.g., given an entity X, give me all of the stuff older than it in constant time).
-        final Multimap<String, Entry> shadowCache = ArrayListMultimap.create();
+        final Multimap<String, Entry> shadowCache = LinkedListMultimap.create();
         for (final Entry entity : allEntries) {
             boolean includeNext = false;
             for (final Entry inner : allEntries) {
@@ -121,13 +122,14 @@ public final class EntryShadowCache {
                                                                @Nullable final Integer limit) {
         final PagedContent<Entry> result;
         final Collection<Entry> shadow = shadowCache_.get(commit);
-        if (shadow == null) {
-            result = new PagedContent<>(ImmutableList.<Entry>of(), shadowCache_.size());
+        final String firstCommit = Iterables.getFirst(shadowCache_.keySet(), null);
+        if (shadow.isEmpty()) {
+            result = new PagedContent<>(ImmutableList.of(), firstCommit, shadowCache_.keySet().size());
         } else {
             final List<Entry> before = ImmutableList.copyOf(shadow);
             final int endIndex = (limit != null && limit > 0 && limit <= before.size()) ? limit : before.size();
             final List<Entry> sublist = before.subList(0, endIndex);
-            result = new PagedContent<>(sublist, before.size() - sublist.size());
+            result = new PagedContent<>(sublist, firstCommit, before.size() - sublist.size());
         }
         return result;
     }

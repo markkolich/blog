@@ -30,6 +30,7 @@ import com.google.gson.annotations.SerializedName;
 import com.kolich.blog.entities.MarkdownContent;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -39,17 +40,26 @@ public final class PagedContent<T extends MarkdownContent> extends GsonAppendabl
     @SerializedName("content")
     private final List<T> content_;
 
+    @SerializedName("first")
+    private final String first_;
+
     @SerializedName("remaining")
     private final int remaining_;
 
     public PagedContent(@Nonnull final List<T> content,
+                        @Nullable final String first,
                         final int remaining) {
         content_ = checkNotNull(content, "Content cannot be null.");
+        first_ = first;
         remaining_ = remaining;
     }
 
     public final List<T> getContent() {
         return content_;
+    }
+
+    public final String getFirst() {
+        return first_;
     }
 
     public final int getRemaining() {

@@ -28,6 +28,7 @@ package com.kolich.blog.components.cache;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.eventbus.Subscribe;
@@ -181,12 +182,17 @@ public final class EntryCache {
 
     public synchronized final PagedContent<Entry> getAll(@Nullable final Integer limit) {
         final List<Entry> list = getAll();
+        final Entry firstEntry = Iterables.getFirst(list, null);
+        String firstCommit = null;
+        if (firstEntry != null) {
+            firstCommit = firstEntry.getCommit();
+        }
         final PagedContent<Entry> result;
         if(limit != null && limit > 0 && limit <= list.size()) {
             final List<Entry> sublist = list.subList(0, limit);
-            result = new PagedContent<>(sublist, list.size() - sublist.size());
+            result = new PagedContent<>(sublist, firstCommit, list.size() - sublist.size());
         } else {
-            result = new PagedContent<>(list, 0);
+            result = new PagedContent<>(list, firstCommit, 0);
         }
         return result;
     }

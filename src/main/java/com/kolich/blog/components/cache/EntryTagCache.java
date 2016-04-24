@@ -97,7 +97,7 @@ public final class EntryTagCache {
     public synchronized final PagedContent<Entry> getAllTagged(@Nonnull final String tag) {
         checkNotNull(tag, "Content tag cannot be null.");
         final Collection<Entry> tagged = tagCache_.get(tag);
-        return new PagedContent<>(ImmutableList.copyOf(tagged), 0);
+        return new PagedContent<>(ImmutableList.copyOf(tagged), null, 0);
     }
 
 }
