@@ -308,6 +308,23 @@ public final class BlogTest {
     }
 
     @Test
+    public void testTweetsJsonApi() throws Exception {
+        final Gson gson = GsonAppendableBlogEntity.getNewBlogGsonInstance();
+
+        final String url = UNIT_TEST_URL + "api/tweets.json";
+        final Future<Response> f = httpClient_.prepareGet(url).execute();
+        final Response r = f.get();
+
+        assertEquals(HttpServletResponse.SC_OK, r.getStatusCode());
+        assertEquals("application/json; charset=utf-8", r.getContentType());
+
+        final String responseJson = r.getResponseBody(Charsets.UTF_8);
+        final JsonObject obj = gson.fromJson(responseJson, JsonObject.class);
+
+        assertTrue(obj.has("tweets"));
+    }
+
+    @Test
     public void testRobotsTxt() throws Exception {
         final Future<Response> f = httpClient_.prepareGet(UNIT_TEST_URL + "robots.txt").execute();
         final Response r = f.get(2, TimeUnit.SECONDS);
