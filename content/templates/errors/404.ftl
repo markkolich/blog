@@ -21,4 +21,5 @@
 </div>
 <!-- /content row -->
 
+<#include "../common/footer.ftl">
 <#include "../common/html-footer.ftl">

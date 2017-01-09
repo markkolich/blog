@@ -15,7 +15,7 @@
                 <h2 class="title"><a href="${context}${e.name}">${e.title}</a></h2>
                 <p class="hash">${e.commit}</p>
                 <p class="date">${e.dateFormatted}</p>
-                <p>${e.content}</p>
+                <div class="content">${e.content}</div>
 
                 <div class="fader"></div>
 
