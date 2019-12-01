@@ -55,7 +55,7 @@
         <powermock-api-mockito.version>1.6.4</powermock-api-mockito.version>
         <powermock-module-junit4.version>1.6.4</powermock-module-junit4.version>
 
-        <async-http-client.version>2.0.0</async-http-client.version>
+        <async-http-client.version>2.0.35</async-http-client.version>
 
         <jsoup.version>1.9.1</jsoup.version>
     </properties>
